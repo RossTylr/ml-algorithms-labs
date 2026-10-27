@@ -1,0 +1,31 @@
+# Module 10 — Anomaly Detection
+
+**Tier** 2 · **Notebooks** 7 · **Prerequisites** 05, 07
+
+> Deterioration, sensor failure, fraud, the one admission that doesn't fit.
+
+## Notebooks
+
+| # | Notebook | Band | Dataset | Clinical problem |
+|---|----------|------|---------|------------------|
+| 01.01 | [Random Partitioning & Scoring](01_isolation/01_random_partitioning_scoring.ipynb) | P4 | `vitals` | Vitals monitor faults — spikes, stuck values, drift |
+| 02.01 | [LOF](02_density_based/01_lof.ipynb) | P1 | `cohort` | Patients unusual relative to their neighbours |
+| 02.02 | [One-Class SVM & Elliptic Envelope](02_density_based/02_one_class_svm_elliptic_envelope.ipynb) | P4 | `vitals` | A boundary around normal physiology |
+| 03.01 | [HBOS, COPOD & ECOD](03_fast_methods/01_hbos_copod_ecod.ipynb) | P4 | `vitals` | Ward-scale real-time scoring |
+| 03.02 | [Z-Score, IQR & Grubbs](03_fast_methods/02_z_score_iqr_grubbs.ipynb) | P4 | `vitals` | Simple first |
+| 04.01 | [Autoencoder Reconstruction Error](04_learned/01_autoencoder_reconstruction_error.ipynb) | P4 | `vitals` | Deterioration as a bad reconstruction |
+| 04.02 | [SUOD & Method Comparison](04_learned/02_suod_method_comparison.ipynb) | P5 | `vitals` | Deployed monitoring with intermittent data — method × failure-type matrix |
+
+## Priority bands
+
+- **P1** Diagnostics — Does this person have the condition? How sure are we?
+- **P2** Treatment — What should we do for this person, and what will happen if we do?
+- **P3** Efficacy — Did the intervention work, for whom, and by how much?
+- **P4** Health tech — Can the system run safely, at scale, in real time?
+- **P5** Military thread — Does it hold under austerity, mass casualty and a hostile clock?
+
+## Conventions
+
+Every notebook carries three registers (🗣️ Plain · 💻 Developer · 🔬 Technical), a minimum visual count,
+a *Failure Modes* section, a *Results / Findings / Implications / Considerations* block, and a *Clinical Reading*
+section. `python scripts/validate.py 10_anomaly_detection` checks all of it.

@@ -1,0 +1,1001 @@
+# ML Mastery — Curriculum Manifest (Health Data Science edition)
+# Single source of truth. scripts/scaffold.py generates the tree, READMEs and notebook stubs from this file.
+# scripts/validate.py checks every built notebook against `gates:`.
+#
+# Design calls recorded here (27 Oct 26):
+#   D1  Every notebook teaches one ML method through one clinical problem. Method first, clinic second —
+#       but the clinic is never decoration: the experiment answers a question a clinician would ask.
+#   D2  Priority bands order the clinical framing: P1 diagnostics, P2 treatment, P3 efficacy,
+#       P4 health tech / operations, P5 military-medicine thread (woven through, never a separate module).
+#   D3  Where a notebook recreates a known study it says so in `study:` — "in the spirit of", synthetic
+#       data, published effect sizes as targets. Never claims to reproduce the paper's numbers.
+#   D4  Ten companion datasets, all synthetic, all clinical, generated from `datasets/` with SEED=42.
+#       Real benchmark sets (MIMIC-style, PhysioNet, UCI Wisconsin) are referenced for context only.
+#   D5  Military-medicine subjects use generic doctrine terms (point of injury, Role 1/2/3, MASCAL,
+#       evacuation chain) so they are learnable without service background.
+
+meta:
+  name: ml-algorithms-labs
+  version: 0.3.0
+  domain: health data science
+  registers: ["🗣️ Plain", "💻 Developer", "🔬 Technical"]
+  seed: 42
+
+priority_bands:
+  P1: {name: Diagnostics,     question: "Does this person have the condition? How sure are we?"}
+  P2: {name: Treatment,       question: "What should we do for this person, and what will happen if we do?"}
+  P3: {name: Efficacy,        question: "Did the intervention work, for whom, and by how much?"}
+  P4: {name: Health tech,     question: "Can the system run safely, at scale, in real time?"}
+  P5: {name: Military thread, question: "Does it hold under austerity, mass casualty and a hostile clock?"}
+
+gates:
+  G1:  "Title cell carries module, topic, notebook number, prerequisites, time estimate, priority band"
+  G2:  "Learning objectives cell with 3–5 bullets"
+  G3:  "Setup cell imports shared.plotting.set_style and sets SEED = 42"
+  G4:  "All three register markers (🗣️ 💻 🔬) appear in markdown"
+  G5:  "Minimum figure count met (per-notebook `visuals`, default 7)"
+  G6:  "Section headed 'Failure Modes' exists"
+  G7:  "Section headed 'Results, Findings & Implications' with 📊 🔍 💡 ⚠️ sub-blocks"
+  G8:  "Section headed 'Clinical Reading' — what the result means at the bedside / in the field"
+  G9:  "Section headed 'Connections' exists"
+  G10: "Section headed 'Key Takeaways' with 3–5 bullets"
+  G11: "No local import other than shared/ and datasets/"
+  G12: "Executes clean under nbconvert --execute (optional, --execute flag)"
+
+datasets:
+  # All generated. Loader signatures in datasets/__init__.py.
+  screening:   {loader: load_screening,   band: P1, domain: "biomarker panel + ground-truth disease status; sensitivity/specificity known by construction", in_spirit_of: "UCI Wisconsin breast cancer; Framingham risk cohort"}
+  admissions:  {loader: load_admissions,  band: P2, domain: "acute admissions — age, severity, comorbidity, department, LOS, 30-day readmission, mortality", in_spirit_of: "MIMIC-style admission tables; NHS SUS"}
+  trial:       {loader: load_trial,       band: P3, domain: "two-arm RCT with covariates, adherence, outcome, time-to-event; true effect known", in_spirit_of: "SPRINT / ISIS-2 style trial structure"}
+  vitals:      {loader: load_vitals,      band: P4, domain: "hourly HR, RR, SpO2, SBP, temp per patient over days; deterioration events labelled", in_spirit_of: "NEWS2 deterioration; PhysioNet sepsis challenge"}
+  prescribing: {loader: load_prescribing, band: P2, domain: "per-patient medication baskets with comorbidity codes; adverse-event flags", in_spirit_of: "FAERS co-prescription signals; Charlson comorbidity"}
+  cohort:      {loader: load_cohort,      band: P1, domain: "population health records with five latent risk segments", in_spirit_of: "population segmentation for proactive care"}
+  notes:       {loader: load_notes,       band: P1, domain: "short triage / discharge free text with coded outcome", in_spirit_of: "ED triage note classification"}
+  referrals:   {loader: load_referrals,   band: P4, domain: "referral network between clinicians, teams and sites", in_spirit_of: "care-pathway network analysis"}
+  imaging:     {loader: load_imaging,     band: P1, domain: "synthetic 16×16 lesion patches, present/absent with shape and intensity variation", in_spirit_of: "patch-level lesion detection"}
+  evac:        {loader: load_evac,        band: P5, domain: "casualty evacuation grid — point of injury → Role 1 → Role 2 under terrain, threat and clock", in_spirit_of: "medical evacuation planning"}
+  synthetic:   {loader: datasets.synthetic, band: all, domain: "controlled generators with known ground truth"}
+
+tiers:
+  1: "Build first — 00–06, 29."
+  2: "Build second — 07–10, 15–16, 22."
+  3: "Build as needed — everything else."
+
+modules:
+
+  # ═══════════════════════════ FOUNDATIONS ═══════════════════════════
+  - id: "00"
+    slug: mathematical_foundations
+    title: Mathematical Foundations
+    tier: 1
+    prereqs: []
+    purpose: "Every concept motivated by a clinical use. 'Why do I need this?' before 'What is this?'"
+    topics:
+      - slug: linear_algebra
+        title: Linear Algebra
+        notebooks:
+          - {n: 1, title: "Vectors, Matrices & Operations", band: P1, subject: "A patient as a vector of biomarkers; a lab panel as a matrix; similarity between patients as a dot product", dataset: screening, visuals: 8, experiments: ["cosine similarity between patient vectors", "scaling the panel changes the geometry", "rank-deficient panels (redundant tests)"]}
+          - {n: 2, title: "Eigenvalues & Decomposition", band: P1, subject: "Principal directions of variation in a biomarker cloud — which combinations of tests carry the signal", dataset: screening, visuals: 8, experiments: ["eigenvectors of the biomarker covariance", "rotate the panel, eigenvectors follow", "PCA is eigendecomposition — prove it"]}
+          - {n: 3, title: "SVD & Low-Rank Approximation", band: P1, subject: "Compressing lesion patches — how many singular values preserve the lesion", dataset: imaging, visuals: 7, experiments: ["reconstruct at rank 1/2/4/8", "storage vs diagnostic detail", "denoise a noisy patch"]}
+      - slug: calculus
+        title: Calculus
+        notebooks:
+          - {n: 1, title: "Derivatives & Gradients", band: P2, subject: "Dose-response surface — the steepest path to the therapeutic window", dataset: synthetic, visuals: 8, experiments: ["numeric vs analytic gradient", "gradient points to higher response", "saddle at the toxic/ineffective boundary"]}
+          - {n: 2, title: "Chain Rule, Jacobians & Hessians", band: P2, subject: "A care pathway as composed functions — how a change at triage propagates to discharge", dataset: synthetic, visuals: 7, experiments: ["hand vs code gradients on a 3-stage pathway", "Newton vs GD on a 2-parameter outcome", "vanishing/exploding over long pathways"]}
+      - slug: probability
+        title: Probability
+        notebooks:
+          - {n: 1, title: "Probability Fundamentals & Bayes", band: P1, subject: "Screening a rare disease — prevalence, sensitivity, specificity, and what a positive result really means", dataset: screening, visuals: 8, study: "Gigerenzer natural-frequency reasoning", experiments: ["simulate 10k screens vs theory", "rare disease → most positives false", "posterior after 1/5/10/50 tests"]}
+          - {n: 2, title: "Distributions & Sampling", band: P4, subject: "ED arrivals per hour (Poisson), LOS (log-normal), survival to event (exponential), test positivity (Binomial)", dataset: admissions, visuals: 10, experiments: ["convergence at n=10..10k", "Binomial→Poisson for rare events", "fit and test goodness of fit on LOS"]}
+          - {n: 3, title: "MLE & MAP Estimation", band: P1, subject: "Estimating a test's true positive rate from a validation sample", dataset: screening, visuals: 8, experiments: ["MLE convergence 5→1000 patients", "MAP with a published-prior vs flat", "MLE under a misspecified model"]}
+      - slug: optimisation
+        title: Optimisation
+        notebooks:
+          - {n: 1, title: "Gradient Descent Variants", band: P2, subject: "Fitting a risk score — batch, stochastic and mini-batch on a 10k-patient cohort", dataset: cohort, visuals: 10, experiments: ["trajectories per variant", "learning-rate sweep to divergence", "batch size vs gradient noise"]}
+          - {n: 2, title: "Constrained Optimisation", band: P4, subject: "Theatre scheduling — maximise cases under staff-hours and bed constraints", dataset: synthetic, visuals: 7, experiments: ["analytic vs numeric Lagrange", "add/remove a constraint", "duality gap"]}
+      - slug: information_theory
+        title: Information Theory
+        notebooks:
+          - {n: 1, title: "Entropy, Divergence & Mutual Information", band: P1, subject: "How much does each test tell you? Information gain of a biomarker about disease status", dataset: screening, visuals: 8, experiments: ["entropy of outcome before/after a test", "KL between predicted and true risk distributions", "MI ranks tests", "information gain ↔ Gini"]}
+      - slug: numerical_methods
+        title: Numerical Methods
+        notebooks:
+          - {n: 1, title: "Stability, Precision & Solvers", band: P4, subject: "Where rounding kills — cumulative drug dosing, ill-conditioned risk models", dataset: synthetic, visuals: 7, experiments: ["catastrophic cancellation in cumulative dose", "condition number 10→1e6 on a risk model", "ridge term stabilises"]}
+
+  - id: "01"
+    slug: programming_data_foundations
+    title: Programming & Data Foundations
+    tier: 1
+    prereqs: ["00"]
+    purpose: "The Python patterns health data work requires."
+    topics:
+      - slug: python_patterns
+        title: Python Patterns
+        notebooks:
+          - {n: 1, title: "Core Python for Health Data", band: P4, subject: "Processing an HL7-style event stream — count, filter, transform", dataset: synthetic, visuals: 7, experiments: ["list vs generator at 10M events", "loop vs comprehension vs NumPy", "pipeline from classes"]}
+          - {n: 2, title: "Pythonic Patterns & Refactoring", band: P4, subject: "Refactor a 100-line audit script", dataset: synthetic, visuals: 5, experiments: ["lru_cache", "itertools.product grid", "monolith → dataclasses"]}
+      - slug: numpy
+        title: NumPy
+        notebooks:
+          - {n: 1, title: "Arrays, Broadcasting & Vectorisation", band: P1, subject: "A lesion patch as an array — windowing, contrast, thresholding", dataset: imaging, visuals: 8, experiments: ["loop vs vectorised", "broadcasting shape matrix", "views vs copies"]}
+          - {n: 2, title: "Linear Algebra, Random & einsum", band: P4, subject: "Bed-flow balance as Ax=b; Monte Carlo bed occupancy", dataset: synthetic, visuals: 6, experiments: ["solve by hand vs np", "occupancy at 100..100k draws", "einsum batch ops"]}
+      - slug: pandas
+        title: pandas
+        notebooks:
+          - {n: 1, title: "DataFrames & Core Operations", band: P2, subject: "An admissions extract with gaps and mixed types", dataset: admissions, visuals: 7, experiments: ["quality issues", "category memory", "method chain"]}
+          - {n: 2, title: "GroupBy, Merge & Reshape", band: P4, subject: "Admissions by department × month; join to a staffing table", dataset: admissions, visuals: 7, experiments: ["multi-aggregation", "left-join NaNs", "pivot for reporting"]}
+      - slug: visualisation
+        title: Visualisation
+        notebooks:
+          - {n: 1, title: "Matplotlib, Seaborn & Plotly", band: P4, subject: "A week of vitals across a ward — which chart tells the story?", dataset: vitals, visuals: 12, experiments: ["same data, 10 chart types", "default vs publication style", "plotly patient slider"]}
+      - slug: data_wrangling
+        title: Data Wrangling
+        notebooks:
+          - {n: 1, title: "Missing Values, Outliers & Coercion", band: P2, subject: "Deliberately messy admissions — MCAR/MAR/MNAR labs, impossible LOS, inconsistent dates", dataset: admissions, visuals: 8, experiments: ["inject each mechanism; compare imputers", "deletion vs mean vs KNN vs MICE on a LOS model", "remove vs cap vs log"]}
+      - slug: sql
+        title: SQL
+        notebooks:
+          - {n: 1, title: "SQL for Health Data", band: P4, subject: "Patients–admissions–prescriptions in DuckDB", dataset: prescribing, visuals: 6, experiments: ["filter→join→aggregate→window→CTE", "DuckDB vs SQLite", "pandas ↔ SQL"]}
+      - slug: git
+        title: Git
+        notebooks:
+          - {n: 1, title: "Git Workflows for Analysis", band: P4, subject: "Branching for model experiments; never committing PHI", dataset: synthetic, visuals: 5, experiments: ["branch/commit/merge", "repo bloat", "DVC on a large extract"]}
+      - slug: reproducibility
+        title: Reproducibility
+        notebooks:
+          - {n: 1, title: "Reproducible Clinical Analysis", band: P3, subject: "A trial analysis that gives different p-values each run — then fixing it", dataset: trial, visuals: 5, experiments: ["unseeded differs", "seeded identical", "out-of-order cell bug"]}
+      - slug: software_engineering
+        title: Software Engineering
+        notebooks:
+          - {n: 1, title: "Testing, Modular Code & Packaging", band: P4, subject: "A 500-line risk-score script → tested package", dataset: synthetic, visuals: 5, experiments: ["pytest a preprocessor", "Hypothesis on a scaler", "extract/type/test"]}
+
+  - id: "02"
+    slug: statistical_foundations
+    title: Statistical Foundations
+    tier: 1
+    prereqs: ["00", "01"]
+    purpose: "Recognise, test and handle the assumptions every clinical model makes."
+    topics:
+      - slug: descriptive
+        title: Descriptive Statistics
+        notebooks:
+          - {n: 1, title: "Central Tendency, Dispersion & Shape", band: P2, subject: "Length of stay across five departments — skewed, normal, bimodal", dataset: admissions, visuals: 8, experiments: ["mean vs median LOS by dept", "5 extreme stays — which stats survive", "skew vs Normal fit"]}
+      - slug: inferential
+        title: Inferential Statistics
+        notebooks:
+          - {n: 1, title: "Hypothesis Testing Fundamentals", band: P3, subject: "Did the new discharge protocol cut LOS? Null, p-value, power", dataset: admissions, visuals: 9, experiments: ["10k null tests → uniform p", "real effect → p near 0", "small-n noise"]}
+          - {n: 2, title: "Common Parametric Tests", band: P3, subject: "Three analgesia regimens; defect rates across three labs", dataset: trial, visuals: 8, experiments: ["t-test normal vs skewed", "t vs Mann-Whitney with outliers", "ANOVA → Tukey"]}
+          - {n: 3, title: "Non-Parametric & Exact Tests", band: P3, subject: "Ordinal pain scores across sites; rare-event 2×2", dataset: trial, visuals: 6, experiments: ["Wilcoxon vs t", "Kruskal-Wallis → Dunn", "Fisher vs Chi²"]}
+      - slug: distributions
+        title: Distributions
+        notebooks:
+          - {n: 1, title: "Discrete Distributions", band: P4, subject: "Arrivals, test positives, trials to first readmission", dataset: admissions, visuals: 8, experiments: ["empirical vs PMF", "Binomial≈Poisson", "Poisson fit to arrivals"]}
+          - {n: 2, title: "Continuous Distributions", band: P2, subject: "LOS (log-normal), time to event (exponential/Weibull), lab values (Normal), dosing (Gamma)", dataset: admissions, visuals: 10, experiments: ["Normal → Log-normal", "t at df 3/10/30/∞", "AIC/BIC across LOS fits"]}
+      - slug: clt
+        title: Central Limit Theorem
+        notebooks:
+          - {n: 1, title: "CLT Intuition & Implications", band: P3, subject: "Why trial mean outcomes are Normal even when individual outcomes aren't", dataset: trial, visuals: 8, experiments: ["six start distributions", "Cauchy never converges", "CI width vs n"]}
+      - slug: correlation
+        title: Correlation & Association
+        notebooks:
+          - {n: 1, title: "Measuring Relationships", band: P1, subject: "Biomarkers vs outcome — linear, monotonic, non-linear, spurious", dataset: screening, visuals: 8, experiments: ["Pearson/Spearman on 5 shapes", "Simpson's paradox by sex", "partial correlation removes age"]}
+      - slug: ab_testing
+        title: A/B Testing
+        notebooks:
+          - {n: 1, title: "Designing, Running & Interpreting Experiments", band: P4, subject: "Appointment-reminder redesign — DNA rate", dataset: synthetic, visuals: 8, experiments: ["10k A/A → 5% false positive", "2% lift power vs n", "daily peeking"]}
+      - slug: resampling
+        title: Resampling
+        notebooks:
+          - {n: 1, title: "Bootstrap, Permutation & Jackknife", band: P3, subject: "Median LOS reduction from 200 patients — how sure?", dataset: admissions, visuals: 7, experiments: ["bootstrap CI of median", "bootstrap vs parametric", "permutation between arms", "fails on the max"]}
+      - slug: mle
+        title: Maximum Likelihood
+        notebooks:
+          - {n: 1, title: "MLE in Practice", band: P1, subject: "Arrival rate; lab error; a risk score as MLE", dataset: screening, visuals: 7, experiments: ["analytic vs numeric λ", "convergence n=10..1000", "best Gaussian to skewed data"]}
+      - slug: bayes_vs_freq
+        title: Bayesian vs Frequentist
+        notebooks:
+          - {n: 1, title: "Two Philosophies, One Trial", band: P3, subject: "Drug efficacy — posterior vs confidence interval on the same data", dataset: trial, visuals: 8, experiments: ["credible vs confidence at n=10/50/200", "prior helps at small n", "prior sensitivity"]}
+      - slug: effect_sizes
+        title: Effect Sizes
+        notebooks:
+          - {n: 1, title: "Practical vs Statistical Significance", band: P3, subject: "1 mmHg at p<0.001 — NNT, Cohen's d, minimal clinically important difference", dataset: trial, visuals: 7, experiments: ["d=0.05 significant at n=100k", "rank interventions by d not p", "publication bias simulation"]}
+
+  - id: "03"
+    slug: data_engineering
+    title: Data Engineering Essentials
+    tier: 1
+    prereqs: ["01", "02"]
+    purpose: "Every mistake here silently ruins everything downstream — and in health, downstream is a patient."
+    topics:
+      - slug: pipelines
+        title: Pipelines
+        notebooks:
+          - {n: 1, title: "ETL, Validation & Contracts", band: P4, subject: "Daily vitals feed — extract, unit-convert, gap-fill, validate schema", dataset: vitals, visuals: 6, experiments: ["3-step pipeline", "pandera catches an impossible SpO2", "idempotency"]}
+      - slug: feature_engineering
+        title: Feature Engineering
+        notebooks:
+          - {n: 1, title: "Numerical Transforms", band: P2, subject: "Admissions — LOS, age, comorbidity count → log, bins, interactions", dataset: admissions, visuals: 8, experiments: ["log/sqrt/Box-Cox", "age×severity interaction", "degree-10 overfit"]}
+          - {n: 2, title: "Temporal & Domain Features", band: P4, subject: "Vitals — cyclical hour-of-day, lags, rolling trends, NEWS2-style derived scores", dataset: vitals, visuals: 7, experiments: ["linear vs sin/cos hour", "lag 1/6/24h value", "rolling 6h trend"]}
+      - slug: scaling
+        title: Feature Scaling
+        notebooks:
+          - {n: 1, title: "Standardisation, Normalisation & Robust Scaling", band: P1, subject: "Biomarkers on wildly different units; KNN/SVM/RF with and without", dataset: screening, visuals: 7, experiments: ["raw vs scaled per model", "outliers: Standard vs Robust", "leakage from full-data fit"]}
+      - slug: encoding
+        title: Categorical Encoding
+        notebooks:
+          - {n: 1, title: "Encoding Strategies", band: P2, subject: "Department (5), diagnosis code (200), GP practice (very high cardinality)", dataset: admissions, visuals: 7, experiments: ["one-hot/target/frequency", "target-encoding leakage", "tree vs linear needs"]}
+      - slug: splitting
+        title: Train/Test Splitting
+        notebooks:
+          - {n: 1, title: "Leakage, Stratification & Temporal Splits", band: P2, subject: "Predict readmission — temporal order, imbalance, repeat patients", dataset: admissions, visuals: 8, experiments: ["random vs temporal inflation", "deliberate target leakage (discharge destination)", "unstratified 95/5"]}
+      - slug: imbalance
+        title: Imbalanced Data
+        notebooks:
+          - {n: 1, title: "Resampling & Cost-Sensitive Learning", band: P5, subject: "Mass-casualty triage — 2% immediate, and the cost of missing one", dataset: synthetic, visuals: 8, experiments: ["98% accuracy, 0% recall on T1", "SMOTE/weights/undersample", "PR-AUC vs ROC-AUC"]}
+      - slug: eda
+        title: Exploratory Data Analysis
+        notebooks:
+          - {n: 1, title: "Systematic Exploration", band: P1, subject: "A de-identified cohort extract with unlabelled columns — discover structure by method", dataset: cohort, visuals: 10, experiments: ["six-phase walk", "manual vs profiling", "hypotheses → simple models"]}
+
+  # ═══════════════════════════ CORE SUPERVISED ═══════════════════════════
+  - id: "04"
+    slug: regression
+    title: Regression
+    tier: 1
+    prereqs: ["00", "01", "02", "03"]
+    purpose: "Predicting continuous outcomes — LOS, dose, cost, biomarker trajectory."
+    topics:
+      - slug: simple_linear
+        title: Simple Linear Regression
+        notebooks:
+          - {n: 1, title: "OLS Intuition & Mathematics", band: P2, subject: "Length of stay from severity score alone", dataset: admissions, visuals: 9, experiments: ["noise → R² decay", "normal equation vs GD", "prediction interval widening"]}
+          - {n: 2, title: "Assumptions & Diagnostics", band: P2, subject: "Same with heteroscedastic LOS, curvature, heavy tails", dataset: admissions, visuals: 8, experiments: ["clean diagnostics", "fan residuals → log fix", "one 90-day stay pulls the line"]}
+      - slug: multiple_linear
+        title: Multiple Linear Regression
+        notebooks:
+          - {n: 1, title: "Multivariate Extension", band: P2, subject: "LOS from all admission features", dataset: admissions, visuals: 7, experiments: ["coefficient interpretation", "standardised vs raw", "added-variable plots"]}
+          - {n: 2, title: "Multicollinearity & VIF", band: P1, subject: "Two correlated biomarkers — disentangling", dataset: screening, visuals: 6, experiments: ["VIF", "bootstrap instability", "drop one / PCA"]}
+      - slug: polynomial
+        title: Polynomial Regression
+        notebooks:
+          - {n: 1, title: "Bias–Variance & Overfitting", band: P2, subject: "Dose–response with known quadratic truth, degrees 1–15", dataset: synthetic, visuals: 8, experiments: ["U-curve", "bias–variance decomposition", "CV degree selection"]}
+      - slug: regularised
+        title: Regularised Regression
+        notebooks:
+          - {n: 1, title: "Ridge", band: P1, subject: "A 50-biomarker panel, most weak", dataset: screening, visuals: 7, experiments: ["paths vs α", "high-d vs OLS", "validation curve"]}
+          - {n: 2, title: "Lasso", band: P1, subject: "A 50-biomarker panel, most irrelevant — which tests to keep", dataset: screening, visuals: 7, experiments: ["paths to zero", "informative vs noise", "Lasso vs Ridge"]}
+          - {n: 3, title: "Elastic Net", band: P1, subject: "Correlated biomarker groups", dataset: screening, visuals: 6, experiments: ["constraint regions", "mixing sweep", "grouped selection"]}
+      - slug: bayesian_linear
+        title: Bayesian Linear Regression
+        notebooks:
+          - {n: 1, title: "Uncertainty Quantification", band: P3, subject: "Only 40 patients in a pilot — how sure is the dose effect?", dataset: trial, visuals: 7, experiments: ["prior→posterior", "intervals widen away from data", "informative vs flat"]}
+      - slug: quantile
+        title: Quantile Regression
+        notebooks:
+          - {n: 1, title: "Conditional Quantiles", band: P4, subject: "90th-percentile LOS for bed planning, not the mean", dataset: admissions, visuals: 6, experiments: ["10th/50th/90th", "vs OLS", "pinball loss"]}
+      - slug: robust
+        title: Robust Regression
+        notebooks:
+          - {n: 1, title: "RANSAC & Huber", band: P2, subject: "Admissions with 10% data-entry corruption", dataset: admissions, visuals: 7, experiments: ["RANSAC inlier mask", "Huber ε sweep", "outlier fraction stress"]}
+      - slug: isotonic
+        title: Isotonic Regression
+        notebooks:
+          - {n: 1, title: "Monotonic Constraints & Calibration", band: P1, subject: "Calibrating a diagnostic model's probabilities", dataset: screening, visuals: 6, experiments: ["step fit", "calibration curves", "noisy vs clean"]}
+      - slug: gaussian_process
+        title: Gaussian Process Regression
+        notebooks:
+          - {n: 1, title: "Kernels & Priors", band: P4, subject: "A patient's heart rate over 72 hours — periodic (circadian) and smooth", dataset: vitals, visuals: 8, experiments: ["prior samples per kernel", "lengthscale effects", "kernel arithmetic"]}
+          - {n: 2, title: "Posterior Inference & Uncertainty", band: P4, subject: "Same — forecasting the next 6 hours with bands", dataset: vitals, visuals: 7, experiments: ["posterior ±2σ", "marginal likelihood", "sparse approximation"]}
+
+  - id: "05"
+    slug: classification
+    title: Classification
+    tier: 1
+    prereqs: ["04"]
+    purpose: "Diagnosis as decision boundary — what shapes can each classifier draw through a patient population?"
+    topics:
+      - slug: logistic
+        title: Logistic Regression
+        notebooks:
+          - {n: 1, title: "Sigmoid & Decision Boundary", band: P1, subject: "Disease present/absent from two biomarkers", dataset: screening, visuals: 9, study: "Framingham-style risk scoring", experiments: ["threshold sweep sensitivity/specificity", "noise", "perfect separation blow-up"]}
+          - {n: 2, title: "Multiclass & Regularisation", band: P5, subject: "Triage category T1–T4 from injury features", dataset: synthetic, visuals: 7, experiments: ["OvR vs softmax", "L1/L2 paths", "per-class ROC"]}
+      - slug: knn
+        title: k-Nearest Neighbours
+        notebooks:
+          - {n: 1, title: "Distance Metrics & k Selection", band: P1, subject: "Patients like this patient — three diagnoses in 2D biomarker space", dataset: screening, visuals: 8, experiments: ["k=1→100", "0→50 noise biomarkers collapse", "scaled vs unscaled"]}
+          - {n: 2, title: "Scaling & Efficiency", band: P4, subject: "Same at 100k patients", dataset: cohort, visuals: 5, experiments: ["brute vs KD-tree", "high-d failure", "approximate NN"]}
+      - slug: naive_bayes
+        title: Naive Bayes
+        notebooks:
+          - {n: 1, title: "Gaussian, Multinomial & Bernoulli", band: P1, subject: "Biomarkers (Gaussian); triage note words (Multinomial); symptom checklist (Bernoulli)", dataset: notes, visuals: 8, experiments: ["triage notes → urgency", "violate independence", "wrong variant on wrong type"]}
+          - {n: 2, title: "Complement NB & Rare Outcomes", band: P1, subject: "Notes where the serious outcome is rare", dataset: notes, visuals: 5, experiments: ["ratio sweep", "vs class weights"]}
+      - slug: decision_trees
+        title: Decision Trees
+        notebooks:
+          - {n: 1, title: "Splitting Criteria & Visualisation", band: P1, subject: "A clinical decision rule learned from data — mixed features", dataset: screening, visuals: 9, study: "Ottawa ankle rule style decision rules", experiments: ["unlimited depth memorises", "Gini vs entropy", "categoricals without encoding"]}
+          - {n: 2, title: "Pruning & Overfitting", band: P1, subject: "Same — a rule a clinician could carry", dataset: screening, visuals: 7, experiments: ["depth U-curve", "CCP alpha", "min_samples_leaf"]}
+          - {n: 3, title: "ID3, C4.5 & Gain Ratio", band: P1, subject: "Categorical-heavy symptom data", dataset: notes, visuals: 5, experiments: ["gain vs gain ratio", "missing strategies"]}
+      - slug: svm
+        title: Support Vector Machines
+        notebooks:
+          - {n: 1, title: "Maximum Margin (Linear)", band: P1, subject: "Two clearly separable diagnoses", dataset: synthetic, visuals: 8, experiments: ["C 0.001→1000", "outliers vs C", "vs logistic"]}
+          - {n: 2, title: "Dual Formulation & Support Vectors", band: P1, subject: "Why only the borderline patients define the rule", dataset: synthetic, visuals: 6, experiments: ["remove non-SVs", "SV count vs C"]}
+          - {n: 3, title: "Kernel Trick (Non-Linear)", band: P1, subject: "Diagnoses with curved boundaries — moons, rings, XOR in biomarker space", dataset: synthetic, visuals: 9, experiments: ["4 shapes × 3 kernels", "γ 0.001→100", "poly-2 on rings"]}
+          - {n: 4, title: "Tuning & Multiclass", band: P1, subject: "C/γ grid", dataset: synthetic, visuals: 6, experiments: ["heatmap", "over/underfit", "OvO vs OvR"]}
+      - slug: discriminant
+        title: Discriminant Analysis
+        notebooks:
+          - {n: 1, title: "LDA & QDA", band: P1, subject: "Biomarkers — equal vs unequal covariance between disease groups", dataset: screening, visuals: 7, experiments: ["linear vs quadratic", "when QDA wins", "sample needs"]}
+      - slug: online
+        title: Online & Linear Classifiers
+        notebooks:
+          - {n: 1, title: "Perceptron", band: P1, subject: "Separable, then XOR", dataset: synthetic, visuals: 7, experiments: ["boundary evolution", "XOR", "learning rate"]}
+          - {n: 2, title: "SGD & Passive-Aggressive", band: P4, subject: "A deterioration classifier learning from a live vitals stream with drift", dataset: vitals, visuals: 7, experiments: ["loss comparison", "partial_fit", "drift adaptation"]}
+      - slug: nearest_centroid
+        title: Nearest Centroid
+        notebooks:
+          - {n: 1, title: "Centroid Classification", band: P1, subject: "The simplest diagnostic rule", dataset: screening, visuals: 5, experiments: ["shrinkage", "overlap"]}
+      - slug: gp_classification
+        title: Gaussian Process Classification
+        notebooks:
+          - {n: 1, title: "Probabilistic Classification", band: P1, subject: "A diagnosis with an honest uncertainty surface", dataset: synthetic, visuals: 6, experiments: ["kernel", "vs SVM", "calibration"]}
+
+  - id: "06"
+    slug: ensembles
+    title: Ensemble Methods
+    tier: 1
+    prereqs: ["05"]
+    purpose: "Why most deployed clinical risk models are gradient-boosted trees."
+    topics:
+      - slug: bagging
+        title: Bagging
+        notebooks:
+          - {n: 1, title: "Bootstrap Aggregating", band: P2, subject: "One tree vs 100 for LOS", dataset: admissions, visuals: 8, experiments: ["1/10/100/500", "bagging a linear model", "OOB vs CV"]}
+      - slug: random_forest
+        title: Random Forest
+        notebooks:
+          - {n: 1, title: "Feature Subsampling & OOB", band: P2, subject: "Readmission from 15 features — correlated, noisy, irrelevant", dataset: admissions, visuals: 9, experiments: ["MDI vs permutation", "noise features ignored", "max_features"]}
+          - {n: 2, title: "Tuning & Interpretation", band: P2, subject: "Full hyperparameter space; PDP on age and severity", dataset: admissions, visuals: 7, experiments: ["n_estimators plateau", "depth×features heatmap", "PDP/ICE"]}
+      - slug: extra_trees
+        title: Extra Trees
+        notebooks:
+          - {n: 1, title: "Extreme Randomisation", band: P2, subject: "RF vs ET", dataset: admissions, visuals: 5, experiments: ["boundaries", "time", "noise"]}
+      - slug: adaboost
+        title: AdaBoost
+        notebooks:
+          - {n: 1, title: "Adaptive Boosting", band: P1, subject: "Diagnosis — the hard cases get reweighted", dataset: screening, visuals: 7, experiments: ["weight evolution", "stumps vs depth-2", "overfit"]}
+      - slug: gradient_boosting
+        title: Gradient Boosting
+        notebooks:
+          - {n: 1, title: "Gradient Descent in Function Space", band: P2, subject: "LOS — fitting residuals", dataset: admissions, visuals: 8, experiments: ["residual animation", "learning rate", "losses"]}
+          - {n: 2, title: "Regularisation & Early Stopping", band: P2, subject: "Same", dataset: admissions, visuals: 6, experiments: ["too many trees", "early stopping", "subsample"]}
+      - slug: xgboost
+        title: XGBoost
+        notebooks:
+          - {n: 1, title: "Regularised Boosting", band: P2, subject: "Readmission — the production baseline", dataset: admissions, visuals: 7, experiments: ["vs sklearn GBM", "importance types", "λ/α"]}
+          - {n: 2, title: "Advanced Features", band: P2, subject: "Monotone-in-severity constraint; custom loss; missing labs", dataset: admissions, visuals: 6, experiments: ["monotone", "custom loss", "missing"]}
+      - slug: lightgbm_catboost
+        title: LightGBM & CatBoost
+        notebooks:
+          - {n: 1, title: "LightGBM", band: P4, subject: "Cohort at 100k rows — speed", dataset: cohort, visuals: 6, experiments: ["leaf vs level", "speed", "categoricals"]}
+          - {n: 2, title: "CatBoost", band: P2, subject: "Admissions — many categoricals", dataset: admissions, visuals: 6, experiments: ["prediction shift", "vs manual target enc"]}
+      - slug: hist_gb
+        title: Histogram Gradient Boosting
+        notebooks:
+          - {n: 1, title: "Binned Features (sklearn)", band: P2, subject: "Speed vs exact", dataset: admissions, visuals: 5, experiments: ["max_bins", "native NaN"]}
+      - slug: stacking
+        title: Stacking, Blending & Voting
+        notebooks:
+          - {n: 1, title: "Stacking & Blending", band: P2, subject: "RF + GBM + logistic for readmission", dataset: admissions, visuals: 7, experiments: ["lift", "diversity", "data efficiency"]}
+          - {n: 2, title: "Voting", band: P1, subject: "Diverse diagnostic classifiers", dataset: screening, visuals: 5, experiments: ["hard vs soft", "calibration", "weights"]}
+      - slug: other_ensembles
+        title: Other Ensembles
+        notebooks:
+          - {n: 1, title: "Isolation Forest & Rotation Forest", band: P4, subject: "Anomalous admissions; rotated bagging", dataset: admissions, visuals: 6, experiments: ["path length", "contamination", "rotation vs RF"]}
+
+  # ═══════════════════════════ UNSUPERVISED ═══════════════════════════
+  - id: "07"
+    slug: clustering
+    title: Clustering
+    tier: 2
+    prereqs: ["00", "03"]
+    purpose: "Finding patient phenotypes nobody labelled."
+    topics:
+      - slug: kmeans
+        title: K-Means Family
+        notebooks:
+          - {n: 1, title: "Lloyd's Algorithm", band: P1, subject: "Population segments for proactive care", dataset: cohort, visuals: 10, experiments: ["100 inits → WCSS histogram", "k-means++", "name the segments"]}
+          - {n: 2, title: "Evaluation & k Selection", band: P1, subject: "How many phenotypes?", dataset: cohort, visuals: 8, experiments: ["elbow/silhouette/gap/CH", "disagreement", "known-k"]}
+          - {n: 3, title: "Mini-Batch, K-Medoids, K-Modes, K-Prototypes", band: P1, subject: "Scale; outlier patients; coded diagnoses; mixed", dataset: cohort, visuals: 8, experiments: ["batch", "medoid vs centroid", "mixed γ"]}
+          - {n: 4, title: "Fuzzy C-Means", band: P1, subject: "Patients between phenotypes", dataset: cohort, visuals: 6, experiments: ["membership heatmap", "m sweep"]}
+      - slug: hierarchical
+        title: Hierarchical
+        notebooks:
+          - {n: 1, title: "Agglomerative Linkage & Dendrograms", band: P1, subject: "Nested disease subtypes", dataset: synthetic, visuals: 8, experiments: ["4 linkages", "chaining", "cophenetic"]}
+          - {n: 2, title: "Cutting, Divisive & BIRCH", band: P4, subject: "Choosing a cut; top-down; 500k streaming records", dataset: cohort, visuals: 7, experiments: ["cut strategies", "DIANA", "CF-tree"]}
+      - slug: density
+        title: Density-Based
+        notebooks:
+          - {n: 1, title: "DBSCAN", band: P1, subject: "Phenotypes with irregular shapes and noise patients", dataset: synthetic, visuals: 9, experiments: ["eps sweep", "k-distance", "variable density fails"]}
+          - {n: 2, title: "OPTICS & HDBSCAN", band: P1, subject: "Variable-density phenotypes", dataset: synthetic, visuals: 8, experiments: ["reachability", "condensed tree", "min_cluster_size"]}
+          - {n: 3, title: "Mean Shift", band: P1, subject: "Multimodal biomarker space", dataset: synthetic, visuals: 6, experiments: ["bandwidth", "mode-seeking"]}
+      - slug: gmm
+        title: Gaussian Mixtures
+        notebooks:
+          - {n: 1, title: "EM Algorithm", band: P1, subject: "Overlapping disease subgroups", dataset: synthetic, visuals: 8, experiments: ["EM animation", "covariance types", "init"]}
+          - {n: 2, title: "Model Selection & Bayesian GMM", band: P1, subject: "Unknown subgroup count", dataset: synthetic, visuals: 7, experiments: ["BIC/AIC", "DP pruning"]}
+      - slug: graph_based
+        title: Graph-Based
+        notebooks:
+          - {n: 1, title: "Spectral Clustering", band: P1, subject: "Interleaved trajectories", dataset: synthetic, visuals: 7, experiments: ["Laplacian", "σ", "graph types"]}
+          - {n: 2, title: "Affinity Propagation", band: P1, subject: "Exemplar patients", dataset: cohort, visuals: 6, experiments: ["preference", "damping"]}
+      - slug: other_clustering
+        title: Other Methods
+        notebooks:
+          - {n: 1, title: "Self-Organising Maps", band: P1, subject: "Topological map of a cohort", dataset: cohort, visuals: 7, experiments: ["U-matrix", "grid", "hex vs rect"]}
+          - {n: 2, title: "CURE & CLARANS", band: P4, subject: "Non-spherical at scale", dataset: synthetic, visuals: 6, experiments: ["representative points", "randomised medoids"]}
+
+  - id: "08"
+    slug: dimensionality_reduction
+    title: Dimensionality Reduction
+    tier: 2
+    prereqs: ["00", "07"]
+    purpose: "Seeing a 50-biomarker patient in two dimensions without lying."
+    topics:
+      - slug: pca
+        title: PCA Family
+        notebooks:
+          - {n: 1, title: "Eigendecomposition & Variance", band: P1, subject: "15 cohort features → 2D", dataset: cohort, visuals: 9, experiments: ["components 1→15", "correlated vs not", "centering"]}
+          - {n: 2, title: "Reconstruction & Compression", band: P1, subject: "Lesion patches compressed and rebuilt", dataset: imaging, visuals: 7, experiments: ["rank sweep", "denoise", "vs SVD"]}
+          - {n: 3, title: "Incremental, Sparse & Kernel PCA", band: P1, subject: "Streaming; interpretable loadings; a curved biomarker manifold", dataset: synthetic, visuals: 8, experiments: ["batch convergence", "α sparsity", "RBF unroll"]}
+      - slug: linear_other
+        title: Other Linear Methods
+        notebooks:
+          - {n: 1, title: "Truncated SVD, Factor Analysis & ICA", band: P1, subject: "Note TF-IDF; latent symptom factors; separating mixed physiological signals", dataset: notes, visuals: 8, experiments: ["LSA", "rotation", "unmixing"]}
+          - {n: 2, title: "NMF & LDA (Supervised)", band: P1, subject: "Lesion parts; disease-aware projection", dataset: imaging, visuals: 7, experiments: ["parts", "LDA vs PCA by class"]}
+      - slug: manifold
+        title: Manifold Learning
+        notebooks:
+          - {n: 1, title: "t-SNE", band: P1, subject: "Lesion patches — perplexity and what the plot lies about", dataset: imaging, visuals: 9, experiments: ["perplexity", "cluster size lies", "seed"]}
+          - {n: 2, title: "UMAP", band: P1, subject: "Same — global structure", dataset: imaging, visuals: 7, experiments: ["n_neighbors/min_dist", "vs t-SNE", "supervised"]}
+          - {n: 3, title: "Isomap, LLE, Spectral Embedding & MDS", band: P1, subject: "A curved manifold four ways; a patient-distance matrix with no features", dataset: synthetic, visuals: 9, experiments: ["geodesic", "weights", "Shepard"]}
+          - {n: 4, title: "Random Projections", band: P4, subject: "JL lemma on the cohort", dataset: cohort, visuals: 5, experiments: ["distance preservation", "vs PCA"]}
+      - slug: neural
+        title: Neural Reduction
+        notebooks:
+          - {n: 1, title: "Autoencoders & VAEs for Reduction", band: P1, subject: "Lesion patches — linear AE ≈ PCA, then non-linear", dataset: imaging, visuals: 8, experiments: ["AE = PCA", "bottleneck", "VAE traversal"]}
+      - slug: feature_selection
+        title: Feature Selection
+        notebooks:
+          - {n: 1, title: "Filter Methods — MI & Chi²", band: P1, subject: "Which tests carry information about outcome", dataset: screening, visuals: 6, experiments: ["MI vs correlation", "Chi² on codes"]}
+          - {n: 2, title: "Wrapper & Embedded — RFE & Boruta", band: P1, subject: "The minimum panel", dataset: screening, visuals: 7, experiments: ["accuracy vs n tests", "shadow features", "vs Lasso"]}
+
+  - id: "09"
+    slug: association_rules
+    title: Association Rules
+    tier: 2
+    prereqs: ["02"]
+    purpose: "Which drugs are co-prescribed, which comorbidities cluster, which combinations flag adverse events."
+    topics:
+      - slug: apriori
+        title: Apriori
+        notebooks:
+          - {n: 1, title: "Support, Confidence & Lift", band: P2, subject: "Co-prescription patterns across 10k patients", dataset: prescribing, visuals: 8, study: "FAERS-style pharmacovigilance signals", experiments: ["min_support explosion", "by age band", "high-confidence lift≈1 traps"]}
+          - {n: 2, title: "Frequent Itemset Generation", band: P2, subject: "The lattice", dataset: prescribing, visuals: 5, experiments: ["pruning per level"]}
+      - slug: fp_eclat
+        title: FP-Growth & Eclat
+        notebooks:
+          - {n: 1, title: "FP-Tree & Vertical Formats", band: P2, subject: "Same, no candidate generation", dataset: prescribing, visuals: 7, experiments: ["FP-tree", "tidsets", "speed"]}
+      - slug: metrics_sequential
+        title: Metrics & Sequential Patterns
+        notebooks:
+          - {n: 1, title: "Conviction, Leverage & Zhang", band: P2, subject: "Ranking adverse-event rules", dataset: prescribing, visuals: 5, experiments: ["metric disagreement"]}
+          - {n: 2, title: "GSP & PrefixSpan", band: P2, subject: "Prescription sequences over time — escalation patterns", dataset: prescribing, visuals: 6, experiments: ["temporal patterns", "prefix projection"]}
+
+  - id: "10"
+    slug: anomaly_detection
+    title: Anomaly Detection
+    tier: 2
+    prereqs: ["05", "07"]
+    purpose: "Deterioration, sensor failure, fraud, the one admission that doesn't fit."
+    topics:
+      - slug: isolation
+        title: Isolation Forest
+        notebooks:
+          - {n: 1, title: "Random Partitioning & Scoring", band: P4, subject: "Vitals monitor faults — spikes, stuck values, drift", dataset: vitals, visuals: 8, experiments: ["5% injected", "contamination", "vs Z-score"]}
+      - slug: density_based
+        title: Density & Boundary Methods
+        notebooks:
+          - {n: 1, title: "LOF", band: P1, subject: "Patients unusual relative to their neighbours", dataset: cohort, visuals: 7, experiments: ["k", "local vs global"]}
+          - {n: 2, title: "One-Class SVM & Elliptic Envelope", band: P4, subject: "A boundary around normal physiology", dataset: vitals, visuals: 7, experiments: ["ν", "Mahalanobis", "Gaussian breaks"]}
+      - slug: fast_methods
+        title: Fast Statistical Methods
+        notebooks:
+          - {n: 1, title: "HBOS, COPOD & ECOD", band: P4, subject: "Ward-scale real-time scoring", dataset: vitals, visuals: 7, experiments: ["speed", "copula tail", "ECDF"]}
+          - {n: 2, title: "Z-Score, IQR & Grubbs", band: P4, subject: "Simple first", dataset: vitals, visuals: 5, experiments: ["fences", "when simple is enough"]}
+      - slug: learned
+        title: Learned & Ensemble
+        notebooks:
+          - {n: 1, title: "Autoencoder Reconstruction Error", band: P4, subject: "Deterioration as a bad reconstruction", dataset: vitals, visuals: 6, study: "NEWS2 early-warning comparison", experiments: ["threshold", "vs IF", "vs NEWS2-style score"]}
+          - {n: 2, title: "SUOD & Method Comparison", band: P5, subject: "Deployed monitoring with intermittent data — method × failure-type matrix", dataset: vitals, visuals: 7, experiments: ["method × anomaly-type"]}
+
+  - id: "11"
+    slug: density_estimation
+    title: Density Estimation
+    tier: 3
+    prereqs: ["02", "07"]
+    purpose: "Reference ranges and what 'normal' really looks like."
+    topics:
+      - slug: kde
+        title: Kernel Density Estimation
+        notebooks:
+          - {n: 1, title: "Bandwidth & Kernels", band: P1, subject: "A biomarker's reference range by age", dataset: screening, visuals: 7, experiments: ["bandwidth", "Silverman vs CV", "kernel"]}
+          - {n: 2, title: "Multivariate KDE & Histograms", band: P1, subject: "Two biomarkers jointly", dataset: screening, visuals: 6, experiments: ["2D contours", "bin rules"]}
+      - slug: parametric_flows
+        title: Parametric & Flow Methods
+        notebooks:
+          - {n: 1, title: "GMM as Density & Normalising Flows", band: P1, subject: "A multimodal lab distribution", dataset: synthetic, visuals: 8, experiments: ["log-likelihood", "flow steps"]}
+
+  - id: "12"
+    slug: text_topics
+    title: Topic Modelling & Text
+    tier: 3
+    prereqs: ["08"]
+    purpose: "Structure in clinical free text."
+    topics:
+      - slug: topic_models
+        title: Topic Models
+        notebooks:
+          - {n: 1, title: "LSA", band: P1, subject: "Triage notes — TF-IDF + SVD", dataset: notes, visuals: 7, experiments: ["topics vs coherence"]}
+          - {n: 2, title: "LDA", band: P1, subject: "Discharge summaries — Dirichlet priors", dataset: notes, visuals: 8, experiments: ["word clouds", "coherence"]}
+          - {n: 3, title: "NMF, CTM & BERTopic", band: P1, subject: "Parts-based; correlated complaint topics; transformer-based", dataset: notes, visuals: 8, experiments: ["heatmap", "correlation", "dynamic topics"]}
+      - slug: embeddings
+        title: Word Embeddings
+        notebooks:
+          - {n: 1, title: "Word2Vec", band: P1, subject: "Clinical vocabulary geometry", dataset: notes, visuals: 8, experiments: ["analogies", "t-SNE", "window"]}
+          - {n: 2, title: "GloVe & FastText", band: P1, subject: "Co-occurrence; subwords for misspelt drug names", dataset: notes, visuals: 6, experiments: ["co-occurrence", "OOV"]}
+
+  - id: "13"
+    slug: graph_unsupervised
+    title: Graph & Network (Unsupervised)
+    tier: 3
+    prereqs: ["00", "07"]
+    purpose: "Care pathways and referral networks as graphs."
+    topics:
+      - slug: ranking
+        title: Node Ranking
+        notebooks:
+          - {n: 1, title: "PageRank & HITS", band: P4, subject: "Which clinicians and units are the hubs of a referral network", dataset: referrals, visuals: 7, experiments: ["damping", "hubs vs authorities"]}
+      - slug: communities
+        title: Community Detection
+        notebooks:
+          - {n: 1, title: "Louvain, Label Propagation & Girvan–Newman", band: P4, subject: "Finding care communities", dataset: referrals, visuals: 8, experiments: ["modularity", "spread", "betweenness"]}
+      - slug: embeddings
+        title: Graph Embeddings
+        notebooks:
+          - {n: 1, title: "DeepWalk, Node2Vec & Graph Autoencoders", band: P4, subject: "Units as vectors", dataset: referrals, visuals: 8, experiments: ["walks", "p/q", "reconstruction"]}
+
+  - id: "14"
+    slug: semi_supervised
+    title: Semi-Supervised Learning
+    tier: 3
+    prereqs: ["05", "07"]
+    purpose: "Labels are expensive — a consultant's time."
+    topics:
+      - slug: pseudo_labelling
+        title: Pseudo-Labelling
+        notebooks:
+          - {n: 1, title: "Self-Training & Co-Training", band: P1, subject: "50 of 500 patients adjudicated", dataset: screening, visuals: 7, experiments: ["5/10/50% labelled", "error propagation", "two views"]}
+      - slug: graph_based
+        title: Graph-Based
+        notebooks:
+          - {n: 1, title: "Label Propagation & Spreading", band: P1, subject: "Labels flow along patient similarity", dataset: screening, visuals: 7, experiments: ["clamping", "kernel"]}
+      - slug: deep
+        title: Deep Semi-Supervised
+        notebooks:
+          - {n: 1, title: "TSVM, MixMatch & FixMatch", band: P1, subject: "Lesion patches with few radiologist labels", dataset: imaging, visuals: 7, experiments: ["margin", "augmentation"]}
+          - {n: 2, title: "Contrastive Learning — SimCLR, BYOL, MoCo", band: P1, subject: "Patch representations without labels", dataset: imaging, visuals: 8, experiments: ["pair similarity", "frozen vs fine-tuned"]}
+
+  # ═══════════════════════════ DEEP LEARNING ═══════════════════════════
+  - id: "15"
+    slug: neural_foundations
+    title: Neural Network Foundations
+    tier: 2
+    prereqs: ["00", "05"]
+    purpose: "From scratch before any framework."
+    topics:
+      - slug: neurons
+        title: Neurons & Networks
+        notebooks:
+          - {n: 1, title: "Perceptron", band: P1, subject: "Separable, then XOR", dataset: synthetic, visuals: 7, experiments: ["evolution", "XOR", "vs logistic"]}
+          - {n: 2, title: "MLP — Hidden Layers & Activations", band: P1, subject: "XOR solved; lesion patches", dataset: imaging, visuals: 9, experiments: ["minimum XOR", "width vs depth", "activations"]}
+          - {n: 3, title: "Universal Approximation", band: P2, subject: "Any dose–response curve with enough neurons", dataset: synthetic, visuals: 6, experiments: ["neurons vs error"]}
+      - slug: backprop
+        title: Backpropagation
+        notebooks:
+          - {n: 1, title: "Chain Rule on a Computational Graph", band: P1, subject: "A 2-1-1 network by hand and by autograd", dataset: synthetic, visuals: 8, experiments: ["manual = autograd", "vanishing", "ReLU fix"]}
+      - slug: training
+        title: Training Dynamics
+        notebooks:
+          - {n: 1, title: "Optimisers — SGD, Momentum, Adam", band: P1, subject: "2D loss surface", dataset: synthetic, visuals: 8, experiments: ["trajectories", "ill-conditioned"]}
+          - {n: 2, title: "Learning Rate Schedules", band: P1, subject: "Lesion classifier training", dataset: imaging, visuals: 6, experiments: ["step/cosine/warmup"]}
+          - {n: 3, title: "Regularisation — Dropout, BatchNorm, Weight Decay", band: P1, subject: "Overfitting a small radiology set", dataset: imaging, visuals: 7, experiments: ["gap per technique"]}
+          - {n: 4, title: "Weight Initialisation", band: P1, subject: "Deep MLP stability", dataset: imaging, visuals: 6, experiments: ["zeros/random/Xavier/He"]}
+          - {n: 5, title: "Loss Functions", band: P1, subject: "CE, focal (rare lesions), triplet, hinge", dataset: imaging, visuals: 6, experiments: ["landscapes", "focal on imbalance"]}
+
+  - id: "16"
+    slug: cnns
+    title: Convolutional Neural Networks
+    tier: 2
+    prereqs: ["15"]
+    purpose: "Medical imaging from first principles."
+    topics:
+      - slug: fundamentals
+        title: Fundamentals
+        notebooks:
+          - {n: 1, title: "Convolution, Pooling & Feature Maps", band: P1, subject: "Edge detection on lesion patches", dataset: imaging, visuals: 10, experiments: ["hand filters", "stride/padding", "params vs dense"]}
+          - {n: 2, title: "Building a First CNN", band: P1, subject: "Lesion present/absent end to end", dataset: imaging, visuals: 7, experiments: ["curve", "augmentation"]}
+      - slug: classic
+        title: Classic Architectures
+        notebooks:
+          - {n: 1, title: "LeNet, AlexNet & VGG", band: P1, subject: "Lineage on patches", dataset: imaging, visuals: 7, experiments: ["ReLU vs sigmoid", "receptive field"]}
+          - {n: 2, title: "Inception & ResNet", band: P1, subject: "Multi-scale lesions; deep training", dataset: imaging, visuals: 8, experiments: ["degradation → skip", "gradient flow"]}
+          - {n: 3, title: "DenseNet, MobileNet & EfficientNet", band: P5, subject: "Reuse; a model that runs on a ruggedised handheld; compound scaling", dataset: imaging, visuals: 7, experiments: ["depthwise savings", "scaling"]}
+      - slug: tasks
+        title: Beyond Classification
+        notebooks:
+          - {n: 1, title: "U-Net Segmentation", band: P1, subject: "Lesion boundary pixel labelling", dataset: imaging, visuals: 7, study: "U-Net (Ronneberger 2015) on biomedical segmentation", experiments: ["skips", "imbalance"]}
+          - {n: 2, title: "Object Detection — YOLO, R-CNN family, FPN", band: P1, subject: "Boxes around multiple lesions", dataset: synthetic, visuals: 8, experiments: ["anchors", "NMS", "pyramid"]}
+          - {n: 3, title: "ConvNeXt", band: P1, subject: "Transformer tricks in a CNN", dataset: imaging, visuals: 5, experiments: ["ablation ladder"]}
+
+  - id: "17"
+    slug: sequences
+    title: RNNs & Sequences
+    tier: 3
+    prereqs: ["15"]
+    purpose: "Physiology and notes unfold in time."
+    topics:
+      - slug: rnn
+        title: Recurrent Networks
+        notebooks:
+          - {n: 1, title: "Vanilla RNN & BPTT", band: P1, subject: "Character-level clinical notes", dataset: notes, visuals: 8, experiments: ["generated text", "gradient vs step"]}
+          - {n: 2, title: "LSTM & GRU", band: P4, subject: "Vitals long-range deterioration; note generation", dataset: vitals, visuals: 8, experiments: ["gates", "params vs accuracy"]}
+          - {n: 3, title: "Bidirectional & Seq2Seq", band: P1, subject: "Note classification; code→description", dataset: notes, visuals: 7, experiments: ["both directions", "teacher forcing"]}
+      - slug: attention
+        title: Attention Mechanisms
+        notebooks:
+          - {n: 1, title: "Bahdanau & Luong Attention", band: P1, subject: "Which words drove the triage decision", dataset: notes, visuals: 7, experiments: ["attention heatmap"]}
+      - slug: convolutional_sequences
+        title: Convolutional & Continuous
+        notebooks:
+          - {n: 1, title: "TCN & WaveNet", band: P4, subject: "Vitals forecasting; waveform", dataset: vitals, visuals: 7, experiments: ["dilated field"]}
+          - {n: 2, title: "Neural ODEs", band: P2, subject: "Pharmacokinetic trajectories", dataset: synthetic, visuals: 5, experiments: ["continuous vs discrete"]}
+
+  - id: "18"
+    slug: transformers
+    title: Transformers
+    tier: 3
+    prereqs: ["17"]
+    purpose: "Attention over notes, codes and images."
+    topics:
+      - slug: attention
+        title: Self-Attention
+        notebooks:
+          - {n: 1, title: "Query, Key, Value", band: P1, subject: "'Patient reports chest pain; it started yesterday' — what does 'it' attend to?", dataset: notes, visuals: 8, experiments: ["√d", "heatmap"]}
+          - {n: 2, title: "Multi-Head & Positional Encoding", band: P1, subject: "Heads; word order in notes", dataset: notes, visuals: 8, experiments: ["per-head", "encodings"]}
+      - slug: architectures
+        title: Core Architectures
+        notebooks:
+          - {n: 1, title: "Full Transformer", band: P1, subject: "Code→description from scratch", dataset: notes, visuals: 7, experiments: ["curve", "attention evolution"]}
+          - {n: 2, title: "BERT", band: P1, subject: "Masked LM; fine-tune for urgency", dataset: notes, visuals: 7, study: "ClinicalBERT-style fine-tuning", experiments: ["mask", "frozen vs fine-tuned"]}
+          - {n: 3, title: "GPT", band: P1, subject: "Discharge summary generation; scaling laws", dataset: notes, visuals: 7, experiments: ["generation", "scaling plots"]}
+          - {n: 4, title: "T5 & Vision Transformers", band: P1, subject: "Text-to-text; lesion patches as tokens", dataset: imaging, visuals: 7, experiments: ["prefixes", "patch embedding"]}
+      - slug: variants
+        title: Variants & Efficiency
+        notebooks:
+          - {n: 1, title: "Swin, DeiT & CLIP", band: P1, subject: "Windows; small-data distillation; image–report pairing", dataset: imaging, visuals: 7, experiments: ["windows", "similarity"]}
+          - {n: 2, title: "Mixture of Experts", band: P1, subject: "Specialty-routed experts", dataset: notes, visuals: 6, experiments: ["routing map"]}
+          - {n: 3, title: "Flash Attention & Efficient Variants", band: P4, subject: "Long records", dataset: synthetic, visuals: 6, experiments: ["memory vs length"]}
+          - {n: 4, title: "State Space Models — S4, Mamba", band: P4, subject: "Long vitals sequences", dataset: vitals, visuals: 6, experiments: ["recurrence vs attention"]}
+
+  - id: "19"
+    slug: generative
+    title: Generative Models
+    tier: 3
+    prereqs: ["15", "16", "18"]
+    purpose: "Synthetic patients, augmented images, privacy-preserving data."
+    topics:
+      - slug: autoencoders
+        title: Autoencoders
+        notebooks:
+          - {n: 1, title: "AE, Denoising & Sparse", band: P1, subject: "Lesion patches", dataset: imaging, visuals: 8, experiments: ["bottleneck", "denoise", "sparse"]}
+          - {n: 2, title: "VAE", band: P1, subject: "A latent space of lesions", dataset: imaging, visuals: 8, experiments: ["ELBO", "grid", "interpolation"]}
+          - {n: 3, title: "β-VAE & VQ-VAE", band: P1, subject: "Disentangle size from intensity; discretise", dataset: imaging, visuals: 7, experiments: ["traversal", "codebook"]}
+      - slug: gans
+        title: GANs
+        notebooks:
+          - {n: 1, title: "GAN — The Adversarial Game", band: P1, subject: "Synthetic lesion patches", dataset: imaging, visuals: 8, experiments: ["oscillation", "mode collapse"]}
+          - {n: 2, title: "DCGAN, WGAN & Conditional GAN", band: P1, subject: "'Generate a malignant-looking patch'", dataset: imaging, visuals: 8, experiments: ["Wasserstein", "conditioning"]}
+          - {n: 3, title: "StyleGAN, CycleGAN & Pix2Pix", band: P1, subject: "Style mixing; modality translation", dataset: synthetic, visuals: 7, experiments: ["style", "cycle consistency"]}
+      - slug: diffusion
+        title: Diffusion
+        notebooks:
+          - {n: 1, title: "DDPM", band: P1, subject: "Patches by denoising", dataset: imaging, visuals: 8, experiments: ["schedule", "reverse animation"]}
+          - {n: 2, title: "DDIM, Latent Diffusion & Guidance", band: P1, subject: "Faster; latent; classifier-free", dataset: imaging, visuals: 8, experiments: ["steps", "guidance"]}
+          - {n: 3, title: "Score-Based & Flow Matching", band: P1, subject: "Score fields; rectified flows", dataset: synthetic, visuals: 7, experiments: ["score arrows", "velocity"]}
+      - slug: energy_flows
+        title: Energy & Flows
+        notebooks:
+          - {n: 1, title: "Normalising Flows", band: P2, subject: "Synthetic tabular patients with exact likelihood", dataset: admissions, visuals: 7, experiments: ["coupling steps"]}
+          - {n: 2, title: "Boltzmann, RBM & DBN", band: P1, subject: "Energy landscapes", dataset: imaging, visuals: 6, experiments: ["CD", "stacking"]}
+      - slug: jepa
+        title: Predictive Architectures
+        notebooks:
+          - {n: 1, title: "I-JEPA & V-JEPA", band: P1, subject: "Predict in embedding space", dataset: imaging, visuals: 6, experiments: ["masked patch prediction"]}
+
+  - id: "20"
+    slug: gnns
+    title: Graph Neural Networks
+    tier: 3
+    prereqs: ["13", "15"]
+    purpose: "Learning on referral and comorbidity graphs."
+    topics:
+      - slug: message_passing
+        title: Message Passing
+        notebooks:
+          - {n: 1, title: "GCN & MPNN", band: P4, subject: "Node classification on the referral network", dataset: referrals, visuals: 7, experiments: ["rounds", "over-smoothing"]}
+          - {n: 2, title: "GraphSAGE & GAT", band: P4, subject: "Inductive; attention on neighbours", dataset: referrals, visuals: 7, experiments: ["sampling", "edge attention"]}
+          - {n: 3, title: "GIN & Graph Transformers", band: P2, subject: "Molecule-style graph-level tasks", dataset: synthetic, visuals: 6, experiments: ["WL"]}
+      - slug: advanced
+        title: Dynamic & Heterogeneous
+        notebooks:
+          - {n: 1, title: "TGN & Heterogeneous GNNs", band: P4, subject: "Evolving multi-type care networks", dataset: referrals, visuals: 6, experiments: ["temporal memory", "meta-paths"]}
+
+  # ═══════════════════════════ ADVANCED ═══════════════════════════
+  - id: "21"
+    slug: reinforcement_learning
+    title: Reinforcement Learning
+    tier: 3
+    prereqs: ["00", "15"]
+    purpose: "Sequential decisions under uncertainty — dosing, evacuation, resource allocation."
+    topics:
+      - slug: bandits
+        title: Bandits
+        notebooks:
+          - {n: 1, title: "Exploration vs Exploitation", band: P3, subject: "Five treatment arms with unknown response rates — adaptive trial design", dataset: synthetic, visuals: 8, study: "adaptive / response-adaptive randomisation", experiments: ["ε-greedy/UCB/Thompson regret"]}
+      - slug: tabular
+        title: Tabular Methods
+        notebooks:
+          - {n: 1, title: "MDPs & Dynamic Programming", band: P5, subject: "Casualty evacuation on a 4×4 grid — point of injury to Role 2", dataset: evac, visuals: 7, experiments: ["value/policy iteration"]}
+          - {n: 2, title: "Monte Carlo & TD Learning", band: P5, subject: "Same, dynamics unknown", dataset: evac, visuals: 7, experiments: ["episode traces", "bootstrapping"]}
+          - {n: 3, title: "Q-Learning & SARSA", band: P5, subject: "A threat lane — safe route vs fastest route", dataset: evac, visuals: 8, experiments: ["Q-table", "on- vs off-policy routes"]}
+          - {n: 4, title: "TD(λ) & Eligibility Traces", band: P5, subject: "Same", dataset: evac, visuals: 5, experiments: ["trace decay"]}
+      - slug: value_based
+        title: Deep Value-Based
+        notebooks:
+          - {n: 1, title: "DQN", band: P4, subject: "Bed allocation under stochastic arrivals", dataset: synthetic, visuals: 8, experiments: ["replay + target", "reward curve"]}
+          - {n: 2, title: "Double, Dueling, PER & Rainbow", band: P4, subject: "Fixing DQN", dataset: synthetic, visuals: 8, experiments: ["overestimation", "cumulative"]}
+      - slug: policy_based
+        title: Policy-Based
+        notebooks:
+          - {n: 1, title: "REINFORCE & Actor-Critic", band: P2, subject: "Dose titration as a policy", dataset: synthetic, visuals: 7, experiments: ["policy distribution", "baseline"]}
+          - {n: 2, title: "A2C/A3C & PPO", band: P2, subject: "Continuous dosing", dataset: synthetic, visuals: 8, experiments: ["clip", "continuous control"]}
+          - {n: 3, title: "TRPO, SAC, DDPG & TD3", band: P2, subject: "Infusion control — continuous family", dataset: synthetic, visuals: 8, experiments: ["trust region", "entropy", "twin critics"]}
+      - slug: model_based
+        title: Model-Based
+        notebooks:
+          - {n: 1, title: "Dyna-Q & World Models", band: P5, subject: "Learned evacuation dynamics, imagined rollouts", dataset: evac, visuals: 7, experiments: ["real vs simulated"]}
+          - {n: 2, title: "MuZero & Dreamer", band: P5, subject: "Planning with learned models", dataset: evac, visuals: 6, experiments: ["MCTS", "imagination"]}
+      - slug: advanced_rl
+        title: Advanced
+        notebooks:
+          - {n: 1, title: "Hierarchical, Inverse & Multi-Agent RL", band: P5, subject: "Sub-goals along the chain; recover a commander's reward from demonstrations; two evac teams cooperating", dataset: evac, visuals: 7, experiments: ["options", "recovered reward", "joint policy"]}
+          - {n: 2, title: "Offline RL", band: P2, subject: "Learning a treatment policy from a fixed registry — CQL, IQL", dataset: admissions, visuals: 5, study: "AI Clinician (sepsis) offline-RL debate", experiments: ["distributional shift"]}
+          - {n: 3, title: "RLHF & DPO", band: P1, subject: "Preference learning from clinician rankings of note summaries", dataset: notes, visuals: 7, experiments: ["reward model", "implicit vs explicit"]}
+
+  - id: "22"
+    slug: time_series
+    title: Time Series & Forecasting
+    tier: 2
+    prereqs: ["02", "04", "17"]
+    purpose: "Demand, vitals and outbreaks over time."
+    topics:
+      - slug: smoothing
+        title: Smoothing
+        notebooks:
+          - {n: 1, title: "Moving Averages & Exponential Smoothing", band: P4, subject: "Three years of daily ED attendances", dataset: admissions, visuals: 8, experiments: ["SMA/EMA/WMA lag", "Holt-Winters"]}
+      - slug: arima
+        title: ARIMA Family
+        notebooks:
+          - {n: 1, title: "Stationarity, ACF & PACF", band: P4, subject: "Attendances — order selection", dataset: admissions, visuals: 8, experiments: ["differencing", "ACF/PACF"]}
+          - {n: 2, title: "ARIMA, SARIMA & SARIMAX", band: P4, subject: "Weekly seasonality; bank holidays as exogenous", dataset: admissions, visuals: 8, experiments: ["diagnostics", "seasonal", "exogenous"]}
+          - {n: 3, title: "VAR & Granger Causality", band: P4, subject: "Five sites — does one site's surge predict another's?", dataset: admissions, visuals: 6, experiments: ["impulse response"]}
+      - slug: decomposition
+        title: Decomposition Models
+        notebooks:
+          - {n: 1, title: "Prophet, TBATS & Theta", band: P4, subject: "Changepoints (a service redesign), multi-seasonality, benchmarks", dataset: admissions, visuals: 8, experiments: ["changepoints", "seasonal components"]}
+      - slug: deep
+        title: Deep Forecasting
+        notebooks:
+          - {n: 1, title: "DeepAR & N-BEATS", band: P4, subject: "Probabilistic bed demand", dataset: admissions, visuals: 7, experiments: ["fan", "stacks"]}
+          - {n: 2, title: "TFT, Informer & PatchTST", band: P4, subject: "Multi-horizon vitals", dataset: vitals, visuals: 7, experiments: ["variable importance", "patching"]}
+          - {n: 3, title: "Foundation Models — TimesFM, Chronos", band: P4, subject: "Zero-shot demand", dataset: admissions, visuals: 5, experiments: ["zero-shot vs fine-tuned"]}
+      - slug: analysis
+        title: Pattern Analysis
+        notebooks:
+          - {n: 1, title: "DTW, Matrix Profile & Changepoints", band: P4, subject: "Similar vital trajectories; recurring motifs; the moment deterioration began", dataset: vitals, visuals: 8, experiments: ["alignment", "motifs/discords", "PELT/BOCPD"]}
+
+  - id: "23"
+    slug: bayesian
+    title: Bayesian Methods
+    tier: 3
+    prereqs: ["00", "02"]
+    purpose: "Uncertainty as a first-class clinical output."
+    topics:
+      - slug: inference
+        title: Inference
+        notebooks:
+          - {n: 1, title: "Bayesian Inference Fundamentals", band: P1, subject: "A test's true positive rate — full posterior", dataset: screening, visuals: 7, experiments: ["prior→posterior"]}
+          - {n: 2, title: "MCMC — Metropolis-Hastings & Gibbs", band: P3, subject: "Trial effect and variance jointly", dataset: trial, visuals: 8, experiments: ["traces", "autocorrelation", "conditional"]}
+          - {n: 3, title: "HMC, NUTS & Variational Inference", band: P3, subject: "A hierarchical multi-site trial", dataset: trial, visuals: 8, experiments: ["energy", "ELBO"]}
+      - slug: models
+        title: Bayesian Models
+        notebooks:
+          - {n: 1, title: "Bayesian Neural Networks", band: P1, subject: "Lesion classifier that knows when it doesn't know", dataset: imaging, visuals: 6, experiments: ["certain vs uncertain"]}
+          - {n: 2, title: "Gaussian Processes (Deep Dive)", band: P4, subject: "Vitals — kernels, posterior, forecasting", dataset: vitals, visuals: 8, experiments: ["priors", "bands"]}
+          - {n: 3, title: "Bayesian Optimisation", band: P2, subject: "Tuning a readmission model; dose finding", dataset: admissions, visuals: 7, experiments: ["surrogate", "best vs iteration"]}
+      - slug: programming
+        title: Probabilistic Programming
+        notebooks:
+          - {n: 1, title: "PyMC, Stan & NumPyro", band: P3, subject: "A full trial model with covariates", dataset: trial, visuals: 6, experiments: ["DAG", "posteriors"]}
+          - {n: 2, title: "Bayesian Nonparametrics", band: P1, subject: "Phenotypes without choosing k", dataset: cohort, visuals: 5, experiments: ["DP mixture"]}
+
+  - id: "24"
+    slug: pgm
+    title: Probabilistic Graphical Models
+    tier: 3
+    prereqs: ["02", "23"]
+    purpose: "Disease progression and tracking as structured uncertainty."
+    topics:
+      - slug: networks
+        title: Networks & Fields
+        notebooks:
+          - {n: 1, title: "Bayesian Networks & MRFs", band: P1, subject: "A diagnostic network of symptoms and causes; pixel labelling", dataset: screening, visuals: 7, experiments: ["d-separation", "cliques"]}
+          - {n: 2, title: "Belief Propagation", band: P1, subject: "Inference on the diagnostic network", dataset: synthetic, visuals: 5, experiments: ["messages"]}
+      - slug: sequential
+        title: Sequential Models
+        notebooks:
+          - {n: 1, title: "HMMs — Forward/Backward, Viterbi, Baum-Welch", band: P2, subject: "Hidden health state well/mild/severe from observed vitals", dataset: vitals, visuals: 8, experiments: ["Viterbi", "transition convergence"]}
+          - {n: 2, title: "CRFs", band: P1, subject: "Entity labelling in notes", dataset: notes, visuals: 5, experiments: ["weights"]}
+      - slug: filtering
+        title: State Estimation
+        notebooks:
+          - {n: 1, title: "Kalman, EKF & UKF", band: P5, subject: "Tracking an evacuation vehicle from noisy position reports", dataset: evac, visuals: 8, experiments: ["predict/correct", "sigma points"]}
+          - {n: 2, title: "Particle Filters", band: P4, subject: "Patient state from intermittent observations", dataset: vitals, visuals: 6, experiments: ["particle cloud"]}
+
+  - id: "25"
+    slug: meta_learning
+    title: Meta-Learning
+    tier: 3
+    prereqs: ["15", "16"]
+    purpose: "Rare diseases — learning from very few cases."
+    topics:
+      - slug: metric
+        title: Metric-Based
+        notebooks:
+          - {n: 1, title: "Siamese, Prototypical, Matching & Relation Networks", band: P1, subject: "5-way 1-shot rare lesion recognition", dataset: imaging, visuals: 8, experiments: ["distances", "prototypes", "learned distance"]}
+      - slug: optimisation
+        title: Optimisation-Based
+        notebooks:
+          - {n: 1, title: "MAML & Reptile", band: P1, subject: "Adapting to a new site's scanner in 5 examples", dataset: imaging, visuals: 7, experiments: ["inner loop", "MAML vs Reptile"]}
+
+  - id: "26"
+    slug: automl
+    title: AutoML & NAS
+    tier: 3
+    prereqs: ["06", "15"]
+    purpose: "Automating the search."
+    topics:
+      - slug: hpo
+        title: Hyperparameter Optimisation
+        notebooks:
+          - {n: 1, title: "Grid, Random & Bayesian (Optuna)", band: P2, subject: "Readmission model tuning", dataset: admissions, visuals: 8, experiments: ["coverage", "Optuna history"]}
+          - {n: 2, title: "Hyperband & ASHA", band: P2, subject: "Early stopping", dataset: admissions, visuals: 5, experiments: ["halving"]}
+      - slug: nas
+        title: Architecture Search
+        notebooks:
+          - {n: 1, title: "NAS, DARTS & AutoML Frameworks", band: P1, subject: "Searching a lesion classifier; auto-sklearn on admissions", dataset: imaging, visuals: 7, experiments: ["space", "weights", "frameworks"]}
+
+  - id: "27"
+    slug: explainability
+    title: Explainability
+    tier: 3
+    prereqs: ["06", "16"]
+    purpose: "No model reaches a clinician without an answer to 'why?'"
+    topics:
+      - slug: global
+        title: Global Methods
+        notebooks:
+          - {n: 1, title: "Feature Importance — MDI, Permutation, Drop-Column", band: P2, subject: "Readmission — three methods disagree", dataset: admissions, visuals: 8, experiments: ["disagreement", "stability"]}
+          - {n: 2, title: "PDP & ICE", band: P2, subject: "Age and severity effects", dataset: admissions, visuals: 6, experiments: ["heterogeneity"]}
+      - slug: local
+        title: Local Methods
+        notebooks:
+          - {n: 1, title: "SHAP — Theory & Practice", band: P2, subject: "Why this patient was flagged", dataset: admissions, visuals: 9, experiments: ["coalitions", "waterfall/beeswarm/dependence"]}
+          - {n: 2, title: "LIME, Anchors & Counterfactuals", band: P2, subject: "One flag, three explanations; what would un-flag them", dataset: admissions, visuals: 7, experiments: ["surrogate", "rules", "minimal change"]}
+      - slug: deep
+        title: Deep Model Explanations
+        notebooks:
+          - {n: 1, title: "Grad-CAM, Integrated Gradients & Attention Viz", band: P1, subject: "Where the CNN looked; which words the transformer weighed", dataset: imaging, visuals: 7, experiments: ["overlays", "attribution"]}
+          - {n: 2, title: "Mechanistic Interpretability", band: P1, subject: "Circuits in a small diagnostic network", dataset: synthetic, visuals: 6, experiments: ["feature viz", "probing"]}
+
+  - id: "28"
+    slug: specialised
+    title: Specialised & Emerging
+    tier: 3
+    prereqs: []
+    purpose: "Methods the clinic has always needed."
+    topics:
+      - slug: survival
+        title: Survival Analysis
+        notebooks:
+          - {n: 1, title: "Kaplan-Meier & Cox PH", band: P3, subject: "Time to readmission by arm; hazard ratios", dataset: trial, visuals: 8, study: "Cox (1972); KM on trial endpoints", experiments: ["KM with censoring", "forest plot", "PH assumption check"]}
+          - {n: 2, title: "Random Survival Forests & DeepSurv", band: P3, subject: "Non-linear survival", dataset: trial, visuals: 6, experiments: ["importance", "neural hazard"]}
+      - slug: causal
+        title: Causal Inference
+        notebooks:
+          - {n: 1, title: "Propensity Scores & Instrumental Variables", band: P3, subject: "Did the treatment work when it wasn't randomised?", dataset: admissions, visuals: 7, experiments: ["overlap", "IV"]}
+          - {n: 2, title: "Diff-in-Diff, DoWhy & Double ML", band: P3, subject: "A policy change across sites; graphs; debiased estimation", dataset: admissions, visuals: 8, experiments: ["parallel trends", "refutation", "cross-fitting"]}
+      - slug: recommenders
+        title: Recommender Systems
+        notebooks:
+          - {n: 1, title: "Collaborative Filtering & Matrix Factorisation", band: P2, subject: "Patients like this one responded to…", dataset: prescribing, visuals: 7, experiments: ["similarity", "factors"]}
+          - {n: 2, title: "NCF, Content-Based, Hybrid & Two-Tower", band: P2, subject: "Guideline retrieval", dataset: notes, visuals: 7, experiments: ["cold start", "ANN"]}
+      - slug: llm
+        title: LLM Techniques
+        notebooks:
+          - {n: 1, title: "LoRA, QLoRA & Quantisation", band: P5, subject: "A clinical note model small enough to run offline at a forward site", dataset: notes, visuals: 7, experiments: ["low-rank", "4-bit"]}
+          - {n: 2, title: "RAG & Agents", band: P1, subject: "Guideline-grounded answers; a triage agent loop", dataset: notes, visuals: 6, experiments: ["chunking", "ReAct"]}
+      - slug: multimodal
+        title: Multimodal & Knowledge
+        notebooks:
+          - {n: 1, title: "Vision-Language, Audio & Knowledge Graph Embeddings", band: P1, subject: "Image–report pairing; dictation; drug–disease graph", dataset: synthetic, visuals: 7, experiments: ["cross-modal", "spectrogram", "link prediction"]}
+      - slug: evolutionary
+        title: Evolutionary Methods
+        notebooks:
+          - {n: 1, title: "Genetic Algorithms, CMA-ES & NEAT", band: P4, subject: "Rota optimisation; evolving a monitoring controller", dataset: synthetic, visuals: 8, experiments: ["population fitness", "ellipsoid", "topology"]}
+
+  - id: "29"
+    slug: evaluation
+    title: Evaluation & Metrics
+    tier: 1
+    prereqs: ["04", "05", "06"]
+    purpose: "Measuring honestly — because the cost of a false negative is a person."
+    topics:
+      - slug: classification_metrics
+        title: Classification Metrics
+        notebooks:
+          - {n: 1, title: "Sensitivity, Specificity, PPV, NPV, ROC & PR", band: P1, subject: "A screening test — accuracy lies at 1% prevalence", dataset: screening, visuals: 9, experiments: ["threshold sweep", "ROC vs PR", "prevalence shifts PPV"]}
+          - {n: 2, title: "Confusion Matrix, MCC & Kappa", band: P1, subject: "Beyond accuracy; inter-rater agreement", dataset: screening, visuals: 5, experiments: ["MCC", "Cohen's κ between two raters"]}
+      - slug: regression_metrics
+        title: Regression Metrics
+        notebooks:
+          - {n: 1, title: "MSE, RMSE, MAE, MAPE & R²", band: P2, subject: "LOS residuals", dataset: admissions, visuals: 6, experiments: ["outlier sensitivity"]}
+      - slug: clustering_ranking
+        title: Clustering & Ranking Metrics
+        notebooks:
+          - {n: 1, title: "Silhouette, ARI, NMI, NDCG & MAP", band: P1, subject: "Phenotypes; guideline retrieval lists", dataset: cohort, visuals: 7, experiments: ["internal vs external", "gain"]}
+      - slug: validation
+        title: Validation Strategy
+        notebooks:
+          - {n: 1, title: "Cross-Validation & Nested CV", band: P2, subject: "Readmission — K-fold, stratified, temporal, patient-grouped", dataset: admissions, visuals: 7, experiments: ["fold diagrams", "nested"]}
+          - {n: 2, title: "Statistical Model Comparison", band: P2, subject: "Two models, same folds", dataset: admissions, visuals: 5, experiments: ["paired tests"]}
+      - slug: calibration_bias
+        title: Calibration & Bias-Variance
+        notebooks:
+          - {n: 1, title: "Calibration — Reliability, Platt, Isotonic", band: P1, subject: "Does 70% risk mean 70%?", dataset: screening, visuals: 6, study: "TRIPOD calibration reporting", experiments: ["reliability before/after"]}
+          - {n: 2, title: "Bias–Variance Decomposition", band: P2, subject: "LOS — bias² + variance + noise", dataset: admissions, visuals: 6, experiments: ["learning curves"]}
+      - slug: fairness
+        title: Fairness
+        notebooks:
+          - {n: 1, title: "Demographic Parity, Equalised Odds & Calibration Across Groups", band: P1, subject: "A risk model audited by sex, age band and deprivation", dataset: cohort, visuals: 7, study: "Obermeyer et al. 2019 algorithmic bias in care management", experiments: ["metric tradeoffs", "mitigation"]}

@@ -1,0 +1,4 @@
+-r base.txt
+transformers>=4.30
+gensim>=4.3
+nltk>=3.8

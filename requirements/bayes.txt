@@ -1,0 +1,4 @@
+-r base.txt
+pymc>=5.6
+arviz>=0.15
+numpyro>=0.12

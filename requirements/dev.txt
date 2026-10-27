@@ -1,0 +1,6 @@
+-r base.txt
+pytest>=8
+ruff>=0.4
+hypothesis>=6
+pandera>=0.18
+duckdb>=0.10

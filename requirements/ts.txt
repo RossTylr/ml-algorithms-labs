@@ -1,0 +1,4 @@
+-r base.txt
+statsmodels>=0.14
+prophet>=1.1
+darts>=0.25

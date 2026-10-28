@@ -6,14 +6,14 @@
 
 ## Notebooks
 
-| # | Notebook | Band | Dataset | Clinical problem |
-|---|----------|------|---------|------------------|
-| 01.01 | [Vanilla RNN & BPTT](01_rnn/01_vanilla_rnn_bptt.ipynb) | P1 | `notes` | Character-level clinical notes |
-| 01.02 | [LSTM & GRU](01_rnn/02_lstm_gru.ipynb) | P4 | `vitals` | Vitals long-range deterioration; note generation |
-| 01.03 | [Bidirectional & Seq2Seq](01_rnn/03_bidirectional_seq2seq.ipynb) | P1 | `notes` | Note classification; code→description |
-| 02.01 | [Bahdanau & Luong Attention](02_attention/01_bahdanau_luong_attention.ipynb) | P1 | `notes` | Which words drove the triage decision |
-| 03.01 | [TCN & WaveNet](03_convolutional_sequences/01_tcn_wavenet.ipynb) | P4 | `vitals` | Vitals forecasting; waveform |
-| 03.02 | [Neural ODEs](03_convolutional_sequences/02_neural_odes.ipynb) | P2 | `synthetic` | Pharmacokinetic trajectories |
+| # | Notebook | Band | Goal | Dataset | Study | Clinical problem |
+|---|----------|------|------|---------|-------|------------------|
+| 01.01 | [Vanilla RNN & BPTT](01_rnn/01_vanilla_rnn_bptt.ipynb) | P1 | predict | `notes` |  | Character-level clinical notes |
+| 01.02 | [LSTM & GRU](01_rnn/02_lstm_gru.ipynb) | P4 | predict | `vitals` | `rajkomar2018` | Rajkomar-style: a patient's admission timeline as a sequence → mortality; long-range deterioration on vitals |
+| 01.03 | [Bidirectional & Seq2Seq](01_rnn/03_bidirectional_seq2seq.ipynb) | P1 | predict | `notes` |  | Note classification; code→description |
+| 02.01 | [Bahdanau & Luong Attention](02_attention/01_bahdanau_luong_attention.ipynb) | P1 | predict | `notes` |  | Which words drove the triage decision |
+| 03.01 | [TCN & WaveNet](03_convolutional_sequences/01_tcn_wavenet.ipynb) | P4 | predict | `vitals` | `zeng2022` | Vitals forecasting; waveform |
+| 03.02 | [Neural ODEs](03_convolutional_sequences/02_neural_odes.ipynb) | P2 | decide | `synthetic` |  | Pharmacokinetic trajectories |
 
 ## Priority bands
 

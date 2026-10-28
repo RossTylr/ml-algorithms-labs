@@ -1,6 +1,6 @@
 # Library Index
 
-**Files in folder** 292 · **Curated** 140 (A 54 · B 13 · C 15 · D 58) · **Cited by manifest** 0
+**Files in folder** 292 · **Curated** 140 (A 54 · B 13 · C 15 · D 58) · **Cited by manifest** 105
 
 Kinds: **A** seminal method (builder reproduces a figure) · **B** clinical (becomes a subject) · **C** critique (skeptic check) · **D** reference only.
 
@@ -8,65 +8,65 @@ Kinds: **A** seminal method (builder reproduces a figure) · **B** clinical (bec
 
 | key | kind | year | title | reproduce / check | cited |
 |---|---|---|---|---|---|
-| `shannon1948` | A | 1948 | A Mathematical Theory of Communication | entropy of a biomarker before/after a test | 0 |
-| `rumelhart1986` | A | 1986 | Learning representations by back-propagating errors | XOR with symmetry-breaking argument | 0 |
-| `cortes1995` | A | 1995 | Support-Vector Networks | soft-margin figure | 0 |
-| `hochreiter1997` | A | 1997 | Long Short-Term Memory | gate diagram in matplotlib | 0 |
-| `page1998` | A | 1998 | The PageRank Citation Ranking | damping-factor sweep (Fig. 3) | 0 |
-| `breiman2001` | A | 2001 | Random Forests | OOB vs test error; strength/correlation bound | 0 |
-| `zhu2003` | A | 2003 | Semi-Supervised Learning Using Gaussian Fields and Harmonic Functions | harmonic solution on two-moons | 0 |
-| `guyon2004` | A | 2004 | An Introduction to Variable and Feature Selection | filter/wrapper/embedded taxonomy; correlation ≠ relevance figure | 0 |
+| `shannon1948` | A | 1948 | A Mathematical Theory of Communication | entropy of a biomarker before/after a test | 2 |
+| `rumelhart1986` | A | 1986 | Learning representations by back-propagating errors | XOR with symmetry-breaking argument | 2 |
+| `cortes1995` | A | 1995 | Support-Vector Networks | soft-margin figure | 1 |
+| `hochreiter1997` | A | 1997 | Long Short-Term Memory | gate diagram in matplotlib | 2 |
+| `page1998` | A | 1998 | The PageRank Citation Ranking | damping-factor sweep (Fig. 3) | 1 |
+| `breiman2001` | A | 2001 | Random Forests | OOB vs test error; strength/correlation bound | 1 |
+| `zhu2003` | A | 2003 | Semi-Supervised Learning Using Gaussian Fields and Harmonic Functions | harmonic solution on two-moons | 1 |
+| `guyon2004` | A | 2004 | An Introduction to Variable and Feature Selection | filter/wrapper/embedded taxonomy; correlation ≠ relevance figure | 2 |
 | `coates2011` | A | 2011 | An Analysis of Single-Layer Networks in Unsupervised Feature Learning | number of features vs accuracy | 0 |
-| `srivastava2014` | A | 2014 | Dropout: A Simple Way to Prevent Neural Networks from Overfitting | train/test gap with and without dropout | 0 |
-| `goodfellow2014` | A | 2014 | Generative Adversarial Nets | Fig. 1 four-panel training dynamics | 0 |
-| `perozzi2014` | A | 2014 | DeepWalk: Online Learning of Social Representations | random-walk traces → skip-gram | 0 |
-| `bruna2014` | A | 2014 | Spectral Networks and Deep Locally Connected Networks on Graphs | spectral filter on a small graph | 0 |
-| `mnih2015` | A | 2015 | Human-level control through deep reinforcement learning | Fig. 2 Q-value trace through an episode | 0 |
-| `tang2015` | A | 2015 | LINE: Large-scale Information Network Embedding | first- vs second-order proximity | 0 |
-| `he2016` | A | 2016 | Deep Residual Learning for Image Recognition | Fig. 1 degradation: plain-20 vs plain-56 vs residual | 0 |
-| `chen2016` | A | 2016 | XGBoost: A Scalable Tree Boosting System | sparsity-aware split; regularised objective vs sklearn GBM | 0 |
-| `gal2016` | A | 2016 | Dropout as a Bayesian Approximation | MC-dropout predictive uncertainty on lesion patches | 0 |
-| `grover2016` | A | 2016 | node2vec: Scalable Feature Learning for Networks | Fig. 3 p/q grid | 0 |
+| `srivastava2014` | A | 2014 | Dropout: A Simple Way to Prevent Neural Networks from Overfitting | train/test gap with and without dropout | 1 |
+| `goodfellow2014` | A | 2014 | Generative Adversarial Nets | Fig. 1 four-panel training dynamics | 1 |
+| `perozzi2014` | A | 2014 | DeepWalk: Online Learning of Social Representations | random-walk traces → skip-gram | 1 |
+| `bruna2014` | A | 2014 | Spectral Networks and Deep Locally Connected Networks on Graphs | spectral filter on a small graph | 1 |
+| `mnih2015` | A | 2015 | Human-level control through deep reinforcement learning | Fig. 2 Q-value trace through an episode | 1 |
+| `tang2015` | A | 2015 | LINE: Large-scale Information Network Embedding | first- vs second-order proximity | 1 |
+| `he2016` | A | 2016 | Deep Residual Learning for Image Recognition | Fig. 1 degradation: plain-20 vs plain-56 vs residual | 1 |
+| `chen2016` | A | 2016 | XGBoost: A Scalable Tree Boosting System | sparsity-aware split; regularised objective vs sklearn GBM | 1 |
+| `gal2016` | A | 2016 | Dropout as a Bayesian Approximation | MC-dropout predictive uncertainty on lesion patches | 2 |
+| `grover2016` | A | 2016 | node2vec: Scalable Feature Learning for Networks | Fig. 3 p/q grid | 1 |
 | `niepert2016` | A | 2016 | Learning Convolutional Neural Networks for Graphs |  | 0 |
-| `kipf2017` | A | 2017 | Semi-Supervised Classification with Graph Convolutional Networks | layer-wise propagation; over-smoothing curve with Li 2018 | 0 |
-| `gilmer2017` | A | 2017 | Neural Message Passing for Quantum Chemistry | message/update/readout framework | 0 |
-| `vaswani2017` | A | 2017 | Attention Is All You Need | Fig. 1 architecture; scaled dot-product with and without √d | 0 |
-| `taylor2018` | A | 2018 | Forecasting at Scale (Prophet) | changepoint prior sweep | 0 |
-| `hastie2018` | A | 2018 | Best Subset, Forward Stepwise, or Lasso? | Fig. 1 relative risk vs SNR | 0 |
-| `redmon2018` | A | 2018 | YOLOv3: An Incremental Improvement | grid-cell prediction + NMS | 0 |
-| `velickovic2018` | A | 2018 | Graph Attention Networks | edge attention heatmap | 0 |
-| `schlichtkrull2018` | A | 2018 | Modeling Relational Data with Graph Convolutional Networks (R-GCN) |  | 0 |
-| `radford2018` | A | 2018 | Improving Language Understanding by Generative Pre-Training |  | 0 |
+| `kipf2017` | A | 2017 | Semi-Supervised Classification with Graph Convolutional Networks | layer-wise propagation; over-smoothing curve with Li 2018 | 1 |
+| `gilmer2017` | A | 2017 | Neural Message Passing for Quantum Chemistry | message/update/readout framework | 1 |
+| `vaswani2017` | A | 2017 | Attention Is All You Need | Fig. 1 architecture; scaled dot-product with and without √d | 1 |
+| `taylor2018` | A | 2018 | Forecasting at Scale (Prophet) | changepoint prior sweep | 1 |
+| `hastie2018` | A | 2018 | Best Subset, Forward Stepwise, or Lasso? | Fig. 1 relative risk vs SNR | 1 |
+| `redmon2018` | A | 2018 | YOLOv3: An Incremental Improvement | grid-cell prediction + NMS | 1 |
+| `velickovic2018` | A | 2018 | Graph Attention Networks | edge attention heatmap | 1 |
+| `schlichtkrull2018` | A | 2018 | Modeling Relational Data with Graph Convolutional Networks (R-GCN) |  | 1 |
+| `radford2018` | A | 2018 | Improving Language Understanding by Generative Pre-Training |  | 1 |
 | `devlin2019` | A | 2019 | BERT: Pre-training of Deep Bidirectional Transformers | MLM on triage notes; frozen vs fine-tuned | 0 |
-| `radford2019` | A | 2019 | Language Models are Unsupervised Multitask Learners (GPT-2) |  | 0 |
-| `xu2019` | A | 2019 | How Powerful are Graph Neural Networks? (GIN) | WL-test failure case | 0 |
+| `radford2019` | A | 2019 | Language Models are Unsupervised Multitask Learners (GPT-2) |  | 1 |
+| `xu2019` | A | 2019 | How Powerful are Graph Neural Networks? (GIN) | WL-test failure case | 1 |
 | `wu2019` | A | 2019 | Simplifying Graph Convolutional Networks (SGC) |  | 0 |
-| `brown2020` | A | 2020 | Language Models are Few-Shot Learners (GPT-3) |  | 0 |
-| `kaplan2020` | A | 2020 | Scaling Laws for Neural Language Models | loss vs params/data log-log on tiny models | 0 |
-| `raffel2020` | A | 2020 | Exploring the Limits of Transfer Learning with a Unified Text-to-Text Transformer (T5) |  | 0 |
-| `tan2020` | A | 2020 | EfficientNet: Rethinking Model Scaling | compound-scaling grid | 0 |
-| `song2021` | A | 2021 | Score-Based Generative Modeling through Stochastic Differential Equations | Fig. 1 forward/reverse SDE on a 2D density | 0 |
-| `lewis2021` | A | 2021 | Retrieval-Augmented Generation for Knowledge-Intensive NLP |  | 0 |
-| `lester2021` | A | 2021 | The Power of Scale for Parameter-Efficient Prompt Tuning |  | 0 |
-| `zhou2021` | A | 2021 | Informer: Beyond Efficient Transformer for Long Sequence Time-Series Forecasting |  | 0 |
-| `gu2022` | A | 2022 | Efficiently Modeling Long Sequences with Structured State Spaces (S4) |  | 0 |
-| `liu2022` | A | 2022 | SCINet: Time Series Modeling and Forecasting with Sample Convolution and Interaction |  | 0 |
+| `brown2020` | A | 2020 | Language Models are Few-Shot Learners (GPT-3) |  | 1 |
+| `kaplan2020` | A | 2020 | Scaling Laws for Neural Language Models | loss vs params/data log-log on tiny models | 1 |
+| `raffel2020` | A | 2020 | Exploring the Limits of Transfer Learning with a Unified Text-to-Text Transformer (T5) |  | 1 |
+| `tan2020` | A | 2020 | EfficientNet: Rethinking Model Scaling | compound-scaling grid | 1 |
+| `song2021` | A | 2021 | Score-Based Generative Modeling through Stochastic Differential Equations | Fig. 1 forward/reverse SDE on a 2D density | 2 |
+| `lewis2021` | A | 2021 | Retrieval-Augmented Generation for Knowledge-Intensive NLP |  | 1 |
+| `lester2021` | A | 2021 | The Power of Scale for Parameter-Efficient Prompt Tuning |  | 2 |
+| `zhou2021` | A | 2021 | Informer: Beyond Efficient Transformer for Long Sequence Time-Series Forecasting |  | 2 |
+| `gu2022` | A | 2022 | Efficiently Modeling Long Sequences with Structured State Spaces (S4) |  | 1 |
+| `liu2022` | A | 2022 | SCINet: Time Series Modeling and Forecasting with Sample Convolution and Interaction |  | 1 |
 | `wei2023` | A | 2023 | Chain-of-Thought Prompting Elicits Reasoning in Large Language Models |  | 0 |
 | `yao2023` | A | 2023 | Tree of Thoughts: Deliberate Problem Solving with LLMs |  | 0 |
-| `muennighoff2023` | A | 2023 | MTEB: Massive Text Embedding Benchmark |  | 0 |
-| `kirillov2023` | A | 2023 | Segment Anything |  | 0 |
-| `gu2024` | A | 2024 | Mamba: Linear-Time Sequence Modeling with Selective State Spaces | selective-scan toy | 0 |
-| `huh2024` | A | 2024 | The Platonic Representation Hypothesis | cross-model kernel alignment, toy | 0 |
-| `ramdas2024` | A | 2024 | Hypothesis Testing with E-values | e-value vs p-value under optional stopping | 0 |
-| `deepseek2025` | A | 2025 | DeepSeek-R1 incentivizes reasoning in LLMs through reinforcement learning |  | 0 |
-| `edge2025` | A | 2025 | From Local to Global: A GraphRAG Approach |  | 0 |
-| `kozlowski2025` | A | 2025 | Semantic Structure in Large Language Model Embeddings |  | 0 |
-| `contrastive2025` | A | 2025 | A Statistical Theory of Contrastive Pre-training | spectral view, toy | 0 |
+| `muennighoff2023` | A | 2023 | MTEB: Massive Text Embedding Benchmark |  | 1 |
+| `kirillov2023` | A | 2023 | Segment Anything |  | 2 |
+| `gu2024` | A | 2024 | Mamba: Linear-Time Sequence Modeling with Selective State Spaces | selective-scan toy | 1 |
+| `huh2024` | A | 2024 | The Platonic Representation Hypothesis | cross-model kernel alignment, toy | 1 |
+| `ramdas2024` | A | 2024 | Hypothesis Testing with E-values | e-value vs p-value under optional stopping | 1 |
+| `deepseek2025` | A | 2025 | DeepSeek-R1 incentivizes reasoning in LLMs through reinforcement learning |  | 1 |
+| `edge2025` | A | 2025 | From Local to Global: A GraphRAG Approach |  | 1 |
+| `kozlowski2025` | A | 2025 | Semantic Structure in Large Language Model Embeddings |  | 1 |
+| `contrastive2025` | A | 2025 | A Statistical Theory of Contrastive Pre-training | spectral view, toy | 1 |
 | `luo2003` | B | 2003 | Measures of spatial accessibility to health care in a GIS environment (2SFCA) | two-step floating catchment on a synthetic grid | 0 |
-| `rajpurkar2017` | B | 2017 | CheXNet: Radiologist-Level Pneumonia Detection on Chest X-Rays | CheXNet in miniature: 2-class on patches with class-activation map | 0 |
-| `esteva2017` | B | 2017 | Dermatologist-level classification of skin cancer with deep neural networks | transfer vs scratch at 100/1k/10k patches | 0 |
+| `rajpurkar2017` | B | 2017 | CheXNet: Radiologist-Level Pneumonia Detection on Chest X-Rays | CheXNet in miniature: 2-class on patches with class-activation map | 1 |
+| `esteva2017` | B | 2017 | Dermatologist-level classification of skin cancer with deep neural networks | transfer vs scratch at 100/1k/10k patches | 1 |
 | `ravi2017` | B | 2017 | Deep Learning for Health Informatics |  | 0 |
-| `rajkomar2018` | B | 2018 | Scalable and accurate deep learning with electronic health records | FHIR-timeline figure as a plot; sequence of events → mortality | 0 |
+| `rajkomar2018` | B | 2018 | Scalable and accurate deep learning with electronic health records | FHIR-timeline figure as a plot; sequence of events → mortality | 1 |
 | `esteva2018` | B | 2018 | A guide to deep learning in healthcare |  | 0 |
 | `panch2018` | B | 2018 | Artificial intelligence, machine learning and health systems |  | 0 |
 | `sideygibbons2019` | B | 2019 | Machine learning in medicine: a practical introduction | GLM vs SVM vs ANN comparison table on screening (project 01) | 0 |
@@ -74,79 +74,79 @@ Kinds: **A** seminal method (builder reproduces a figure) · **B** clinical (bec
 | `jumper2021` | B | 2021 | Highly accurate protein structure prediction with AlphaFold | reference only — not reproducible at this scale | 0 |
 | `macnab2022` | B | 2022 | Bayesian disease mapping: Past, present, and future | BYM/CAR model on a synthetic 50-area grid | 0 |
 | `brodeur2024` | B | 2024 | Superhuman performance of a large language model on the reasoning tasks of a physician | what the benchmark measured vs what was claimed | 0 |
-| `nori2025` | B | 2025 | Sequential Diagnosis with Language Models | gatekeeper pattern; cost-vs-accuracy frontier | 0 |
-| `box1976` | C | 1976 | Science and Statistics | 'all models are wrong' — does the notebook say how this one is wrong? | 0 |
-| `breiman2001b` | C | 2001 | Statistical Modeling: The Two Cultures | Rashomon — interpretability claim from one model when many fit equally? | 0 |
-| `domingos2012` | C | 2012 | A Few Useful Things to Know about Machine Learning | which of the twelve folk-lessons does the notebook violate? | 0 |
-| `wasserstein2016` | C | 2016 | The ASA Statement on p-Values: Context, Process, and Purpose | ASA-1..6: p-value treated as evidence of importance, or absence of significance as absence of effect? | 0 |
-| `li2018` | C | 2018 | Deeper Insights into Graph Convolutional Networks for Semi-Supervised Learning | over-smoothing shown? | 0 |
-| `frankle2019` | C | 2019 | The Lottery Ticket Hypothesis | prune-and-rewind on a small MLP | 0 |
-| `shchur2019` | C | 2019 | Pitfalls of Graph Neural Network Evaluation | GNN comparison on a single split? | 0 |
-| `amrhein2019` | C | 2019 | Scientists rise up against statistical significance | dichotomania — 'significant / not significant' in Findings? | 0 |
-| `zeng2022` | C | 2022 | Are Transformers Effective for Time Series Forecasting? | DLinear beats the transformer on vitals | 0 |
-| `rajpurkar2022` | C | 2022 | AI in health and medicine | does the Clinical Reading say the result is retrospective and synthetic, and that the bar is prospective? | 0 |
+| `nori2025` | B | 2025 | Sequential Diagnosis with Language Models | gatekeeper pattern; cost-vs-accuracy frontier | 1 |
+| `box1976` | C | 1976 | Science and Statistics | 'all models are wrong' — does the notebook say how this one is wrong? | 1 |
+| `breiman2001b` | C | 2001 | Statistical Modeling: The Two Cultures | Rashomon — interpretability claim from one model when many fit equally? | 1 |
+| `domingos2012` | C | 2012 | A Few Useful Things to Know about Machine Learning | which of the twelve folk-lessons does the notebook violate? | 1 |
+| `wasserstein2016` | C | 2016 | The ASA Statement on p-Values: Context, Process, and Purpose | ASA-1..6: p-value treated as evidence of importance, or absence of significance as absence of effect? | 1 |
+| `li2018` | C | 2018 | Deeper Insights into Graph Convolutional Networks for Semi-Supervised Learning | over-smoothing shown? | 1 |
+| `frankle2019` | C | 2019 | The Lottery Ticket Hypothesis | prune-and-rewind on a small MLP | 1 |
+| `shchur2019` | C | 2019 | Pitfalls of Graph Neural Network Evaluation | GNN comparison on a single split? | 2 |
+| `amrhein2019` | C | 2019 | Scientists rise up against statistical significance | dichotomania — 'significant / not significant' in Findings? | 2 |
+| `zeng2022` | C | 2022 | Are Transformers Effective for Time Series Forecasting? | DLinear beats the transformer on vitals | 1 |
+| `rajpurkar2022` | C | 2022 | AI in health and medicine | does the Clinical Reading say the result is retrospective and synthetic, and that the bar is prospective? | 1 |
 | `dellacqua2023` | C | 2023 | Navigating the Jagged Technological Frontier | flag where builder difficulty (attempts) diverges from method difficulty | 0 |
-| `mirzadeh2024` | C | 2024 | GSM-Symbolic: Understanding the Limitations of Mathematical Reasoning in LLMs | LLM reasoning overclaim? | 0 |
-| `shalizi2024` | C | 2024 | The Truth about Linear Regression | are OLS coefficients called 'effects'? | 0 |
-| `chen2025` | C | 2025 | Reasoning Models Don't Always Say What They Think | CoT taken as faithful? | 0 |
+| `mirzadeh2024` | C | 2024 | GSM-Symbolic: Understanding the Limitations of Mathematical Reasoning in LLMs | LLM reasoning overclaim? | 1 |
+| `shalizi2024` | C | 2024 | The Truth about Linear Regression | are OLS coefficients called 'effects'? | 2 |
+| `chen2025` | C | 2025 | Reasoning Models Don't Always Say What They Think | CoT taken as faithful? | 1 |
 | `kalai2025` | C | 2025 | Why Language Models Hallucinate | did the gate reward padding over abstention? | 0 |
 | `turing1950` | D | 1950 | Computing Machinery and Intelligence |  | 0 |
 | `dean2004` | D | 2004 | MapReduce: Simplified Data Processing on Large Clusters |  | 0 |
-| `dekking2005` | D | 2005 | A Modern Introduction to Probability and Statistics |  | 0 |
-| `bishop2006` | D | 2006 | Pattern Recognition and Machine Learning / NN for Pattern Recognition |  | 0 |
-| `esl2009` | D | 2009 | The Elements of Statistical Learning (2e) |  | 0 |
-| `manning2009` | D | 2009 | Introduction to Information Retrieval |  | 0 |
-| `barber2015` | D | 2012 | Bayesian Reasoning and Machine Learning |  | 0 |
+| `dekking2005` | D | 2005 | A Modern Introduction to Probability and Statistics |  | 2 |
+| `bishop2006` | D | 2006 | Pattern Recognition and Machine Learning / NN for Pattern Recognition |  | 2 |
+| `esl2009` | D | 2009 | The Elements of Statistical Learning (2e) |  | 9 |
+| `manning2009` | D | 2009 | Introduction to Information Retrieval |  | 3 |
+| `barber2015` | D | 2012 | Bayesian Reasoning and Machine Learning |  | 2 |
 | `schmidhuber2014` | D | 2014 | Deep learning in neural networks: An overview |  | 0 |
 | `shalev2014` | D | 2014 | Understanding Machine Learning: From Theory to Algorithms |  | 0 |
 | `lecun2015` | D | 2015 | Deep learning (Nature review) |  | 0 |
-| `knaflic2015` | D | 2015 | Storytelling with Data | figure title = the finding | 0 |
+| `knaflic2015` | D | 2015 | Storytelling with Data | figure title = the finding | 1 |
 | `silver2016` | D | 2016 | Mastering the game of Go with deep neural networks and tree search |  | 0 |
 | `heylighen2016` | D | 2016 | Stigmergy as a universal coordination mechanism I | theoretical basis for the no-coordinator harness | 0 |
 | `goodfellow2016` | D | 2016 | Deep Learning |  | 0 |
-| `donoho2017` | D | 2017 | 50 Years of Data Science | six divisions → gds: tag | 0 |
-| `hamilton2018` | D | 2018 | Representation Learning on Graphs: Methods and Applications |  | 0 |
-| `ng2022` | D | 2018 | Machine Learning Yearning | error analysis; human-level performance | 0 |
-| `sutton2018` | D | 2018 | Reinforcement Learning: An Introduction |  | 0 |
-| `mohri2018` | D | 2018 | Foundations of Machine Learning (2e) |  | 0 |
-| `zheng2018` | D | 2018 | Feature Engineering for Machine Learning |  | 0 |
-| `jurafsky2018` | D | 2018 | Speech and Language Processing |  | 0 |
-| `mehta2019` | D | 2019 | A high-bias, low-variance introduction to Machine Learning for physicists | closest precedent: one dataset across every method, notebooks, domain register | 0 |
+| `donoho2017` | D | 2017 | 50 Years of Data Science | six divisions → gds: tag | 1 |
+| `hamilton2018` | D | 2018 | Representation Learning on Graphs: Methods and Applications |  | 1 |
+| `ng2022` | D | 2018 | Machine Learning Yearning | error analysis; human-level performance | 4 |
+| `sutton2018` | D | 2018 | Reinforcement Learning: An Introduction |  | 3 |
+| `mohri2018` | D | 2018 | Foundations of Machine Learning (2e) |  | 2 |
+| `zheng2018` | D | 2018 | Feature Engineering for Machine Learning |  | 2 |
+| `jurafsky2018` | D | 2018 | Speech and Language Processing |  | 2 |
+| `mehta2019` | D | 2019 | A high-bias, low-variance introduction to Machine Learning for physicists | closest precedent: one dataset across every method, notebooks, domain register | 3 |
 | `sutton2019` | D | 2019 | The Bitter Lesson |  | 0 |
-| `kochenderfer2019` | D | 2019 | Algorithms for Optimization |  | 0 |
-| `zhou2020` | D | 2020 | Graph neural networks: A review of methods and applications |  | 0 |
-| `roscher2020` | D | 2020 | Explainable Machine Learning for Scientific Insights and Discoveries |  | 0 |
-| `harris2020` | D | 2020 | Array programming with NumPy |  | 0 |
-| `deisenroth2020` | D | 2020 | Mathematics for Machine Learning |  | 0 |
-| `needham2020` | D | 2020 | Graph Algorithms |  | 0 |
-| `hardt2021` | D | 2021 | Patterns, Predictions, and Actions | predict → decide → act spine; causality from first principles | 0 |
-| `bronstein2021` | D | 2021 | Geometric Deep Learning: Grids, Groups, Graphs, Geodesics, and Gauges | symmetry map for modules 16–20 | 0 |
-| `lakshmanan2021` | D | 2021 | Machine Learning Design Patterns | pattern vocabulary: Reframing, Cascade, Neutral Class, Rebalancing, Useful Overfitting | 0 |
-| `hyndman2021` | D | 2021 | Forecasting: Principles and Practice (file: Advanced Forecasting) |  | 0 |
-| `murphy2022` | D | 2022 | Probabilistic Machine Learning: An Introduction |  | 0 |
+| `kochenderfer2019` | D | 2019 | Algorithms for Optimization |  | 4 |
+| `zhou2020` | D | 2020 | Graph neural networks: A review of methods and applications |  | 1 |
+| `roscher2020` | D | 2020 | Explainable Machine Learning for Scientific Insights and Discoveries |  | 2 |
+| `harris2020` | D | 2020 | Array programming with NumPy |  | 1 |
+| `deisenroth2020` | D | 2020 | Mathematics for Machine Learning |  | 3 |
+| `needham2020` | D | 2020 | Graph Algorithms |  | 2 |
+| `hardt2021` | D | 2021 | Patterns, Predictions, and Actions | predict → decide → act spine; causality from first principles | 4 |
+| `bronstein2021` | D | 2021 | Geometric Deep Learning: Grids, Groups, Graphs, Geodesics, and Gauges | symmetry map for modules 16–20 | 3 |
+| `lakshmanan2021` | D | 2021 | Machine Learning Design Patterns | pattern vocabulary: Reframing, Cascade, Neutral Class, Rebalancing, Useful Overfitting | 1 |
+| `hyndman2021` | D | 2021 | Forecasting: Principles and Practice (file: Advanced Forecasting) |  | 1 |
+| `murphy2022` | D | 2022 | Probabilistic Machine Learning: An Introduction |  | 3 |
 | `geron2022` | D | 2022 | Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow (3e) |  | 0 |
-| `kochenderfer2022` | D | 2022 | Algorithms for Decision Making | Bayes → PGM → decisions → RL ordering | 0 |
-| `huyen2022` | D | 2022 | Designing Machine Learning Systems |  | 0 |
-| `chen2022` | D | 2022 | Reliable Machine Learning |  | 0 |
-| `tunstall2022` | D | 2022 | Natural Language Processing with Transformers |  | 0 |
-| `munn2022` | D | 2022 | Explainable AI for Practitioners |  | 0 |
+| `kochenderfer2022` | D | 2022 | Algorithms for Decision Making | Bayes → PGM → decisions → RL ordering | 4 |
+| `huyen2022` | D | 2022 | Designing Machine Learning Systems |  | 2 |
+| `chen2022` | D | 2022 | Reliable Machine Learning |  | 2 |
+| `tunstall2022` | D | 2022 | Natural Language Processing with Transformers |  | 1 |
+| `munn2022` | D | 2022 | Explainable AI for Practitioners |  | 2 |
 | `taillard2022` | D | 2022 | Design of Heuristic Algorithms for Hard Optimization |  | 0 |
 | `barocas2023` | D | 2023 | Fairness and Machine Learning | Ch. 3 criteria table | 0 |
-| `murphy2023` | D | 2023 | Probabilistic Machine Learning: Advanced Topics |  | 0 |
-| `prince2023` | D | 2023 | Understanding Deep Learning |  | 0 |
-| `bellemare2023` | D | 2023 | Distributional Reinforcement Learning |  | 0 |
+| `murphy2023` | D | 2023 | Probabilistic Machine Learning: Advanced Topics |  | 2 |
+| `prince2023` | D | 2023 | Understanding Deep Learning |  | 4 |
+| `bellemare2023` | D | 2023 | Distributional Reinforcement Learning |  | 1 |
 | `geocomp2023` | D | 2023 | Geocomputation: a practical primer |  | 0 |
 | `ridnik2024` | D | 2024 | Code Generation with AlphaCodium: From Prompt Engineering to Flow Engineering | tests-first → pre-registration in the harness | 0 |
 | `anthropic2024` | D | 2024 | Building effective agents | evaluator–optimiser = builder/skeptic | 0 |
-| `fleuret2024` | D | 2024 | The Little Book of Deep Learning | format for LITTLE_BOOK.md | 0 |
+| `fleuret2024` | D | 2024 | The Little Book of Deep Learning | format for LITTLE_BOOK.md | 2 |
 | `azizov2024` | D | 2024 | A Decade of Deep Learning: A Survey on The Magnificent Seven |  | 0 |
-| `albrecht2024` | D | 2024 | Multi-Agent Reinforcement Learning |  | 0 |
-| `downey2024` | D | 2024 | Think Stats (3e) |  | 0 |
-| `novikov2025` | D | 2025 | AlphaEvolve: A coding agent for scientific and algorithmic discovery |  | 0 |
-| `liu2025` | D | 2025 | AlphaGo Moment for Model Architecture Discovery |  | 0 |
+| `albrecht2024` | D | 2024 | Multi-Agent Reinforcement Learning |  | 1 |
+| `downey2024` | D | 2024 | Think Stats (3e) |  | 2 |
+| `novikov2025` | D | 2025 | AlphaEvolve: A coding agent for scientific and algorithmic discovery |  | 1 |
+| `liu2025` | D | 2025 | AlphaGo Moment for Model Architecture Discovery |  | 1 |
 | `zhao2025` | D | 2025 | Absolute Zero: Reinforced Self-play Reasoning with Zero Data |  | 0 |
-| `gupta2025` | D | 2025 | A Comprehensive Survey of Retrieval-Augmented Generation |  | 0 |
-| `reddi2025` | D | 2025 | Machine Learning Systems |  | 0 |
+| `gupta2025` | D | 2025 | A Comprehensive Survey of Retrieval-Augmented Generation |  | 1 |
+| `reddi2025` | D | 2025 | Machine Learning Systems |  | 1 |
 | `pmle2025` | D | 2025 | Google PMLE Study Guide | coverage checklist for modules 03 and 29 | 0 |
 
 ## Flags

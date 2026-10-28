@@ -6,12 +6,12 @@
 
 ## Notebooks
 
-| # | Notebook | Band | Dataset | Clinical problem |
-|---|----------|------|---------|------------------|
-| 01.01 | [Self-Training & Co-Training](01_pseudo_labelling/01_self_training_co_training.ipynb) | P1 | `screening` | 50 of 500 patients adjudicated |
-| 02.01 | [Label Propagation & Spreading](02_graph_based/01_label_propagation_spreading.ipynb) | P1 | `screening` | Labels flow along patient similarity |
-| 03.01 | [TSVM, MixMatch & FixMatch](03_deep/01_tsvm_mixmatch_fixmatch.ipynb) | P1 | `imaging` | Lesion patches with few radiologist labels |
-| 03.02 | [Contrastive Learning — SimCLR, BYOL, MoCo](03_deep/02_contrastive_learning_simclr_byol_moco.ipynb) | P1 | `imaging` | Patch representations without labels |
+| # | Notebook | Band | Goal | Dataset | Study | Clinical problem |
+|---|----------|------|------|---------|-------|------------------|
+| 01.01 | [Self-Training & Co-Training](01_pseudo_labelling/01_self_training_co_training.ipynb) | P1 | predict | `screening` |  | 50 of 500 patients adjudicated |
+| 02.01 | [Label Propagation & Spreading](02_graph_based/01_label_propagation_spreading.ipynb) | P1 | predict | `screening` | `zhu2003` | Labels flow along patient similarity |
+| 03.01 | [TSVM, MixMatch & FixMatch](03_deep/01_tsvm_mixmatch_fixmatch.ipynb) | P1 | predict | `imaging` |  | Lesion patches with few radiologist labels |
+| 03.02 | [Contrastive Learning — SimCLR, BYOL, MoCo](03_deep/02_contrastive_learning_simclr_byol_moco.ipynb) | P1 | predict | `imaging` | `contrastive2025` | Patch representations without labels |
 
 ## Priority bands
 

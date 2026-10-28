@@ -6,16 +6,16 @@
 
 ## Notebooks
 
-| # | Notebook | Band | Dataset | Clinical problem |
-|---|----------|------|---------|------------------|
-| 01.01 | [Bayesian Inference Fundamentals](01_inference/01_bayesian_inference_fundamentals.ipynb) | P1 | `screening` | A test's true positive rate — full posterior |
-| 01.02 | [MCMC — Metropolis-Hastings & Gibbs](01_inference/02_mcmc_metropolis_hastings_gibbs.ipynb) | P3 | `trial` | Trial effect and variance jointly |
-| 01.03 | [HMC, NUTS & Variational Inference](01_inference/03_hmc_nuts_variational_inference.ipynb) | P3 | `trial` | A hierarchical multi-site trial |
-| 02.01 | [Bayesian Neural Networks](02_models/01_bayesian_neural_networks.ipynb) | P1 | `imaging` | Lesion classifier that knows when it doesn't know |
-| 02.02 | [Gaussian Processes (Deep Dive)](02_models/02_gaussian_processes_deep_dive.ipynb) | P4 | `vitals` | Vitals — kernels, posterior, forecasting |
-| 02.03 | [Bayesian Optimisation](02_models/03_bayesian_optimisation.ipynb) | P2 | `admissions` | Tuning a readmission model; dose finding |
-| 03.01 | [PyMC, Stan & NumPyro](03_programming/01_pymc_stan_numpyro.ipynb) | P3 | `trial` | A full trial model with covariates |
-| 03.02 | [Bayesian Nonparametrics](03_programming/02_bayesian_nonparametrics.ipynb) | P1 | `cohort` | Phenotypes without choosing k |
+| # | Notebook | Band | Goal | Dataset | Study | Clinical problem |
+|---|----------|------|------|---------|-------|------------------|
+| 01.01 | [Bayesian Inference Fundamentals](01_inference/01_bayesian_inference_fundamentals.ipynb) | P1 | predict | `screening` |  | A test's true positive rate — full posterior |
+| 01.02 | [MCMC — Metropolis-Hastings & Gibbs](01_inference/02_mcmc_metropolis_hastings_gibbs.ipynb) | P3 | explain | `trial` |  | Trial effect and variance jointly |
+| 01.03 | [HMC, NUTS & Variational Inference](01_inference/03_hmc_nuts_variational_inference.ipynb) | P3 | explain | `trial` |  | A hierarchical multi-site trial |
+| 02.01 | [Bayesian Neural Networks](02_models/01_bayesian_neural_networks.ipynb) | P1 | predict | `imaging` |  | Lesion classifier that knows when it doesn't know |
+| 02.02 | [Gaussian Processes (Deep Dive)](02_models/02_gaussian_processes_deep_dive.ipynb) | P4 | predict | `vitals` |  | Vitals — kernels, posterior, forecasting |
+| 02.03 | [Bayesian Optimisation](02_models/03_bayesian_optimisation.ipynb) | P2 | decide | `admissions` |  | Tuning a readmission model; dose finding |
+| 03.01 | [PyMC, Stan & NumPyro](03_programming/01_pymc_stan_numpyro.ipynb) | P3 | explain | `trial` |  | A full trial model with covariates |
+| 03.02 | [Bayesian Nonparametrics](03_programming/02_bayesian_nonparametrics.ipynb) | P1 | predict | `cohort` |  | Phenotypes without choosing k |
 
 ## Priority bands
 

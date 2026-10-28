@@ -6,11 +6,11 @@
 
 ## Notebooks
 
-| # | Notebook | Band | Dataset | Clinical problem |
-|---|----------|------|---------|------------------|
-| 01.01 | [PageRank & HITS](01_ranking/01_pagerank_hits.ipynb) | P4 | `referrals` | Which clinicians and units are the hubs of a referral network |
-| 02.01 | [Louvain, Label Propagation & Girvan–Newman](02_communities/01_louvain_label_propagation_girvannewman.ipynb) | P4 | `referrals` | Finding care communities |
-| 03.01 | [DeepWalk, Node2Vec & Graph Autoencoders](03_embeddings/01_deepwalk_node2vec_graph_autoencoders.ipynb) | P4 | `referrals` | Units as vectors |
+| # | Notebook | Band | Goal | Dataset | Study | Clinical problem |
+|---|----------|------|------|---------|-------|------------------|
+| 01.01 | [PageRank & HITS](01_ranking/01_pagerank_hits.ipynb) | P4 | explain | `referrals` | `page1998` | Which clinicians and units are the hubs of a referral network |
+| 02.01 | [Louvain, Label Propagation & Girvan–Newman](02_communities/01_louvain_label_propagation_girvannewman.ipynb) | P4 | explain | `referrals` |  | Finding care communities |
+| 03.01 | [DeepWalk, Node2Vec & Graph Autoencoders](03_embeddings/01_deepwalk_node2vec_graph_autoencoders.ipynb) | P4 | predict | `referrals` | `grover2016` | Units as vectors |
 
 ## Priority bands
 

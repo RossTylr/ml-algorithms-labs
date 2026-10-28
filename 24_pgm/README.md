@@ -6,14 +6,14 @@
 
 ## Notebooks
 
-| # | Notebook | Band | Dataset | Clinical problem |
-|---|----------|------|---------|------------------|
-| 01.01 | [Bayesian Networks & MRFs](01_networks/01_bayesian_networks_mrfs.ipynb) | P1 | `screening` | A diagnostic network of symptoms and causes; pixel labelling |
-| 01.02 | [Belief Propagation](01_networks/02_belief_propagation.ipynb) | P1 | `synthetic` | Inference on the diagnostic network |
-| 02.01 | [HMMs — Forward/Backward, Viterbi, Baum-Welch](02_sequential/01_hmms_forward_backward_viterbi_baum_welch.ipynb) | P2 | `vitals` | Hidden health state well/mild/severe from observed vitals |
-| 02.02 | [CRFs](02_sequential/02_crfs.ipynb) | P1 | `notes` | Entity labelling in notes |
-| 03.01 | [Kalman, EKF & UKF](03_filtering/01_kalman_ekf_ukf.ipynb) | P5 | `evac` | Tracking an evacuation vehicle from noisy position reports |
-| 03.02 | [Particle Filters](03_filtering/02_particle_filters.ipynb) | P4 | `vitals` | Patient state from intermittent observations |
+| # | Notebook | Band | Goal | Dataset | Study | Clinical problem |
+|---|----------|------|------|---------|-------|------------------|
+| 01.01 | [Bayesian Networks & MRFs](01_networks/01_bayesian_networks_mrfs.ipynb) | P1 | predict | `screening` |  | A diagnostic network of symptoms and causes; pixel labelling |
+| 01.02 | [Belief Propagation](01_networks/02_belief_propagation.ipynb) | P1 | predict | `synthetic` |  | Inference on the diagnostic network |
+| 02.01 | [HMMs — Forward/Backward, Viterbi, Baum-Welch](02_sequential/01_hmms_forward_backward_viterbi_baum_welch.ipynb) | P2 | decide | `vitals` |  | Hidden health state well/mild/severe from observed vitals |
+| 02.02 | [CRFs](02_sequential/02_crfs.ipynb) | P1 | predict | `notes` |  | Entity labelling in notes |
+| 03.01 | [Kalman, EKF & UKF](03_filtering/01_kalman_ekf_ukf.ipynb) | P5 | decide | `evac` |  | Tracking an evacuation vehicle from noisy position reports |
+| 03.02 | [Particle Filters](03_filtering/02_particle_filters.ipynb) | P4 | predict | `vitals` |  | Patient state from intermittent observations |
 
 ## Priority bands
 

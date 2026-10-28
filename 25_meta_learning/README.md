@@ -6,10 +6,10 @@
 
 ## Notebooks
 
-| # | Notebook | Band | Dataset | Clinical problem |
-|---|----------|------|---------|------------------|
-| 01.01 | [Siamese, Prototypical, Matching & Relation Networks](01_metric/01_siamese_prototypical_matching_relation_networks.ipynb) | P1 | `imaging` | 5-way 1-shot rare lesion recognition |
-| 02.01 | [MAML & Reptile](02_optimisation/01_maml_reptile.ipynb) | P1 | `imaging` | Adapting to a new site's scanner in 5 examples |
+| # | Notebook | Band | Goal | Dataset | Study | Clinical problem |
+|---|----------|------|------|---------|-------|------------------|
+| 01.01 | [Siamese, Prototypical, Matching & Relation Networks](01_metric/01_siamese_prototypical_matching_relation_networks.ipynb) | P1 | predict | `imaging` |  | 5-way 1-shot rare lesion recognition |
+| 02.01 | [MAML & Reptile](02_optimisation/01_maml_reptile.ipynb) | P1 | predict | `imaging` |  | Adapting to a new site's scanner in 5 examples |
 
 ## Priority bands
 

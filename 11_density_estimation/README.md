@@ -6,11 +6,11 @@
 
 ## Notebooks
 
-| # | Notebook | Band | Dataset | Clinical problem |
-|---|----------|------|---------|------------------|
-| 01.01 | [Bandwidth & Kernels](01_kde/01_bandwidth_kernels.ipynb) | P1 | `screening` | A biomarker's reference range by age |
-| 01.02 | [Multivariate KDE & Histograms](01_kde/02_multivariate_kde_histograms.ipynb) | P1 | `screening` | Two biomarkers jointly |
-| 02.01 | [GMM as Density & Normalising Flows](02_parametric_flows/01_gmm_as_density_normalising_flows.ipynb) | P1 | `synthetic` | A multimodal lab distribution |
+| # | Notebook | Band | Goal | Dataset | Study | Clinical problem |
+|---|----------|------|------|---------|-------|------------------|
+| 01.01 | [Bandwidth & Kernels](01_kde/01_bandwidth_kernels.ipynb) | P1 | predict | `screening` |  | A biomarker's reference range by age |
+| 01.02 | [Multivariate KDE & Histograms](01_kde/02_multivariate_kde_histograms.ipynb) | P1 | predict | `screening` |  | Two biomarkers jointly |
+| 02.01 | [GMM as Density & Normalising Flows](02_parametric_flows/01_gmm_as_density_normalising_flows.ipynb) | P1 | predict | `synthetic` |  | A multimodal lab distribution |
 
 ## Priority bands
 

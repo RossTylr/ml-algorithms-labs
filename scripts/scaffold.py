@@ -22,6 +22,12 @@ from nbformat.v4 import new_code_cell, new_markdown_cell, new_notebook
 
 ROOT = Path(__file__).resolve().parent.parent
 MANIFEST = ROOT / "curriculum" / "curriculum.yaml"
+LIBRARY = ROOT / "library" / "curated.yaml"
+GOALS = {"predict": "Predict — the model's job is accuracy on unseen patients; coefficients are not mechanisms.",
+         "explain": "Explain — the model's job is to say something true about the process; prediction is secondary.",
+         "decide": "Decide — the model feeds an action; the cost of being wrong in each direction matters more than accuracy."}
+GDS = {1: "Gathering, preparation, exploration", 2: "Representation and transformation", 3: "Computing with data",
+       4: "Data modelling", 5: "Visualisation and presentation", 6: "Science about data science"}
 
 
 def load_manifest() -> dict:
@@ -51,15 +57,32 @@ def slugify(title: str) -> str:
     return s.strip("_")
 
 
-def stub_notebook(m: dict, t: dict, nb: dict, meta: dict, bands: dict) -> nbformat.NotebookNode:
+def load_library() -> dict:
+    return yaml.safe_load(LIBRARY.read_text()) if LIBRARY.exists() else {}
+
+
+def stub_notebook(m: dict, t: dict, nb: dict, meta: dict, bands: dict, lib: dict | None = None) -> nbformat.NotebookNode:
     """The stub carries every gate-checked section with placeholders. Claude Code fills; validate.py checks."""
     band = nb.get("band", "P1")
     band_name = bands[band]["name"]
     band_q = bands[band]["question"]
     prereqs = ", ".join(m["prereqs"]) or "None"
     experiments = nb.get("experiments", [])
+    lib = lib or {}
     study = nb.get("study")
-    study_line = f"**Recreates (in spirit)**: {study}  \n" if study else ""
+    if study in lib:
+        e = lib[study]
+        study_line = f"**In the spirit of**: {e['authors']} ({e['year']}), *{e['title']}* — reproduce: {e.get('reproduce', '')}  \n"
+    elif study:
+        study_line = f"**In the spirit of**: {study}  \n"
+    else:
+        study_line = ""
+    goal = nb.get("goal", "predict"); gds = int(nb.get("gds", 4))
+    goal_line = f"**Goal**: `{goal}` — {GOALS[goal]}  \n**GDS division**: {gds} {GDS[gds]}  \n"
+    refs = [k for k in nb.get("refs", []) if k in lib]
+    if study in lib and study not in refs:
+        refs = [study] + refs
+    ref_lines = "\n".join(f"- {lib[k]['authors']} ({lib[k]['year']}). *{lib[k]['title']}*. `library:{k}`" for k in refs) or "- "
 
     cells = [
         new_markdown_cell(
@@ -67,6 +90,7 @@ def stub_notebook(m: dict, t: dict, nb: dict, meta: dict, bands: dict) -> nbform
             f"**Module**: {m['id']} {m['title']} · **Topic**: {t['title']} · **Notebook**: {nb['n']:02d}  \n"
             f"**Prerequisites**: {prereqs} · **Estimated time**: 60 min  \n"
             f"**Priority band**: {band} {band_name} — *{band_q}*  \n"
+            f"{goal_line}"
             f"{study_line}"
             f"**Dataset**: `{nb['dataset']}`"
         ),
@@ -136,7 +160,7 @@ def stub_notebook(m: dict, t: dict, nb: dict, meta: dict, bands: dict) -> nbform
             "---\n## 10. Connections\n\n- **Builds on**: \n- **Leads to**: \n- **Alternatives**: "
         ),
         new_markdown_cell("---\n## 11. Key Takeaways\n\n1. \n2. \n3. "),
-        new_markdown_cell("---\n## References\n\n- "),
+        new_markdown_cell("---\n## References\n\n" + ref_lines),
     ]
     nbk = new_notebook(cells=cells)
     nbk.metadata["ml_mastery"] = {
@@ -144,6 +168,8 @@ def stub_notebook(m: dict, t: dict, nb: dict, meta: dict, bands: dict) -> nbform
         "band": band,
         "dataset": nb["dataset"],
         "visuals_min": nb.get("visuals", 7),
+        "goal": goal, "gds": gds, "study": study, "refs": refs,
+        "experiments": nb.get("experiments", []),
         "status": "stub",
     }
     nbk.metadata["kernelspec"] = {"display_name": "ml-algorithms-labs", "language": "python", "name": "ml-algorithms-labs"}
@@ -162,7 +188,7 @@ def module_readme(m: dict, bands: dict) -> str:
         for nb in t["notebooks"]:
             p = f"{t['idx']:02d}_{t['slug']}/{nb['n']:02d}_{nb['slug']}.ipynb"
             rows.append(
-                f"| {t['idx']:02d}.{nb['n']:02d} | [{nb['title']}]({p}) | {nb['band']} | `{nb['dataset']}` | {nb['subject']} |"
+                f"| {t['idx']:02d}.{nb['n']:02d} | [{nb['title']}]({p}) | {nb['band']} | {nb.get('goal','')} | `{nb['dataset']}` | {('`'+nb['study']+'`') if nb.get('study') else ''} | {nb['subject']} |"
             )
     table = "\n".join(rows)
     prereqs = ", ".join(m["prereqs"]) or "None"
@@ -175,8 +201,8 @@ def module_readme(m: dict, bands: dict) -> str:
 
 ## Notebooks
 
-| # | Notebook | Band | Dataset | Clinical problem |
-|---|----------|------|---------|------------------|
+| # | Notebook | Band | Goal | Dataset | Study | Clinical problem |
+|---|----------|------|------|---------|-------|------------------|
 {table}
 
 ## Priority bands
@@ -210,6 +236,7 @@ def main() -> int:
     args = ap.parse_args()
 
     manifest = load_manifest()
+    lib = load_library()
     bands = manifest["priority_bands"]
     created = skipped = 0
 
@@ -226,7 +253,7 @@ def main() -> int:
                     continue
                 if not args.dry_run:
                     p.parent.mkdir(parents=True, exist_ok=True)
-                    nbformat.write(stub_notebook(m, t, nb, manifest["meta"], bands), p)
+                    nbformat.write(stub_notebook(m, t, nb, manifest["meta"], bands, lib), p)
                 created += 1
         if not args.dry_run:
             (ROOT / f"{m['id']}_{m['slug']}" / "README.md").write_text(module_readme(m, bands))

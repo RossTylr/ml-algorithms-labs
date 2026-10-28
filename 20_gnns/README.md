@@ -6,12 +6,12 @@
 
 ## Notebooks
 
-| # | Notebook | Band | Dataset | Clinical problem |
-|---|----------|------|---------|------------------|
-| 01.01 | [GCN & MPNN](01_message_passing/01_gcn_mpnn.ipynb) | P4 | `referrals` | Node classification on the referral network |
-| 01.02 | [GraphSAGE & GAT](01_message_passing/02_graphsage_gat.ipynb) | P4 | `referrals` | Inductive; attention on neighbours |
-| 01.03 | [GIN & Graph Transformers](01_message_passing/03_gin_graph_transformers.ipynb) | P2 | `synthetic` | Molecule-style graph-level tasks |
-| 02.01 | [TGN & Heterogeneous GNNs](02_advanced/01_tgn_heterogeneous_gnns.ipynb) | P4 | `referrals` | Evolving multi-type care networks |
+| # | Notebook | Band | Goal | Dataset | Study | Clinical problem |
+|---|----------|------|------|---------|-------|------------------|
+| 01.01 | [GCN & MPNN](01_message_passing/01_gcn_mpnn.ipynb) | P4 | predict | `referrals` | `kipf2017` | Node classification on the referral network |
+| 01.02 | [GraphSAGE & GAT](01_message_passing/02_graphsage_gat.ipynb) | P4 | predict | `referrals` | `velickovic2018` | Inductive; attention on neighbours |
+| 01.03 | [GIN & Graph Transformers](01_message_passing/03_gin_graph_transformers.ipynb) | P2 | decide | `synthetic` | `xu2019` | Molecule-style graph-level tasks |
+| 02.01 | [TGN & Heterogeneous GNNs](02_advanced/01_tgn_heterogeneous_gnns.ipynb) | P4 | predict | `referrals` |  | Evolving multi-type care networks |
 
 ## Priority bands
 

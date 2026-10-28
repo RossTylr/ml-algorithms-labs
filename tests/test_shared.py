@@ -29,3 +29,19 @@ def test_decision_boundary_draws():
     from sklearn.linear_model import LogisticRegression
     df = load_screening(n=200); X = df[["bm_01", "bm_02"]].values; y = df["disease"].values
     decision_boundary(LogisticRegression().fit(X, y), X, y)
+
+
+def test_manifest_cites_only_known_library_keys():
+    import subprocess, sys
+    r = subprocess.run([sys.executable, "scripts/library.py"], capture_output=True, text=True, cwd=os.path.join(os.path.dirname(__file__), ".."))
+    assert r.returncode == 0, r.stderr
+
+
+def test_every_notebook_has_goal_and_gds():
+    import yaml
+    man = yaml.safe_load(open(os.path.join(os.path.dirname(__file__), "..", "curriculum", "curriculum.yaml")))
+    for m in man["modules"]:
+        for t in m["topics"]:
+            for nb in t["notebooks"]:
+                assert nb.get("goal") in {"predict", "explain", "decide"}, nb["title"]
+                assert nb.get("gds") in {1, 2, 3, 4, 5, 6}, nb["title"]

@@ -6,13 +6,13 @@
 
 ## Notebooks
 
-| # | Notebook | Band | Dataset | Clinical problem |
-|---|----------|------|---------|------------------|
-| 01.01 | [LSA](01_topic_models/01_lsa.ipynb) | P1 | `notes` | Triage notes — TF-IDF + SVD |
-| 01.02 | [LDA](01_topic_models/02_lda.ipynb) | P1 | `notes` | Discharge summaries — Dirichlet priors |
-| 01.03 | [NMF, CTM & BERTopic](01_topic_models/03_nmf_ctm_bertopic.ipynb) | P1 | `notes` | Parts-based; correlated complaint topics; transformer-based |
-| 02.01 | [Word2Vec](02_embeddings/01_word2vec.ipynb) | P1 | `notes` | Clinical vocabulary geometry |
-| 02.02 | [GloVe & FastText](02_embeddings/02_glove_fasttext.ipynb) | P1 | `notes` | Co-occurrence; subwords for misspelt drug names |
+| # | Notebook | Band | Goal | Dataset | Study | Clinical problem |
+|---|----------|------|------|---------|-------|------------------|
+| 01.01 | [LSA](01_topic_models/01_lsa.ipynb) | P1 | predict | `notes` |  | Triage notes — TF-IDF + SVD |
+| 01.02 | [LDA](01_topic_models/02_lda.ipynb) | P1 | predict | `notes` |  | Discharge summaries — Dirichlet priors |
+| 01.03 | [NMF, CTM & BERTopic](01_topic_models/03_nmf_ctm_bertopic.ipynb) | P1 | predict | `notes` |  | Parts-based; correlated complaint topics; transformer-based |
+| 02.01 | [Word2Vec](02_embeddings/01_word2vec.ipynb) | P1 | predict | `notes` |  | Clinical vocabulary geometry |
+| 02.02 | [GloVe & FastText](02_embeddings/02_glove_fasttext.ipynb) | P1 | predict | `notes` |  | Co-occurrence; subwords for misspelt drug names |
 
 ## Priority bands
 

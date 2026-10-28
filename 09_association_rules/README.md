@@ -6,13 +6,13 @@
 
 ## Notebooks
 
-| # | Notebook | Band | Dataset | Clinical problem |
-|---|----------|------|---------|------------------|
-| 01.01 | [Support, Confidence & Lift](01_apriori/01_support_confidence_lift.ipynb) | P2 | `prescribing` | Co-prescription patterns across 10k patients |
-| 01.02 | [Frequent Itemset Generation](01_apriori/02_frequent_itemset_generation.ipynb) | P2 | `prescribing` | The lattice |
-| 02.01 | [FP-Tree & Vertical Formats](02_fp_eclat/01_fp_tree_vertical_formats.ipynb) | P2 | `prescribing` | Same, no candidate generation |
-| 03.01 | [Conviction, Leverage & Zhang](03_metrics_sequential/01_conviction_leverage_zhang.ipynb) | P2 | `prescribing` | Ranking adverse-event rules |
-| 03.02 | [GSP & PrefixSpan](03_metrics_sequential/02_gsp_prefixspan.ipynb) | P2 | `prescribing` | Prescription sequences over time — escalation patterns |
+| # | Notebook | Band | Goal | Dataset | Study | Clinical problem |
+|---|----------|------|------|---------|-------|------------------|
+| 01.01 | [Support, Confidence & Lift](01_apriori/01_support_confidence_lift.ipynb) | P2 | explain | `prescribing` | `FAERS-style pharmacovigilance signals` | Co-prescription patterns across 10k patients |
+| 01.02 | [Frequent Itemset Generation](01_apriori/02_frequent_itemset_generation.ipynb) | P2 | explain | `prescribing` |  | The lattice |
+| 02.01 | [FP-Tree & Vertical Formats](02_fp_eclat/01_fp_tree_vertical_formats.ipynb) | P2 | decide | `prescribing` |  | Same, no candidate generation |
+| 03.01 | [Conviction, Leverage & Zhang](03_metrics_sequential/01_conviction_leverage_zhang.ipynb) | P2 | decide | `prescribing` |  | Ranking adverse-event rules |
+| 03.02 | [GSP & PrefixSpan](03_metrics_sequential/02_gsp_prefixspan.ipynb) | P2 | decide | `prescribing` |  | Prescription sequences over time — escalation patterns |
 
 ## Priority bands
 

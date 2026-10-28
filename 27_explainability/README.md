@@ -6,14 +6,14 @@
 
 ## Notebooks
 
-| # | Notebook | Band | Dataset | Clinical problem |
-|---|----------|------|---------|------------------|
-| 01.01 | [Feature Importance — MDI, Permutation, Drop-Column](01_global/01_feature_importance_mdi_permutation_drop_column.ipynb) | P2 | `admissions` | Readmission — three methods disagree |
-| 01.02 | [PDP & ICE](01_global/02_pdp_ice.ipynb) | P2 | `admissions` | Age and severity effects |
-| 02.01 | [SHAP — Theory & Practice](02_local/01_shap_theory_practice.ipynb) | P2 | `admissions` | Why this patient was flagged |
-| 02.02 | [LIME, Anchors & Counterfactuals](02_local/02_lime_anchors_counterfactuals.ipynb) | P2 | `admissions` | One flag, three explanations; what would un-flag them |
-| 03.01 | [Grad-CAM, Integrated Gradients & Attention Viz](03_deep/01_grad_cam_integrated_gradients_attention_viz.ipynb) | P1 | `imaging` | Where the CNN looked; which words the transformer weighed |
-| 03.02 | [Mechanistic Interpretability](03_deep/02_mechanistic_interpretability.ipynb) | P1 | `synthetic` | Circuits in a small diagnostic network |
+| # | Notebook | Band | Goal | Dataset | Study | Clinical problem |
+|---|----------|------|------|---------|-------|------------------|
+| 01.01 | [Feature Importance — MDI, Permutation, Drop-Column](01_global/01_feature_importance_mdi_permutation_drop_column.ipynb) | P2 | explain | `admissions` |  | Readmission — three methods disagree |
+| 01.02 | [PDP & ICE](01_global/02_pdp_ice.ipynb) | P2 | explain | `admissions` |  | Age and severity effects |
+| 02.01 | [SHAP — Theory & Practice](02_local/01_shap_theory_practice.ipynb) | P2 | explain | `admissions` |  | Why this patient was flagged |
+| 02.02 | [LIME, Anchors & Counterfactuals](02_local/02_lime_anchors_counterfactuals.ipynb) | P2 | explain | `admissions` |  | One flag, three explanations; what would un-flag them |
+| 03.01 | [Grad-CAM, Integrated Gradients & Attention Viz](03_deep/01_grad_cam_integrated_gradients_attention_viz.ipynb) | P1 | explain | `imaging` | `roscher2020` | Where the CNN looked; which words the transformer weighed |
+| 03.02 | [Mechanistic Interpretability](03_deep/02_mechanistic_interpretability.ipynb) | P1 | explain | `synthetic` |  | Circuits in a small diagnostic network |
 
 ## Priority bands
 

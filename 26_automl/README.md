@@ -6,11 +6,11 @@
 
 ## Notebooks
 
-| # | Notebook | Band | Dataset | Clinical problem |
-|---|----------|------|---------|------------------|
-| 01.01 | [Grid, Random & Bayesian (Optuna)](01_hpo/01_grid_random_bayesian_optuna.ipynb) | P2 | `admissions` | Readmission model tuning |
-| 01.02 | [Hyperband & ASHA](01_hpo/02_hyperband_asha.ipynb) | P2 | `admissions` | Early stopping |
-| 02.01 | [NAS, DARTS & AutoML Frameworks](02_nas/01_nas_darts_automl_frameworks.ipynb) | P1 | `imaging` | Searching a lesion classifier; auto-sklearn on admissions |
+| # | Notebook | Band | Goal | Dataset | Study | Clinical problem |
+|---|----------|------|------|---------|-------|------------------|
+| 01.01 | [Grid, Random & Bayesian (Optuna)](01_hpo/01_grid_random_bayesian_optuna.ipynb) | P2 | decide | `admissions` |  | Readmission model tuning |
+| 01.02 | [Hyperband & ASHA](01_hpo/02_hyperband_asha.ipynb) | P2 | decide | `admissions` |  | Early stopping |
+| 02.01 | [NAS, DARTS & AutoML Frameworks](02_nas/01_nas_darts_automl_frameworks.ipynb) | P1 | predict | `imaging` | `novikov2025` | Searching a lesion classifier; auto-sklearn on admissions |
 
 ## Priority bands
 

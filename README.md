@@ -1,114 +1,106 @@
-# ML Mastery — Health Data Science Edition
+# ml-algorithms-labs
 
-> Every major machine-learning algorithm, taught through a clinical problem.
-> 30 modules · 266 notebooks · three explanation registers · visual-first · machine-gated · paper-anchored.
+A curriculum of machine-learning algorithms, each taught through a clinical problem. Thirty modules, 266 notebooks, three explanation registers in every notebook, visual-first, and gated by a validator rather than by opinion.
 
-## Why this repo exists
+Built and maintained by Ross Taylor as a working health-data-science reference and a structured route through the field. Synthetic data throughout; nothing here is, or derives from, a real patient record.
 
-Most ML curricula teach the algorithm, then bolt on a toy example. This one starts from the clinic:
-*does this patient have the condition? what should we do? did it work? can the system run safely?
-does it hold up under a mass-casualty clock?* Each notebook answers one of those questions with one method,
-on synthetic data whose generating mechanism is known — so you can check the algorithm against the truth.
+## Premise
+
+Most machine-learning curricula teach the algorithm and then attach a toy example. This one starts from the clinic. Each notebook poses one of five questions — does this patient have the condition; what should be done and what will follow; did the intervention work and for whom; can the system run safely at scale; does it hold under austerity and a hostile clock — and answers it with one method on data whose generating mechanism is known. Because the mechanism is known, every method can be checked against the truth rather than against a benchmark score.
+
+The military-medicine thread is woven through the other modules rather than isolated: triage imbalance, casualty-evacuation reinforcement learning, offline note models, deployed monitoring, facility placement.
 
 ## How a notebook reads
 
-Every concept is explained three ways, side by side:
+Every concept is explained three ways, side by side, in the same cell block.
 
-| Register | Audience | Sounds like |
+| Register | Written for | Sounds like |
 |---|---|---|
-| 🗣️ **Plain** | a nurse, a section commander, a manager | "Imagine a screening test for a disease one person in a hundred has…" |
-| 💻 **Developer** | a software engineer new to ML | pseudocode, the API, what it costs in time and memory |
-| 🔬 **Technical** | a masters student, a paper reader | notation, the objective, the assumptions, convergence |
+| Plain | a nurse, a section commander, a manager | an analogy that works first time, with no undefined term |
+| Developer | an engineer new to ML | pseudocode, the API, cost in time and memory |
+| Technical | a postgraduate or a paper reader | notation, the objective, the assumptions, convergence |
 
-Then the method is **built from scratch**, run with the library, **pushed until it breaks**, and the experiments
-close with *Results → Findings → Implications → Considerations* and a **Clinical Reading**: what a clinician
-would do differently, and what they must not conclude.
+The method is then built from scratch, run with the library implementation, and pushed until it fails. Experiments are pre-registered in the manifest. Each notebook closes with a structured block — results, findings, implications, considerations — and a clinical reading stating what a clinician would do differently and what they must not conclude.
 
-## Priority bands
+Where a notebook recreates a known study it says so, as "in the spirit of", on synthetic data, with no claim to the paper's figures.
 
-| Band | Question |
-|---|---|
-| **P1 Diagnostics** | Does this person have the condition? How sure are we? |
-| **P2 Treatment** | What should we do, and what will happen if we do? |
-| **P3 Efficacy** | Did the intervention work, for whom, by how much? |
-| **P4 Health tech** | Can the system run safely, at scale, in real time? |
-| **P5 Military thread** | Does it hold under austerity, mass casualty and a hostile clock? |
+## Structure
 
-P5 is woven through the other modules (triage imbalance, evacuation RL, offline note models, deployed
-monitoring) rather than quarantined in its own module.
-
-## The companion datasets
-
-All synthetic, all seeded, all with a known mechanism. `datasets/__init__.py`.
-
-| Dataset | Band | What it is |
+| Area | Modules | Status |
 |---|---|---|
-| `screening` | P1 | biomarker panel + disease status; two strong markers, three weak, one collinear pair |
-| `admissions` | P2 | acute admissions — LOS, readmission, mortality; repeat patients; a leaking column on purpose |
-| `trial` | P3 | two-arm RCT with heterogeneous effect, adherence, censoring; true effect known |
-| `vitals` | P4 | hourly HR/RR/SpO₂/SBP/temp; labelled deterioration onsets; injected sensor faults |
-| `prescribing` | P2 | medication baskets with comorbidities; adverse-event flags on known risky pairs |
-| `cohort` | P1 | population records with five latent risk segments |
-| `notes` | P1 | template-generated triage notes with urgency and disposition |
-| `referrals` | P4 | clinician/team referral network with site communities and specialty hubs |
-| `imaging` | P1 | 16×16 lesion patches with ground-truth masks |
-| `evac` | P5 | casualty evacuation grid — terrain, threat lanes, Role 1, Role 2, a clock |
+| Foundations | 00 mathematics, 01 programming, 02 statistics, 03 data engineering | Tier 1 |
+| Core supervised | 04 regression, 05 classification, 06 ensembles, 29 evaluation | Tier 1 |
+| Unsupervised | 07 clustering, 08 dimensionality reduction, 09 association, 10 anomaly, 11 density, 12 text, 13 graphs, 14 semi-supervised | Tier 2–3 |
+| Deep learning | 15 foundations, 16 CNNs, 17 sequences, 18 transformers, 19 generative, 20 GNNs | Tier 2–3 |
+| Advanced | 21 reinforcement learning, 22 time series, 23 Bayesian, 24 graphical models, 25 meta-learning, 26 AutoML, 27 explainability, 28 specialised | Tier 2–3 |
 
-Where a notebook recreates a known study it says so in the manifest (`study:`) — *in the spirit of*,
-with synthetic data, never claiming the paper's numbers.
+The full table is in [INDEX.md](INDEX.md). Tier 1 is built first.
 
-## Modules
+## Datasets
 
-See [INDEX.md](INDEX.md) for the full table. Tier 1 (build first): **00–06 and 29** — foundations, regression,
-classification, ensembles, evaluation. Tier 2: clustering, dimensionality reduction, association rules,
-anomaly detection, neural foundations, CNNs, time series. Tier 3: everything else.
+All synthetic, seeded, and generated from a known mechanism in `datasets/`.
+
+| Dataset | Use | What it holds |
+|---|---|---|
+| `screening` | diagnostics | biomarker panel with disease status; two strong markers, three weak, one collinear pair |
+| `admissions` | treatment, operations | acute admissions with length of stay, readmission and mortality; repeat patients; one column that leaks by design |
+| `trial` | efficacy | two-arm RCT with heterogeneous effect, adherence and censoring; true effect known |
+| `vitals` | monitoring | hourly observations with labelled deterioration onsets and injected sensor faults |
+| `prescribing` | treatment | medication baskets with comorbidities and adverse-event flags |
+| `cohort` | population health | five latent risk segments |
+| `notes` | text | template-generated triage notes with urgency and disposition |
+| `referrals` | networks | clinician and team referral graph with site communities |
+| `imaging` | vision | small lesion patches with ground-truth masks |
+| `evac` | military thread | casualty-evacuation grid with terrain, threat lanes and a clock |
+| `areas` | spatial | small-area counts with spatial and unstructured risk; facility sites |
+
+`datasets.baselines` provides rule-based clinician proxies so that "better than a clinician" has a number.
+
+## The library
+
+A curated collection of papers underpins the curriculum (`library/`). Each notebook's `study:` field names the paper whose central figure it reproduces; `refs:` populate the References cell; the critique papers — on p-values, significance, the two cultures, GNN evaluation, time-series baselines, hallucination — are the reviewer's named checks. `library/INDEX.md` lists the catalogue and the two planning documents record how it was folded in.
+
+## Build process
+
+The manifest `curriculum/curriculum.yaml` is the single source of truth. A script generates the tree and the stubs; a validator gates each notebook; a ledger records every attempt. There is no other process.
+
+```
+python scripts/scaffold.py                       # idempotent; stubs for anything missing
+python scripts/next.py                           # next unbuilt notebook in build order
+python scripts/validate.py <path>                # gates G1–G14; --execute runs the notebook
+python scripts/ledger.py summary                 # LEDGER.md
+python scripts/little_book.py                    # LITTLE_BOOK.md from everything built
+```
+
+Gates: title metadata, objectives, setup and seed, three registers, visual count, failure modes, the closing block, the clinical reading, connections, takeaways, no cross-notebook imports, clean execution, specific abstention, pre-registered experiments. An abstention — a stated reason why a figure or experiment cannot be done honestly on synthetic data — is accepted by the gate; padding is not.
+
+With Claude Code, `/build-next` runs the loop end to end: a builder fills the next stub, the validator gates it, a reviewer with no sight of the build attacks it, the ledger records the outcome, and the notebook is committed. `HARNESS.md` describes the design and the reasoning behind it.
 
 ## Quick start
 
 ```bash
-git clone https://github.com/RossTylr/ml-algorithms-labs && cd ml-algorithms-labs
-python -m venv .venv && source .venv/bin/activate
-pip install -r requirements/base.txt          # Tier 1 needs nothing more
-pytest -q                                     # generators and shared utilities
-python scripts/scaffold.py                    # idempotent; creates any missing stubs
-python scripts/validate.py --all --built-only # gate everything that has been built
+git clone https://github.com/RossTylr/ml-algorithms-labs.git
+cd ml-algorithms-labs
+python3 -m venv .venv && source .venv/bin/activate
+pip install -r requirements/base.txt
+pytest -q
+python scripts/next.py
 ```
 
-## Building a notebook
-
-The manifest is the plan; the validator is the review. There is no other process.
-
-```bash
-python scripts/scaffold.py                                    # stubs exist for every notebook
-# fill 04_regression/01_simple_linear/01_ols_intuition_mathematics.ipynb
-python scripts/validate.py 04_regression/01_simple_linear/01_ols_intuition_mathematics.ipynb
-python scripts/validate.py <same> --execute                   # also runs it (G12)
-git commit -am "nb(04.01.01): OLS intuition — PASS G1–G12"
-```
-
-Gates (from `curriculum/curriculum.yaml`): title metadata · objectives · setup/seed · three registers ·
-visual count · failure modes · RFI block · clinical reading · connections · takeaways · no cross-notebook
-imports · executes clean · **specific abstention** · **pre-registered experiments**. A warning (not a failure)
-flags figure titles that describe rather than state a finding.
-
-## The library
-
-Ross's paper collection is catalogued in `library/` (140 curated of 292 files). Each notebook's `study:` names the
-paper whose central figure it reproduces *in spirit*; `refs:` fill the References cell; the critique papers are the
-skeptic's named checks. See `library/INDEX.md` and `HARNESS.md` §6b–6c for how the library shaped the loop.
+Tier 1 needs no further dependencies. Optional extras for later modules are listed in `requirements/`.
 
 ## Layout
 
 ```
-curriculum/curriculum.yaml   the manifest — modules, topics, notebooks, subjects, bands, gates
-scripts/scaffold.py          manifest → directory tree, stubs, READMEs, INDEX.md
-scripts/validate.py          the gate
-shared/                      plotting · evaluation · explanation · experiment · rl
-datasets/                    ten clinical generators + synthetic/
-NN_module/MM_topic/KK_notebook.ipynb
-tests/
+curriculum/curriculum.yaml   manifest
+library/                     paper catalogue and planning documents
+scripts/                     scaffold, validate, next, ledger, little_book, library
+shared/                      plotting, evaluation, explanation, experiment, rl
+datasets/                    generators, synthetic variants, clinician baselines
+NN_module/MM_topic/KK.ipynb  notebooks
+tests/                       generators, utilities, gates, harness
 ```
 
 ## Licence
 
-MIT. Synthetic data throughout; nothing here is or derives from real patient records.
+MIT.

@@ -1,178 +1,129 @@
-# HARNESS.md — Building ml-algorithms-labs with agents, loops and minimal prompts
+# Harness
 
-> Ideation + the executable minimum. Decisions are recorded inline (D-n) with reasoning.
-> Companion to CLAUDE.md. CLAUDE.md governs *what a notebook is*; this governs *how the loop runs*.
+How the notebooks get built: the loop, the agents, the gates, and the learning cadence that runs alongside. Companion to `CLAUDE.md`, which governs what a notebook is; this document governs how the loop runs. Design decisions are recorded inline as D-1 to D-6 with their reasoning.
 
----
+## 1. Origin and what was kept
 
-## 0. What the quant-desk pattern actually contains
+The design borrows from the "AI research desk" pattern — a lead that plans, agents that run tests, a sceptic that tries to break every result, a ledger that remembers what failed. Stripped of its product, four mechanisms survive scrutiny and three do not.
 
-The "AI quant research team" setup has five agents and a terminal. Strip the product and four mechanisms remain:
-
-| Mechanism | In the desk | Worth stealing? | Our analogue |
-|---|---|---|---|
-| **Fixed verdict contract** | DATA VALIDATED / TRADE-OFF / NO EDGE, computed by the server, never by the agent | **Yes** | `scripts/validate.py` → BUILT / REVISE / BLOCKED. Nobody argues with it. |
-| **Role separation** | the agent that had the idea never grades it; the skeptic runs on the strongest model | **Yes** | a **skeptic** subagent in a fresh context that never saw the build — the "held-out window" for prose |
-| **Ledger memory** | `research.md`: every test logged with verdict before any summary; NO EDGE is a result, never retest without a new reason | **Yes** | `ledger.jsonl` + `LEDGER.md`: every attempt, every gate, every skeptic finding; 3 fails → BLOCKED, don't retry without a manifest change |
-| **Sweep, never guess** | twenty configurations from one prompt; a real edge is a plateau | **Yes, already in** | `experiments:` in the manifest demand parameter sweeps and failure modes per notebook |
-| Lead that plans | Opus turns a question into a plan, decides what runs next | **No** | the manifest is the plan; `scripts/next.py` is deterministic. A planning agent is RULE 1 drift. |
-| Librarian | searches a strategy library | **No** | `study:` is pre-selected per notebook; references are the builder's job inside the notebook |
-| Scout checks data first | confirm the universe before testing | **Partly** | `tests/` already proves every generator. A per-notebook scout is ceremony. |
-
-**D-1** Two agents, not five: **builder** and **skeptic**. Everything else is a script or the manifest.
-*Reason*: each additional seat is a place for process to start generating work. Two is the minimum that gives role separation.
-
-**D-2** The skeptic may only ever output `PASS` or `REVISE + ≤3 findings`, scoped to the notebook in hand.
-*Reason*: a skeptic that can say "you should also add a notebook on X" is a planner wearing a hat.
-
----
-
-## 1. The loop
-
-```
-                ┌──────────────────────────────────────────────────────────────┐
-                │  scripts/next.py  → path of next unbuilt stub (build order)  │
-                └──────────────┬───────────────────────────────────────────────┘
-                               ▼
-   ┌───────────┐   fill   ┌─────────┐  G1–G12  ┌──────────┐  fresh ctx  ┌─────────┐
-   │ stub      │ ───────▶ │ builder │ ───────▶ │ validate │ ──────────▶ │ skeptic │
-   └───────────┘          └─────────┘          └──────────┘             └─────────┘
-                               ▲                    │ FAIL                   │ REVISE (≤3)
-                               └────────────────────┴────────────────────────┘
-                                          max 2 revision cycles, then BLOCKED
-                               │ PASS + PASS
-                               ▼
-                   ┌────────────────────────────┐
-                   │ ledger.jsonl ← append       │
-                   │ git commit  "nb(NN.MM.KK)"  │
-                   │ learn/queue ← quiz + digest │
-                   └────────────────────────────┘
-```
-
-Verdicts (the contract):
-
-| Verdict | Meaning | Who decides |
+| Mechanism | Kept | Form here |
 |---|---|---|
-| **BUILT** | all gates pass; skeptic found nothing it could substantiate | `validate.py` AND skeptic |
-| **REVISE** | a gate failed, or skeptic has ≤3 substantiated findings | either |
-| **BLOCKED** | 3 attempts failed, or a dependency cannot be installed | `loop.sh` |
+| Fixed verdict contract — the verdict is computed, never argued | Yes | `scripts/validate.py` returns BUILT, REVISE or BLOCKED |
+| Role separation — the agent that built the work never grades it | Yes | a reviewer in a fresh context that has not seen the build |
+| Ledger memory — every attempt logged with its verdict; a failure is a result, not retried without a new reason | Yes | `ledger.jsonl` and `LEDGER.md`; three failures block the notebook until the manifest changes |
+| Sweep, never guess — one configuration proves nothing | Already present | the manifest's pre-registered experiments require sweeps and failure modes |
+| A lead that plans | No | the manifest is the plan and `scripts/next.py` is deterministic; a planning agent generates work, which is the drift the harness exists to prevent |
+| A librarian | No | each notebook's `study:` and `refs:` are set in advance |
+| A scout that checks data first | No | the generators are proven once, in `tests/` |
 
-**D-3** `validate.py` runs *before* the skeptic. *Reason*: don't spend the expensive model on a notebook with no figures.
+**D-1.** Two agents — a builder and a reviewer — and nothing else. Each additional seat is a place for process to begin producing tasks. Two is the minimum that gives role separation.
 
-**D-4** Revision goes back to the **same builder context** (via `SendMessage`/resume), not a new one. *Reason*: it has the notebook loaded; a fresh builder would re-read 200 cells.
+**D-2.** The reviewer may output only PASS, or REVISE with at most three substantiated findings, scoped to the notebook in hand. A reviewer that can say "a notebook on X is also needed" is a planner by another name.
 
----
+## 2. The loop
 
-## 2. Three harness tiers — demo in this order
-
-### T0 — bash + headless Claude (demo tonight)
-```bash
-scripts/loop.sh 3          # build the next 3 notebooks, sequentially
 ```
-One `claude -p` call per notebook. No subagents, no skeptic. Measures the floor: can one prompt + CLAUDE.md + the stub produce a gate-passing notebook? Record tokens, wall time, first-attempt gate pass rate.
-
-### T1 — Claude Code subagents + skill (the working configuration)
+next.py ──> stub ──> builder ──> validate.py ──> reviewer ──> ledger ──> commit
+                        ^            |  FAIL         |  REVISE
+                        └────────────┴───────────────┘
+                              at most two revision cycles, then BLOCKED
 ```
-.claude/agents/builder.md     model: sonnet   tools: Read Write Edit Bash NotebookEdit
-.claude/agents/skeptic.md     model: opus     tools: Read Bash(validate only)
-.claude/skills/build-next/    /build-next → next.py → builder → validate → skeptic → ledger → commit
-```
-Prompt from you: `/build-next` (or `/build-next 5`). That is the whole interface.
 
-### T2 — parallel seats by module (only if T1 pass rate > 80%)
-Notebooks are independent by construction (HC-1), so N builders can run in N git worktrees on N modules with **no coordinator** — `next.py --module 04` gives each seat its own queue. A merge is a merge of disjoint files.
-**D-5** Parallelism is allowed; a coordinator is not. If two seats ever need to talk, the design is wrong.
+| Verdict | Meaning | Decided by |
+|---|---|---|
+| BUILT | every gate passes and the reviewer found nothing it could substantiate | validator and reviewer |
+| REVISE | a gate failed, or the reviewer has one to three substantiated findings | either |
+| BLOCKED | three attempts failed, or a dependency cannot be installed | the loop |
 
-### Unattended — scheduled task
-A nightly Claude Code scheduled task runs `/build-next 4` at 02:00. Morning: ledger shows 4 lines, `learn/queue` shows 4 items. That is the "let it run" mode. Daily cap is the token budget, not a count.
+**D-3.** The validator runs before the reviewer, so the expensive model is not spent on a notebook with no figures.
 
----
+**D-4.** Revisions return to the same builder context rather than a fresh one; the notebook is already loaded.
 
-## 3. Concurrent learning — the thing the quant desk doesn't have
+## 3. Three configurations, tried in order
 
-You are not a hedge fund outsourcing research. You are learning the material while the machine writes it. Three mechanisms, all byproducts of the loop, none requiring extra prompts:
+**T0 — headless.** `scripts/loop.sh N` makes one `claude -p` call per notebook, gates it, records it, commits it. No agents, no reviewer. This measures the floor: whether one prompt plus `CLAUDE.md` plus the stub produces a gate-passing notebook, and at what cost in tokens and time.
 
-**L1 — Quiz per notebook.** The builder's last act is to write `learn/queue/NN.MM.KK.quiz.md`: five questions derived from the notebook's own Learning Objectives, answers at the bottom. You answer before you read the notebook. Score goes in the ledger (`understood: 0–5`).
+**T1 — agents.** `/build-next` in Claude Code runs the full loop: `.claude/agents/builder.md` fills the stub, the validator gates it, `.claude/agents/skeptic.md` reviews it in a fresh context, the ledger records the outcome, the notebook is committed. Tier-3 notebooks are routed to the stronger model. This is the working configuration and the whole interface is one command.
 
-**L2 — Skeptic digest.** The skeptic's substantiated findings are the best teaching material in the repo: *here is where a strong model got the 🔬 register subtly wrong, or let the Clinical Reading overclaim*. `learn/digest.md` accumulates them, newest first, tagged by module. Reading the digest is reading a syllabus of real pitfalls.
+**T2 — parallel seats.** Notebooks are independent by construction, so several builders can run in separate git worktrees on separate modules with `next.py --module NN` giving each its own queue. A merge is a merge of disjoint files.
 
-**L3 — Teach-back on a sample.** For one notebook in five (`next.py` marks it `teachback: true`), the builder leaves the 🗣️ Plain register of section 2 as a placeholder. You write it. Then `/skeptic` grades *your* paragraph against the 💻 and 🔬 registers. The diff is the lesson.
+**D-5.** Parallelism is permitted; a coordinator is not. If two seats ever need to talk, the design is wrong.
 
-**D-6** Learning artefacts are written by the builder in the same run, not by a third agent. *Reason*: RULE 1 again — a "tutor" agent would start proposing curricula.
+**Unattended.** A nightly scheduled task runs `/build-next 4` with a token ceiling stated in the prompt. The ledger and the learning queue are what a returning reader sees in the morning.
 
-Morning cadence (15 min): read ledger → take 4 quizzes → read digest → mark `understood` → done. The build continues regardless of whether you do this; the learning compounds if you do.
+### Why no coordinator works
 
----
+Heylighen (2016; `library:heylighen2016`) defines stigmergy as coordination through traces left in a shared medium rather than messages between agents. That is this harness exactly: builder and reviewer never address each other; they read and write the repository — stub, notebook, ledger, digest, next stub. A coordinator would be a second medium competing with the first. Test H11 enforces it: no agent file may name another agent.
 
-## 4. Minimal prompt set
+Anthropic's *Building effective agents* (`library:anthropic2024`) describes the builder–reviewer pair as an evaluator–optimiser loop and recommends one further pattern, routing by task type, which `/build-next` does by tier.
 
-| Prompt | What happens |
+## 4. Learning alongside the build
+
+The author is learning the material while the machine writes it. Three mechanisms fall out of the loop without extra prompts.
+
+**Quiz per notebook.** The builder's last act is `learn/queue/NN.MM.KK.quiz.md`: five questions derived from the notebook's own objectives, a sixth where a paper is being reproduced — *what did the paper claim that this synthetic reproduction could not test?* — each with a two-step hints ladder. Score is correct answers less half a point per hint, recorded in the ledger (Nori et al. 2025, *Sequential Diagnosis*: accuracy and the cost of information requested).
+
+**Reviewer digest.** The reviewer's substantiated findings accumulate in `learn/digest.md`, newest first. Each is a place a strong model got the technical register subtly wrong or let a clinical reading overclaim. Read in sequence they form a syllabus of real pitfalls.
+
+**Teach-back on the jagged edge.** Where the reviewer last returned REVISE on a topic — and otherwise every fifth notebook — the builder leaves the plain-language paragraph of section 2 blank. The author writes it; `/skeptic` grades it against the developer and technical registers. Dell'Acqua et al. (2023) showed that model capability has a jagged edge across tasks that look equally hard; those edges are where a human explanation is worth most.
+
+**The Little Book.** `scripts/little_book.py` stitches every built notebook's plain paragraph and its one central figure into `LITTLE_BOOK.md`, in build order, after Fleuret (2024). It is regenerated on every build and is the thing to read away from a screen.
+
+**The closing notebook.** `29.meta.1` is built last, from the ledger and digest, as data: which methods the builder got wrong first time, which registers slipped, where clinical readings overclaimed. Donoho's sixth division — science about data science — applied to the repository itself.
+
+**D-6.** Learning artefacts are written by the builder in the same run, not by a third agent. A tutor agent would begin proposing curricula.
+
+Morning cadence, fifteen minutes: read the ledger, take the quizzes, read the digest, record the scores. The build continues whether or not this happens; the learning compounds if it does.
+
+## 5. The prompt set
+
+| Prompt | Effect |
 |---|---|
-| `/build-next` | build one notebook through the full loop |
-| `/build-next 5` | five, sequentially, stop on BLOCKED |
-| `/skeptic <path>` | run the skeptic alone on any notebook (including one you edited) |
-| `/learn` | print today's queue and digest |
+| `/build-next` | one notebook through the full loop |
+| `/build-next N` | N notebooks, sequentially, stopping on BLOCKED |
+| `/skeptic <path>` | the reviewer alone, on any notebook including one edited by hand |
+| `claude -p "Read CLAUDE.md. Build <path> in place; then run python scripts/validate.py <path> and fix failures."` | the headless floor, no agents |
 
-Nothing else. If you find yourself writing a fourth kind of prompt, it belongs in the manifest or CLAUDE.md.
+If a fifth kind of prompt becomes necessary, the need belongs in the manifest or `CLAUDE.md`, not in a prompt.
 
----
+## 6. Tests
 
-## 5. Demo / test plan — numbered, machine-checkable
+| Test | Condition | Configuration |
+|---|---|---|
+| H1 | `next.py` returns `00.01.01` on a fresh scaffold | T0 |
+| H2 | `loop.sh 1` produces a notebook passing G1–G11 and G13–G14 at first attempt | T0 |
+| H3 | the same notebook passes G12 (`--execute`) | T0 |
+| H4 | the ledger holds one line with attempt 1 and token and time fields populated | T0 |
+| H5 | `/build-next` runs builder, validator, reviewer and commit with no human input | T1 |
+| H6 | the reviewer, given a notebook with a planted false technical claim, returns REVISE naming it | T1 |
+| H7 | `/build-next 5` over module 00 yields at least four BUILT and no BLOCKED | T1 |
+| H8 | median tokens per BUILT notebook under 150k; median wall time under twelve minutes | T1 |
+| H9 | two worktree seats on modules 04 and 05 complete three each and merge cleanly | T2 |
+| H10 | the nightly task produces at least three BUILT lines by morning | unattended |
+| H11 | no agent file names another agent | `tests/test_harness.py` |
 
-| # | Test | Pass condition | Tier |
-|---|---|---|---|
-| H1 | `scripts/next.py` returns `00_mathematical_foundations/01_linear_algebra/01_vectors_matrices_operations.ipynb` on a fresh scaffold | exact path | T0 |
-| H2 | `scripts/loop.sh 1` produces a notebook that passes G1–G11 on first attempt | `validate.py` exit 0 | T0 |
-| H3 | Same notebook passes G12 (`--execute`) | exit 0 | T0 |
-| H4 | Ledger has exactly one line with `attempt: 1` and token/time fields populated | `jq` check | T0 |
-| H5 | `/build-next` runs builder → validate → skeptic → commit with no human input | one commit `nb(00.01.01)` | T1 |
-| H6 | Skeptic on a deliberately broken notebook (wrong 🔬 claim planted) returns REVISE with the planted error in its ≤3 findings | finding text matches | T1 |
-| H7 | `/build-next 5` over Module 00: ≥ 4/5 BUILT, 0 BLOCKED | ledger count | T1 |
-| H8 | Cost: median tokens per BUILT notebook < 150k; median wall time < 12 min | ledger stats | T1 |
-| H9 | Two worktree seats on modules 04 and 05 complete 3 each with a clean merge | `git merge` no conflicts | T2 |
-| H10 | Nightly scheduled task produces ≥ 3 BUILT lines in the ledger by 07:00 | ledger timestamps | sched |
+H1 and H11 are automated. H2–H4 are the first evening's work; H5–H8 the first week; H9–H10 only if H7 holds.
 
-H1–H4 tonight. H5–H8 this week. H9–H10 only if H7 holds.
-
----
-
-## 6. What's in the box now
+## 7. Components
 
 ```
-scripts/next.py              deterministic "next stub in build order"; --module; --teachback flag every 5th
-scripts/loop.sh              T0: N × (claude -p → validate → ledger → commit)
-scripts/ledger.py            append / summarise ledger.jsonl → LEDGER.md
-.claude/agents/builder.md    the builder subagent
-.claude/agents/skeptic.md    the skeptic subagent (opus, fresh context, PASS | REVISE ≤3)
-.claude/skills/build-next/   /build-next skill wiring the loop
-.claude/skills/skeptic/      /skeptic
-learn/                       queue/ and digest.md
+scripts/next.py              next stub in build order; --module; teach-back flag
+scripts/loop.sh              T0 loop
+scripts/ledger.py            ledger.jsonl and LEDGER.md
+scripts/little_book.py       LITTLE_BOOK.md
+.claude/agents/builder.md    the builder
+.claude/agents/skeptic.md    the reviewer: fresh context, PASS or REVISE with at most three findings, named checks
+.claude/skills/build-next/   the loop as a slash command
+.claude/skills/skeptic/      the reviewer as a slash command
+learn/                       quiz queue, digest, quiz template
 ```
 
----
+## 8. Risks
 
-## 6b. Why no coordinator works — stigmergy
-
-Heylighen (2016, `library:heylighen2016`) defines stigmergy as coordination through *traces left in a shared medium*, not
-messages between agents. That is this harness exactly: builder and skeptic never address each other; they read and write
-the repo — stub → notebook → ledger → digest → next stub. A coordinator would be a second medium competing with the first.
-**H11**: no agent file may name another agent. Checked by `tests/test_harness.py`.
-
-Anthropic's *Building effective agents* (`library:anthropic2024`) calls the builder/skeptic pair an evaluator–optimiser
-loop and recommends exactly one more pattern — routing by task type — which `/build-next` now does by tier.
-
-## 6c. Learning loop additions (from the library)
-
-- **Sixth quiz question** on every `study:` notebook: *what did the paper claim that this synthetic reproduction could not test?*
-- **Hints at a cost** (Nori 2025, Sequential Diagnosis): each question has H1/H2; score = correct − 0.5·hints.
-- **Teach-back on the jagged edge** (Dell'Acqua 2023): `next.py` sets teach-back where the last skeptic verdict on that topic was REVISE, else every fifth.
-- **The Little Book** (Fleuret 2024): `scripts/little_book.py` stitches every built notebook's 🗣️ paragraph and `# CENTRAL` figure into `LITTLE_BOOK.md`.
-- **The closing notebook** (Donoho GDS6): `29.meta.1` is built last, from the ledger and digest.
-
-## 7. Risks recorded
-
-- **R1 Skeptic drift.** The skeptic will try to be helpful and suggest additions. The agent file forbids it and the skill truncates output to three findings. Watch the digest for "you could also…" phrasing — that is the leak.
-- **R2 Gate gaming.** A builder can satisfy G5 with seven trivial plots. Mitigation: the skeptic's brief includes "do the figures carry the argument, or pad it?"
-- **R3 Register collapse.** 🗣️ Plain drifting into 💻 Developer with analogies bolted on. The skeptic checks the Plain paragraph against the "nurse or section commander, first time" test.
-- **R4 Clinical overclaim.** The most dangerous failure in this repo: a Clinical Reading that implies a synthetic result transfers to practice. The skeptic checks every Clinical Reading contains a "must not conclude" clause (G8 only checks presence).
-- **R5 Cost runaway unattended.** `loop.sh` and the scheduled task take a count, and the ledger tracks tokens. Set a daily token ceiling in the scheduled task prompt.
+| | Risk | Mitigation |
+|---|---|---|
+| R1 | Reviewer drift — the reviewer tries to be helpful and suggests additions | forbidden in the agent file; output truncated to three findings; the phrase "could also" in the digest is the leak to watch for |
+| R2 | Gate gaming — seven trivial plots satisfy the visual count | the reviewer's brief asks whether each figure carries the argument; a specific abstention is a legal alternative to padding (Kalai et al. 2025) |
+| R3 | Register collapse — the plain register drifts into developer prose with analogies attached | the reviewer tests the plain paragraph against a reader with no background, first time |
+| R4 | Clinical overclaim — a clinical reading implying a synthetic result transfers to practice | the reviewer requires a "must not conclude" clause and a statement that the result is retrospective and synthetic (Rajpurkar et al. 2022) |
+| R5 | Cost runaway when unattended | the loop and the scheduled task take a count; the ledger tracks tokens; the nightly prompt states a ceiling |

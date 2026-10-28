@@ -28,6 +28,6 @@
 
 ## Conventions
 
-Every notebook carries three registers (🗣️ Plain · 💻 Developer · 🔬 Technical), a minimum visual count,
-a *Failure Modes* section, a *Results / Findings / Implications / Considerations* block, and a *Clinical Reading*
-section. `python scripts/validate.py 22_time_series` checks all of it.
+Every notebook carries three explanation registers (plain, developer, technical), a minimum visual count, a failure-modes
+section, a results / findings / implications / considerations block, and a clinical reading. Experiments are the manifest's
+pre-registered list. `python scripts/validate.py 22_time_series` gates the module.

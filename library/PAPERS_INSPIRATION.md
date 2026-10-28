@@ -2,7 +2,7 @@
 
 > Companion to PAPERS_PLAN.md (which maps papers → notebooks). This one asks what the library says about the
 > *design* of ml-algorithms-labs: its spine, its gates, its harness, its learning loop. Plan only; nothing applied.
-> Each idea: source → the idea → what it would change → cost. Ideas marked ✓ *validate* the current design and change nothing.
+> Each idea: source → the idea → what it would change → cost. Ideas marked *validates* the current design and change nothing.
 
 ---
 
@@ -52,7 +52,7 @@ Box's loop is theory → confront with data → revise. AlphaCodium's trick is t
 ### B2. Reward abstention — the Kalai principle applied to our own gates
 *Kalai et al., Why Language Models Hallucinate (2025):* evaluation that penalises "I don't know" produces confident guessing.
 Our gates do this too. G5 counts figures; a builder under pressure pads. G7 demands findings; a builder with nothing to find invents. The fix is a legal abstention: a notebook may declare `CANNOT-REPRODUCE: <reason>` for a `study:` figure, or `NULL-RESULT` for an experiment, and the gate accepts it when the reason is specific.
-**Change**: `validate.py` accepts a `⛔ Abstention` block in place of a figure/finding if it cites the experiment id and a reason; ledger records it; skeptic checks the reason is real.
+**Change**: `validate.py` accepts a ` Abstention` block in place of a figure/finding if it cites the experiment id and a reason; ledger records it; skeptic checks the reason is real.
 **Cost**: ~30 lines. Changes the incentive for every notebook.
 
 ### B3. The critique papers as named skeptic checks — expanded list
@@ -80,11 +80,11 @@ No notebook in the manifest does this, and it is the most clinical thing a data 
 *Heylighen, Stigmergy as a universal coordination mechanism (2016):* coordination through traces left in a shared medium, not through messages between agents.
 That is exactly the design: builder and skeptic never talk; they read and write the repo (stub → notebook → ledger → digest). The paper gives the theoretical reason RULE 1 works: a coordinator is a second medium competing with the first.
 **Change**: one paragraph in HARNESS.md; a test — H11: no agent file may reference another agent by name.
-**Cost**: none. ✓ validates.
+**Cost**: none. validates.
 
 ### C2. Evaluator–optimiser, routing, and nothing else
 *Anthropic, Building effective agents (2024):* simple composable patterns beat frameworks; the evaluator–optimiser loop; routing by task type.
-Builder/skeptic **is** evaluator–optimiser. ✓. The one pattern worth adding is routing: tier-3 notebooks (RL, diffusion, SSMs) are harder; route them to an opus builder, tier-1 to sonnet. `next.py` already emits the tier.
+Builder/skeptic **is** evaluator–optimiser. . The one pattern worth adding is routing: tier-3 notebooks (RL, diffusion, SSMs) are harder; route them to an opus builder, tier-1 to sonnet. `next.py` already emits the tier.
 **Change**: `/build-next` picks the builder model by tier.
 **Cost**: three lines in the skill.
 
@@ -97,7 +97,7 @@ Two uses. (i) For the skeptic: give it the notebook *without* the Results sectio
 ### C4. The Bitter Lesson applied to the builder prompt
 *Sutton (2019):* general methods + compute beat hand-crafted knowledge.
 Risk: the temptation to keep enriching builder.md with clinical lore until the prompt is the product. Sutton says keep the prompt general, put the specifics in the manifest row, and let the gate + skeptic do the correcting.
-**Change**: a cap — builder.md stays under 40 lines; everything else is manifest data. ✓ validates current size.
+**Change**: a cap — builder.md stays under 40 lines; everything else is manifest data. validates current size.
 
 ---
 
@@ -105,7 +105,7 @@ Risk: the temptation to keep enriching builder.md with clinical lore until the p
 
 ### D1. The Little Book — a free derived artefact
 *Fleuret, The Little Book of Deep Learning (2024):* 160 phone-sized pages, one idea and one figure per page.
-Every notebook has a 🗣️ Plain paragraph for section 2 and one "central" figure. A script concatenates them in manifest order → `LITTLE_BOOK.md` (and a PDF). It costs nothing, it is regenerated on every build, and it is the thing you can read on the train. By module 06 it is a readable pamphlet; by 29 it is a book.
+Every notebook has a plain Plain paragraph for section 2 and one "central" figure. A script concatenates them in manifest order → `LITTLE_BOOK.md` (and a PDF). It costs nothing, it is regenerated on every build, and it is the thing you can read on the train. By module 06 it is a readable pamphlet; by 29 it is a book.
 **Change**: `scripts/little_book.py`; the builder marks one figure `# CENTRAL` per notebook.
 **Cost**: an hour, once.
 
@@ -119,7 +119,7 @@ From PAPERS_PLAN §6 (what could the reproduction not test?) plus C3(ii) hints-a
 
 ### D4. One dataset, many methods — the Mehta precedent
 *Mehta et al., A high-bias, low-variance introduction to ML for physicists (2019):* a 124-page review built on Jupyter notebooks, one physics dataset (Ising) carried across every method, a "physics intuition" register throughout.
-This is the closest existing thing to our design and it works. ✓ validates companion datasets and the clinical register. One thing they do that we don't: a **closing section per method on "what the physics tells you the method is doing"** — ours should be "what the clinic tells you the method is doing", which is what the Clinical Reading is for. ✓.
+This is the closest existing thing to our design and it works. validates companion datasets and the clinical register. One thing they do that we don't: a **closing section per method on "what the physics tells you the method is doing"** — ours should be "what the clinic tells you the method is doing", which is what the Clinical Reading is for. .
 
 ### D5. Sidey-Gibbons as the first capstone
 *Sidey-Gibbons & Sidey-Gibbons, ML in medicine: a practical introduction (2019):* GLM, SVM, single-layer ANN on Wisconsin breast cancer, N=683, with the full evaluation.
@@ -145,4 +145,4 @@ That is three of our notebooks (05.01, 05.05, 15.01) on `screening`. A capstone 
 4. **D1 Little Book** — the derived artefact that makes the build visible as learning.
 5. **A5 the last notebook** — makes the ledger and digest into physics.
 
-Everything else is either validation (✓) or a tag.
+Everything else is either validation () or a tag.

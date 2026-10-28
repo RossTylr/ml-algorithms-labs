@@ -1,0 +1,292 @@
+01_General_and_Surveys/19 March 2025 - Imagerecognition Languageunderstanding (2025).pdf
+01_General_and_Surveys/22 Nature Vol 646 2 October 2025 (2025).pdf
+01_General_and_Surveys/50 Years of Data Science - David Donoho (2017).pdf
+01_General_and_Surveys/8 Rules for Better Data Storytelling - 2020.pdf
+01_General_and_Surveys/A Comprehensive Overview of Large Language Models - Humza Naveed (2024).pdf
+01_General_and_Surveys/AI Futures - Daniel Kokotajlo (2025).pdf
+01_General_and_Surveys/AlphaEvolve A Gemini-powered coding (2025).pdf
+01_General_and_Surveys/AlphaEvolve A coding agent for scientific and (2025).pdf
+01_General_and_Surveys/Applying explainable artificial intelligence methods to models for diagnosing personal traits and cognitive abilities by.pdf
+01_General_and_Surveys/Artificial General Intelligence (2015).pdf
+01_General_and_Surveys/Attention Is All You Need - Vaswani, 2017 - Ashish Vaswani.pdf
+01_General_and_Surveys/Books & arts (2024).pdf
+01_General_and_Surveys/By Ben Thompson Explore Stratechery Plus (2025).pdf
+01_General_and_Surveys/Causal/Causal ML What is it and what is its - Artificial Intelligence (2025).pdf
+01_General_and_Surveys/Causal/Causal Machine Learning (2022).pdf
+01_General_and_Surveys/Causal/Get unlimited access to the best of Medium for less than $1week. Become a member (2025) (1).pdf
+01_General_and_Surveys/Causal/Get unlimited access to the best of Medium for less than $1week. Become a member (2025).pdf
+01_General_and_Surveys/Chain-of-Thought Prompting Elicits Reasoning (2023).pdf
+01_General_and_Surveys/Dario Amodei - Dario Amodei (2025).pdf
+01_General_and_Surveys/Data & AI Trends (2024).pdf
+01_General_and_Surveys/Different languages, similar encoding efficiency Comparable information rates across the human communicative niche (2019.pdf
+01_General_and_Surveys/Explainable Machine Learning for Scientific Insights and Discoveries (2020).pdf
+01_General_and_Surveys/Forecasting at Scale - Sean J. Taylor (2018).pdf
+01_General_and_Surveys/Gradual Disempowerment - Gradual Disempowerment (2025).pdf
+01_General_and_Surveys/History is in the making (2024).pdf
+01_General_and_Surveys/How AI Is Shaping the Future of Data App Development - 2025 (2025).pdf
+01_General_and_Surveys/Interpretability (2025).pdf
+01_General_and_Surveys/MTEB Massive Text Embedding Benchmark (2023).pdf
+01_General_and_Surveys/Most People's Life Satisfaction Matches Their Personality Traits True Correlations in Multitrait, Multirater, Multisampl.pdf
+01_General_and_Surveys/Networks and Spatial Economics - Potential Merger (2025).pdf
+01_General_and_Surveys/Patterns, Predictions, and Actions - Moritz Hardt and Benjamin Recht (2021).pdf
+01_General_and_Surveys/Quantum supremacy using a programmable superconducting processor - Frank Arute (2019).pdf
+01_General_and_Surveys/Reality as a Collective Hunch (2022).pdf
+01_General_and_Surveys/Reasoning models don't always say (2025).pdf
+01_General_and_Surveys/Retrieval-Augmented Generation for (2021).pdf
+01_General_and_Surveys/Samo Burja - Great Founder (2021).pdf
+01_General_and_Surveys/Segment Anything - Segment Anything (2023).pdf
+01_General_and_Surveys/Situational Awareness - Leopold Aschenbrenner (2024).pdf
+01_General_and_Surveys/Solving real-world optimization tasks using physics-informed neural computing - Jaemin Seo (2023).pdf
+01_General_and_Surveys/The Agent Economy -Part V Future (2025).pdf
+01_General_and_Surveys/The Bitter Lesson - Rich Sutton (2025).pdf
+01_General_and_Surveys/The Power of Scale for Parameter-Efficient Prompt Tuning - Brian Lester ; Rami Al-Rfou ; Noah Constant (2021).pdf
+01_General_and_Surveys/The Stack - Hugging Face (2022).pdf
+01_General_and_Surveys/Tree of Thoughts Deliberate Problem Solving (2023).pdf
+01_General_and_Surveys/Useful Fictions - Useful Fictions (2025).pdf
+01_General_and_Surveys/Welcome Developer Guide API Guide Claude Code Model Context Protocol (MCP) Resources Release Notes - Support Install (20.pdf
+01_General_and_Surveys/Whale song shows language-like statistical structure (2025).pdf
+01_General_and_Surveys/Will AI R&D Automation cause a (2025).pdf
+01_General_and_Surveys/Working Paper 24-013 - Katherine C. Kellogg (2023).pdf
+01_General_and_Surveys/andrew-ng-machine-learning-yearning (2022).pdf
+01_General_and_Surveys/doi10.1038nature14539 (2015).pdf
+01_General_and_Surveys/doi10.1038nature16961 - David Silver (2016).pdf
+01_General_and_Surveys/rClaudeAI •2 mo. ago - Create Community (2025).pdf
+01_General_and_Surveys/videoplayback.mp4
+01_General_and_Surveys/“What It Can Create, It May Not Understand” (2024).pdf
+02_Theory_and_Foundations/1327452.1327492 - Jeffrey Dean, Sanjay Ghemawat.pdf
+02_Theory_and_Foundations/1999-66 (1999).pdf
+02_Theory_and_Foundations/2507.18074v1.pdf
+02_Theory_and_Foundations/2508.10003v1 - Austin C. Kozlowski; Callin Dai; Andrei Boutyline.pdf
+02_Theory_and_Foundations/6088 - V323.indd (2017).pdf
+02_Theory_and_Foundations/A Statistical Theory of Contrastive Pre-training and (2025).pdf
+02_Theory_and_Foundations/An Analysis of Single-Layer Networks (2011).pdf
+02_Theory_and_Foundations/An Introduction to Variable and Feature Selection (2004).pdf
+02_Theory_and_Foundations/AreTransformersEffectiveforTimeSeriesForecasting (2022).pdf
+02_Theory_and_Foundations/Array programming with NumPy - Charles R. Harris (2020).pdf
+02_Theory_and_Foundations/BF00994018.pdf
+02_Theory_and_Foundations/Best Subset, Forward Stepwise, or Lasso - Best Subset (2018).pdf
+02_Theory_and_Foundations/CESNET-TimeSeries24 Time Series Dataset for Network Traffic Anomaly Detection and Forecasting - Josef Koumar (2025).pdf
+02_Theory_and_Foundations/Darts User-Friendly Modern Machine Learning for Time (2022).pdf
+02_Theory_and_Foundations/Deep learning in neural networks An overview - Jürgen Schmidhuber (2014).pdf
+02_Theory_and_Foundations/Dropout A Simple Way to Prevent Neural Networks from (2014).pdf
+02_Theory_and_Foundations/Dropout as a Bayesian Approximation Representing Model Uncertainty in Deep Learning - Yarin Gal, Zoubin Ghahramani (2016.pdf
+02_Theory_and_Foundations/Efficient Adaptive Optimization via Subset-Norm and - Convergence Guarantees (2024).pdf
+02_Theory_and_Foundations/EfficientNet Rethinking Model Scaling for Convolutional Neural Networks - Mingxing Tan, Quoc V. Le (2020).pdf
+02_Theory_and_Foundations/Efficiently Modeling Long Sequences with Structured State Spaces (2022).pdf
+02_Theory_and_Foundations/Feature Engineering for Machine Learning - Alice Zheng and Amanda Casari (2018).pdf
+02_Theory_and_Foundations/Future of University Centre for University of Center for a Electronic OpenAI (2018).pdf
+02_Theory_and_Foundations/Generative Adversarial Nets (2014).pdf
+02_Theory_and_Foundations/He_Deep_Residual_Learning_CVPR_2016_paper - Kaiming He, Xiangyu Zhang, Shaoqing Ren, Jian Sun.pdf
+02_Theory_and_Foundations/Human-level control through deep reinforcement learning - Volodymyr Mnih (2015).pdf
+02_Theory_and_Foundations/Hypothesis Testing with E-values (2024).pdf
+02_Theory_and_Foundations/Informer Beyond Efficient Transformer for Long Sequence Time-Series Forecasting - Haoyi Zhou (2021).pdf
+02_Theory_and_Foundations/L O N G S H O R T - T E R M M E M O R Y (2013).pdf
+02_Theory_and_Foundations/Mamba Linear-Time Sequence Modeling with Selective State Spaces (2024).pdf
+02_Theory_and_Foundations/Neural Tangent Kernel (2020).pdf
+02_Theory_and_Foundations/Preprint. Under Review (2024).pdf
+02_Theory_and_Foundations/Random Forests (2001).pdf
+02_Theory_and_Foundations/Reasoning Models Don’t Always Say What They Think (2025).pdf
+02_Theory_and_Foundations/SCINet Time Series Modeling and Forecasting with (2022).pdf
+02_Theory_and_Foundations/SCORE-BASED GENERATIVE MODELING THROUGH (2021).pdf
+02_Theory_and_Foundations/Self-supervised Learning A Succinct Review - Veenu Rani (2023).pdf
+02_Theory_and_Foundations/Semi-Supervised Learning Using Gaussian Fields and Harmonic Functions - Xiaojin Zhu, Zoubin Ghahramani, and John Laffert.pdf
+02_Theory_and_Foundations/Statistical Modeling The Two Cultures - Leo Breiman (2024).pdf
+02_Theory_and_Foundations/Stigmergy as a universal coordination mechanism I Definition and components - Francis Heylighen (2016).pdf
+02_Theory_and_Foundations/The Bell System Technical Journal (2014).pdf
+02_Theory_and_Foundations/The Platonic Representation Hypothesis - Minyoung Huh, Brian Cheung, Tongzhou Wang, Phillip Isola (2024).pdf
+02_Theory_and_Foundations/XGBoost A Scalable Tree Boosting System (2016).pdf
+02_Theory_and_Foundations/YOLOv3 An Incremental Improvement (2018).pdf
+02_Theory_and_Foundations/cacm12.pdf
+03_Core_Architectures_and_Models/Deep learning in neural networks An overview - Jürgen Schmidhuber (2014).pdf
+04_Language_Models/2410.12837v1.pdf
+04_Language_Models/2412.10849v2.pdf
+04_Language_Models/A Beginner’s Guide to Large Language Models (2023).pdf
+04_Language_Models/A Compact Guide to (2024).pdf
+04_Language_Models/A Survey on Evaluation of Large Language Models (2024).pdf
+04_Language_Models/Advances and Challenges in Foundation Agents (2025).pdf
+04_Language_Models/BERT Pre-training of Deep Bidirectional Transformers for Language Understanding - Jacob Devlin (2019).pdf
+04_Language_Models/Deep Residual Learning for Image Recognition (2015).pdf
+04_Language_Models/Densing Law of LLMs - Release Date (2024).pdf
+04_Language_Models/Exploring the Limits of Transfer Learning with a Unified - Peter J. Liu (2020).pdf
+04_Language_Models/GPT (Generative Pre-trained Transformer) – A - Potential Applications (2023).pdf
+04_Language_Models/GSM-Symbolic Understanding the Limitations of (2024).pdf
+04_Language_Models/Gemini A Family of Highly Capable - Multimodal Models (2025).pdf
+04_Language_Models/Get unlimited access to the best of Medium for less than $1week. Become a member (2025).pdf
+04_Language_Models/Improving Language Understanding - Generative Pre-Training (2018).pdf
+04_Language_Models/Language Models are Few-Shot Learners (2020).pdf
+04_Language_Models/Language Models are Unsupervised Multitask Learners - Alec Radford (2019).pdf
+04_Language_Models/Large Language Diffusion Models (2025).pdf
+04_Language_Models/Scaling Laws for Neural Language Models (2020).pdf
+04_Language_Models/THE LOTTERY TICKET HYPOTHESIS (2019).pdf
+04_Language_Models/Training Large Language Models to Reason in a (2024).pdf
+04_Language_Models/Transformer Circuits Thread - David Abrahams (2025).pdf
+04_Language_Models/Understanding LSTM Networks (2025).pdf
+04_Language_Models/Understanding Large Language Models Towards Rigorous and Targeted Interpretability Using Probing Classifiers and Self-Ra.pdf
+05_Reinforcement_Learning/Book-Bishop-Neural Networks for Pattern Recognition (2006).pdf
+05_Reinforcement_Learning/NIH Public Access - Michael I. Miller (2010).pdf
+05_Reinforcement_Learning/Sutton & Barto Book Reinforcement Learning An Introduction (2004).pdf
+06_Applications_and_Systems/Get unlimited access to the best of Medium for less than $1week. Become a member (2025).pdf
+07_Evaluation_and_Critique/EVOLUTION Cooperation HISTORY To fight denial, CHEMISTRY Three more unsung PUBLISHING As well as ORCID - Valentin Amrhei.pdf
+07_Evaluation_and_Critique/Get unlimited access to the best of Medium for less than $1week. Become a member (2025).pdf
+07_Evaluation_and_Critique/P-Values/American Statistical Association Releases Statement on Statistical Significance and P-Values - American Statistical Asso.pdf
+07_Evaluation_and_Critique/P-Values/F.M. Dekking C. Kraaikamp (2005).pdf
+07_Evaluation_and_Critique/P-Values/The ASA Statement on p-Values Context, Process, and Purpose - Ronald L. Wasserstein (2016).pdf
+07_Evaluation_and_Critique/Printer Opaque this (2008).pdf
+07_Evaluation_and_Critique/Transformer Circuits Thread - Theodore R. Sumers (2025).pdf
+07_Evaluation_and_Critique/WRITE FOR US EN My Dashboard - Machine Learning (2025).pdf
+08_Tooling_and_Libraries/CosmaRohillaShalizi (2024).pdf
+09_Spatial_and_GNNs/1812.08434v6.pdf
+09_Spatial_and_GNNs/20 MAY 2019 WRITTEN BY PIETRO CROVARI (2025).pdf
+09_Spatial_and_GNNs/2505.03335v2 - Andrew Zhao.pdf
+09_Spatial_and_GNNs/A new model for learning in graph domains (2000).pdf
+09_Spatial_and_GNNs/Adaptive Graph Convolutional Neural Networks - Ruoyu Li, Sheng Wang, Feiyun Zhu, Junzhou Huang (2018).pdf
+09_Spatial_and_GNNs/Aug 18, 2024 - Avi Chawla (2025).pdf
+09_Spatial_and_GNNs/Deep Gaussian Embedding of Graphs Unsupervised Inductive Learning via Ranking - Aleksandar Bojchevski, Stephan Guenneman.pdf
+09_Spatial_and_GNNs/DeepWalk Online Learning of Social Representations - Bryan Perozzi, Rami Al-Rfou, and Steven Skiena (2014).pdf
+09_Spatial_and_GNNs/Deeper Insights into Graph Convolutional Networks for Semi-Supervised Learning - Qimai Li, Zhichao Han, Xiao-Ming Wu (20.pdf
+09_Spatial_and_GNNs/Demystifying Graph Data Science Graph algorithms, analytics methods, platforms, databases, and use cases - Pethuru Raj (.pdf
+09_Spatial_and_GNNs/Geocomputation a practical primer (2023).pdf
+09_Spatial_and_GNNs/Geometric Deep Learning (2021).pdf
+09_Spatial_and_GNNs/Get unlimited access to the best of Medium for less than $1week. Become a member (2025).pdf
+09_Spatial_and_GNNs/Get unlimited access to the best of Medium for less than $1week. Become a member - Basic Concepts (2025).pdf
+09_Spatial_and_GNNs/Google Maps–it’s just one big graph (2025).pdf
+09_Spatial_and_GNNs/Graph Data Science with Python and Neo4j Hands-on Projects on Python and Neo4j Integration for Data Visualization and An.pdf
+09_Spatial_and_GNNs/Graph Neural Networks Methods, Applications, and Opportunities (2021).pdf
+09_Spatial_and_GNNs/HOW POWERFUL ARE GRAPH NEURAL NETWORKS (2019).pdf
+09_Spatial_and_GNNs/JOURNALOFLATEXCLASSFILES,VOL.XX,NO.XX,AUGUST2019 1 - Zonghan Wu (2019).pdf
+09_Spatial_and_GNNs/LINE Large-scale Information Network Embedding (2015).pdf
+09_Spatial_and_GNNs/Large-Scale Learnable Graph Convolutional Networks - Hongyang Gao, Zhengyang Wang, and Shuiwang Ji (2018).pdf
+09_Spatial_and_GNNs/Learning Convolutional Neural Networks for Graphs - Mathias Niepert, Mohamed Ahmed, Konstantin Kutzkov (2016).pdf
+09_Spatial_and_GNNs/Measures of Spatial Accessibility to Health Care in a GIS Environment Synthesis and a Case Study in the Chicago Region (.pdf
+09_Spatial_and_GNNs/Modeling Relational Data with Graph Convolutional Networks - Michael Schlichtkrull (2018).pdf
+09_Spatial_and_GNNs/Neural Message Passing for Quantum Chemistry - Justin Gilmer (2017).pdf
+09_Spatial_and_GNNs/PetarVelicˇkovic´∗ GuillemCucurull∗ (2023).pdf
+09_Spatial_and_GNNs/Pitfalls of Graph Neural Network Evaluation (2019).pdf
+09_Spatial_and_GNNs/Publish AI, ML & data-science insights to a global community of data - Recommended Articles (2025).pdf
+09_Spatial_and_GNNs/Representation Learning on Graphs Methods and Applications (2018).pdf
+09_Spatial_and_GNNs/SEMI-SUPERVISED CLASSIFICATION WITH (2017).pdf
+09_Spatial_and_GNNs/Simplifying Graph Convolutional Networks (2019).pdf
+09_Spatial_and_GNNs/Spectral Networks and Deep Locally Connected (2014).pdf
+09_Spatial_and_GNNs/node2vec Scalable Feature Learning for Networks (2016).pdf
+10_Future_and_Perspectives/After AI Agents - Hernan Munoz (MA) (2025).pdf
+10_Future_and_Perspectives/Daniel Kokotajlo, Scott Alexander, Thomas Larsen, Eli Lifland, Romeo Dean - Daniel Kokotajlo (2025).pdf
+10_Future_and_Perspectives/Taking a responsible path to AGI - Anca Dragan (2025).pdf
+11_Textbooks/A Practical Introduction to - Python Programming (2024).pdf
+11_Textbooks/AI for Healthcare (2021).pdf
+11_Textbooks/All Machine Learning algorithms explained in 17 min 720.mp4
+11_Textbooks/Bayesian Reasoning and Machine Learning (2015).pdf
+11_Textbooks/Collected Insights - Build Your (2022).pdf
+11_Textbooks/Deep Learning - Deep Learning (2021).pdf
+11_Textbooks/Explainable AI for Practitioners - Michael Munn;David Pitman; (2022).pdf
+11_Textbooks/Forecasting (2014).pdf
+11_Textbooks/Forecasting - Advanced Forecasting (2021).pdf
+11_Textbooks/Foundations of Machine Learning (second edition) - Mehryar Mohri, Afshin Rostamizadeh, and Ameet Talwalkar. (2019).pdf
+11_Textbooks/Graph Algorithms - Mark Needham and Amy E. Hodler (2020).pdf
+11_Textbooks/Graph Databases - Ian Robinson (2015).pdf
+11_Textbooks/Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow, 3rd Edition - Aurélien Géron (2022).pdf
+11_Textbooks/Joe Suzuki - Joe Suzuki (2022).pdf
+11_Textbooks/Machine Learning - Machine Learning (2022).pdf
+11_Textbooks/Machine Learning Foundations, Methodologies, - Zheng Rong (2022).pdf
+11_Textbooks/Machine Learning Systems - Vijay Janapa Reddi (2025).pdf
+11_Textbooks/Neuro-Systemic Applications in Learning (2022).pdf
+11_Textbooks/Reliable Machine Learning - Cathy Chen & Niall Richard Murphy & Kranti Parisa & D. Sculley & Todd Underwood (2022).pdf
+11_Textbooks/Series Editors Richard Boucherie · Johann Hurink (2022).pdf
+11_Textbooks/Storytelling with Data - Cole Nussbaumer Knaflic (2015).pdf
+11_Textbooks/TensorFlow A System for Large-Scale - Machine Learning (2016).pdf
+11_Textbooks/The Practitioner's Guide to Graph Data - Denise Gosnell;Matthias Broecheler; (2020).pdf
+11_Textbooks/Think Stats - Think Stats (2024).pdf
+11_Textbooks/Understanding Machine Learning - Shai Shalev-Shwartz, Shai Ben-David (2014).pdf
+12_General/Books & arts (2024).pdf
+12_General/Computing Machinery and Intelligence -- A.M. Turing -- ( WeLib.org ).pdf
+12_General/Dario Amodei - Dario Amodei (2025).pdf
+12_General/Journal of the American Statistical Association - Statistical Association (2012).pdf
+12_General/NIPS-2017-attention-is-all-you-need-Paper - Ashish Vaswani.pdf
+12_General/Shunyu Yao - Shunyu Yao (2025).pdf
+13_Health_Data_Science/A Systematic Review on Healthcare Analytics Application and Theoretical Perspective of Data Mining - Md Saiful Islam (20.pdf
+13_Health_Data_Science/A guide to deep learning in healthcare - Andre Esteva (2018).pdf
+13_Health_Data_Science/AI in health and medicine - Pranav Rajpurkar (2022).pdf
+13_Health_Data_Science/Artificial intelligence in healthcare (2021).pdf
+13_Health_Data_Science/CheXNet Radiologist-Level Pneumonia Detection on Chest X-Rays with Deep Learning - Pranav Rajpurkar (2017).pdf
+13_Health_Data_Science/Deep Learning for Health Informatics (2017).pdf
+13_Health_Data_Science/Deep learning-enabled medical computer vision - Andre Esteva (2020).pdf
+13_Health_Data_Science/Dermatologist-level classification of skin cancer with deep neural networks - Andre Esteva (2017).pdf
+13_Health_Data_Science/Electronic supplementary material (2018).pdf
+13_Health_Data_Science/Highly accurate protein structure prediction for the human proteome - Kathryn Tunyasuvunakool (2021).pdf
+13_Health_Data_Science/Highly accurate protein structure prediction with AlphaFold - John Jumper (2021).pdf
+13_Health_Data_Science/Hindawi Publishing Corporation - Review Article (2015).pdf
+13_Health_Data_Science/Machine learning in medicine a practical introduction - Chris Sidey-Gibbons (2019).pdf
+13_Health_Data_Science/PhysicsReports810(2019)1–124 (2019).pdf
+13_Health_Data_Science/Scalable and accurate deep learning with electronic health records - Alvin Rajkomar (2018).pdf
+13_Health_Data_Science/SpatialStatistics50(2022)100593 (2022).pdf
+Code Videos/Nested loops in Python are easy ➿ 720.mp4
+Code Videos/Neural Network In 5 Minutes _ What Is A Neural Network_ _ How Neural Networks Work _ Simplilearn 720.mp4
+Code Videos/Predicting with a Neural Network explained 720.mp4
+Code Videos/Python Functions (The Only Guide You'll Need) #12 720.mp4
+Code Videos/Vectors _ Chapter 1, Essence of linear algebra 720.mp4
+Code Videos/youtube_Bj9BD2D3DzA_1920x1080_h264.mp4
+Code Videos/youtube_pYxNSUDSFH4_1280x720_h264.mp4
+Code Videos/youtube_qJomWHnBicw_1920x1080_h264.mp4
+Google - DeepMind/The future of intelligence ｜ Demis Hassabis (Co-founder and CEO of DeepMind).mp4
+Google - DeepMind/youtube_1XF-NG_35NE_1920x1080_h264.mp4
+Google - DeepMind/youtube_ETZfkkv6V7Y_1920x1080_h264.mp4
+Google - DeepMind/youtube_hHooQmmzG4k_1920x1080_h264.mp4
+Google - DeepMind/youtube_yr0GiSgUvPU_1920x1080_h264.mp4
+Google ML - Course/Best Practices for ML Development on Vertex AI.pdf
+Google ML - Course/PMLE_Study_Guide.pdf
+Google ML - Course/T-GCPML-I v.4.0_Day 2_ Launching into Machine Learning.pdf
+Google ML - Course/T-GCPML-I v.4.0_Day 3_ TensorFlow on Google Cloud.pdf
+Google ML - Course/T-GCPML-I v.4.0_Day 4_  Feature Engineering .pdf
+Google ML - Course/T-GCPML-I v.4.0_Day 5_  Machine Learning in the Enterprise.pdf
+Google ML - Course/T-GCPML-I v.4.0_Series Summary -  Machine Learning on Google Cloud.pdf
+Google ML - Course/T-GCPML-I v4.0_00_ Welcome to Machine Learning on Google Cloud.pdf
+Google ML - Course/_T-GCPML-I v.4.0_Day 1_  Artificial Intelligence & Machine Learning Fundamentals.pdf
+MIT ML - Books/Albrecht, Christianos, Schafer - Multi-Agent Reinforcement Learning (2024).pdf
+MIT ML - Books/Barocas, Hardt, Narayanan - Fairness and Machine Learning (2023).pdf
+MIT ML - Books/Bellemare, Dabney, Rowland - Distributional Reinforcement Learning (2023).pdf
+MIT ML - Books/Kevin Murphy - Probabilistic Machine Learning - Advanced Topics (2023).pdf
+MIT ML - Books/Kevin Murphy - Probabilistic Machine Learning - An Introduction (2022).pdf
+MIT ML - Books/Kochenderfer, Wheeler - Algorithms for Optimization (2019).pdf
+MIT ML - Books/Kochenderfer, Wheeler, Wray - Algorithms for Decision Making (2022).pdf
+MIT ML - Books/McShane, Nirenburg, English - Agents in the Long Game of AI (2024).pdf
+MIT ML - Books/Mohri - Foundations of Machine Learning - AppB Convex Optimization (2018).pdf
+MIT ML - Books/Mohri - Foundations of Machine Learning - Ch01 Introduction (2018).pdf
+MIT ML - Books/Mohri - Foundations of Machine Learning - Ch02 PAC Learning (2018).pdf
+MIT ML - Books/Mohri - Foundations of Machine Learning - Ch03 Rademacher Complexity (2018).pdf
+MIT ML - Books/Mohri - Foundations of Machine Learning - Ch05 Support Vector Machines (2018).pdf
+MIT ML - Books/Mohri - Foundations of Machine Learning - Ch06 Kernel Methods (2018).pdf
+MIT ML - Books/Mohri - Foundations of Machine Learning - Ch07 Boosting (2018).pdf
+MIT ML - Books/Mohri - Foundations of Machine Learning - Ch08 On-Line Learning (2018).pdf
+MIT ML - Books/Mohri - Foundations of Machine Learning - Ch09 Multi-Class Classification (2018).pdf
+MIT ML - Books/Mohri - Foundations of Machine Learning - Ch10 Ranking (2018).pdf
+MIT ML - Books/Mohri - Foundations of Machine Learning - Ch11 Regression (2018).pdf
+MIT ML - Books/Mohri - Foundations of Machine Learning - Ch12 Maximum Entropy Models (2018).pdf
+MIT ML - Books/Mohri - Foundations of Machine Learning - Ch14 Reinforcement Learning (2018).pdf
+MIT ML - Books/Mohri, Rostamizadeh, Talwalkar - Foundations of Machine Learning (2018).pdf
+MIT ML - Books/Simon Prince - Understanding Deep Learning (2023).pdf
+Misc/2506.13131v1 - Alexander Novikov.pdf
+Misc/2506.22405v2 - Harsha Nori.pdf
+Misc/Agents Companion - Agents Companion (2025).pdf
+Misc/Code Generation with AlphaCodium From Prompt Engineering to Flow (2024).pdf
+Misc/DeepSeek-R1 incentivizes reasoning in LLMs through reinforcement learning (2025).pdf
+Misc/Engineering at Anthropic (2025).pdf
+Misc/Graph Analysis/AI NEWS (MOVED TO NEWS.SMOL.AI!) - Eleuther Discord (2025).pdf
+Misc/Graph Analysis/From Local to Global A GraphRAG Approach to (2025).pdf
+Misc/Introduction to Information Retrieval - Christopher Manning (2009).pdf
+Misc/Language Model Guided Sim-To-Real Transfer (2025).pdf
+Misc/PPPPrrrrooooggggrrrraaaammmmmmmmiiiinnnngggg &&&& DDDDSSSSAAAA (2025).pdf
+Misc/The Agentic AI Mindset - A Practitioner's Guide to Architectures, Patterns, - Markus Richter (2025).pdf
+Misc/The Prompt Report A Systematic Survey of Prompt Engineering (2025).pdf
+Misc/Why Language Models Hallucinate (2025).pdf
+The Little Book of Deep Learning - François Fleuret (2024).pdf
+WiP/Building Machine - Building Machine (2020).pdf
+WiP/Deep Learning - Deep Learning (2016).pdf
+WiP/Deep Learning with Python - François Chollet (2021).pdf
+WiP/Designing Machine Learning Systems - Chip Huyen (2022).pdf
+WiP/Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow, 3rd Edition - Aurélien Géron (2022).pdf
+WiP/Machine Learning Design Patterns - Valliappa Lakshmanan & Sara Robinson & Michael Munn (2021).pdf
+WiP/Mathematics for Machine Learning - Marc Peter Deisenroth, A. Aldo Faisal, Cheng Soon Ong (2020).pdf
+WiP/Natural Language Processing with Transformers - Tunstall, Lewis;Werra, Leandro von;Wolf, Thomas; (2022).pdf
+WiP/Probabilistic Machine Learning- An Introduction (Adaptive -- Kevin P. Murphy -- ( WeLib.org ).pdf
+WiP/Speech and Language Processing - James H. Martin (2018).pdf
+WiP/T E X T S I N C O M P U T E R S C I E N C E - Computer Vision (2022).pdf
+WiP/Transformers for Natural Language Processing- Build, train, - Denis Rothman (2022).pdf

@@ -22,7 +22,7 @@ Change the manifest, re-run `scripts/scaffold.py`; never hand-edit a README or I
 5. commit when PASS                             # message: "nb(04.01.01): OLS intuition — PASS G1–G12"
 ```
 A notebook with `metadata.ml_mastery.status == "stub"` and `_objective_` still in it is unbuilt.
-When built, set `status: "built"` in the notebook metadata. Gates are G1–G14 (G12 execute is optional, G13 abstention, G14 pre-registration).
+Status follows the verdict: the builder leaves `status: "stub"`; the loop sets `"built"` on BUILT and `"blocked"` on BLOCKED. Gates are G1–G14 (G12 execute is optional, G13 abstention, G14 pre-registration).
 
 ## Hard constraints
 - HC-1 Self-contained: no notebook imports from another notebook. Only `shared/` and `datasets/`.

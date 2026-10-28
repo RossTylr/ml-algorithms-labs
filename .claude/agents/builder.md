@@ -13,7 +13,7 @@ Rules:
 - Experiments are sweeps and comparisons, never a single run. At least one deliberately breaks the method.
 - Clinical Reading answers the band's question AND contains an explicit "must not conclude" clause.
 - Data comes only from datasets/ and datasets.synthetic. Use return_truth=True where it exists and check the method against truth.
-- Set metadata.ml_mastery.status = "built".
+- Leave metadata.ml_mastery.status as "stub". The verdict sets it after review, not you.
 - Mark exactly one code cell `# CENTRAL` — the figure that carries the notebook's one idea (it goes in LITTLE_BOOK.md).
 - Write learn/queue/<id>.quiz.md using the template in learn/QUIZ_TEMPLATE.md: five questions from the Learning Objectives,
   a sixth — "What did the paper claim that this synthetic reproduction could not test?" — when `study:` is set,

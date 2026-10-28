@@ -2,8 +2,8 @@
 """next.py — print the path of the next unbuilt stub in build order. Deterministic. No planning.
 
 Build order: tier (1→3), then module id, then topic, then notebook.
-A notebook is unbuilt if metadata.ml_mastery.status == "stub".
-BLOCKED notebooks (in ledger.jsonl) are skipped.
+A notebook is unbuilt if metadata.ml_mastery.status == "stub"; "built" and "blocked" are skipped.
+BLOCKED notebooks (in ledger.jsonl) are skipped too.
 
     python scripts/next.py                 # one path
     python scripts/next.py --n 5           # five paths

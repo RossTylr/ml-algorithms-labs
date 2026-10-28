@@ -45,3 +45,21 @@ def test_every_notebook_has_goal_and_gds():
             for nb in t["notebooks"]:
                 assert nb.get("goal") in {"predict", "explain", "decide"}, nb["title"]
                 assert nb.get("gds") in {1, 2, 3, 4, 5, 6}, nb["title"]
+
+
+def test_gates_abstention_and_preregistration():
+    import copy, subprocess, sys, nbformat
+    from nbformat.v4 import new_markdown_cell
+    root = os.path.join(os.path.dirname(__file__), "..")
+    src = os.path.join(root, "04_regression/01_simple_linear/01_ols_intuition_mathematics.ipynb")
+    nb = nbformat.read(src, as_version=4)
+    cases = {
+        "good": ("⛔ Abstention — prediction interval widening — the synthetic generator fixes homoscedastic Gaussian noise so widening cannot be shown honestly", "✓ G13"),
+        "bad": ("⛔ Abstention — prediction interval widening — too complex for this notebook", "✗ G13"),
+        "ext": ("### Experiment 9: bonus sweep", "✗ G14"),
+    }
+    for name, (cell, expect) in cases.items():
+        n = copy.deepcopy(nb); n.cells.insert(-3, new_markdown_cell(cell))
+        p = f"/tmp/_gate_{name}.ipynb"; nbformat.write(n, p)
+        out = subprocess.run([sys.executable, "scripts/validate.py", p], capture_output=True, text=True, cwd=root).stdout
+        assert expect in out, (name, out)

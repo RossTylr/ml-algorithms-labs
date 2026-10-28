@@ -24,6 +24,7 @@ def add(a) -> None:
         "id": a.id, "path": a.path, "attempt": a.attempt, "verdict": a.verdict,
         "gates": a.gates, "skeptic": a.skeptic, "findings": a.findings,
         "tokens": a.tokens, "seconds": a.seconds, "understood": None,
+        "abstained": a.abstained, "exploratory": a.exploratory,
     }
     with LEDGER.open("a") as f:
         f.write(json.dumps(rec) + "\n")
@@ -42,11 +43,11 @@ def summary() -> None:
         "# Build Ledger", "",
         f"**Built** {len(built)} · **Revise cycles** {len(revise)} · **Blocked** {len(blocked)} · "
         f"**Median tokens/built** {med(tok)} · **Median seconds/built** {med(sec)}", "",
-        "| ts | id | attempt | verdict | gates | skeptic | tokens | s | understood |",
-        "|---|---|---|---|---|---|---|---|---|",
+        "| ts | id | attempt | verdict | gates | skeptic | abst | expl | tokens | s | understood |",
+        "|---|---|---|---|---|---|---|---|---|---|---|",
     ]
     for r in reversed(recs[-200:]):
-        lines.append(f"| {r['ts'][:16]} | {r['id']} | {r['attempt']} | **{r['verdict']}** | {r['gates']} | {r['skeptic']} | {r.get('tokens') or ''} | {r.get('seconds') or ''} | {r.get('understood') if r.get('understood') is not None else ''} |")
+        lines.append(f"| {r['ts'][:16]} | {r['id']} | {r['attempt']} | **{r['verdict']}** | {r['gates']} | {r['skeptic']} | {r.get('abstained', 0)} | {r.get('exploratory', 0)} | {r.get('tokens') or ''} | {r.get('seconds') or ''} | {r.get('understood') if r.get('understood') is not None else ''} |")
     if blocked:
         lines += ["", "## Blocked — do not retry without a manifest change", ""]
         lines += [f"- `{r['id']}` — {r['findings']}" for r in blocked]
@@ -60,6 +61,7 @@ def main() -> int:
         p.add_argument(f"--{k}", required=True)
     p.add_argument("--attempt", type=int, default=1); p.add_argument("--findings", default="")
     p.add_argument("--tokens", type=int); p.add_argument("--seconds", type=int)
+    p.add_argument("--abstained", type=int, default=0); p.add_argument("--exploratory", type=int, default=0)
     sub.add_parser("summary")
     a = ap.parse_args()
     add(a) if a.cmd == "add" else summary()

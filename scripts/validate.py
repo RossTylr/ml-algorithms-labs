@@ -12,6 +12,14 @@ Usage:
     python scripts/validate.py --all
     python scripts/validate.py --all --execute            # also run each notebook (slow)
     python scripts/validate.py --all --built-only         # skip untouched stubs
+
+Gates G1–G12 per curriculum.yaml. Added by the paper fold (slice 4):
+  G13  every ⛔ Abstention block names the experiment and gives a specific reason (Kalai 2025: reward abstention over padding)
+  G14  experiment headings are the manifest's pre-registered list; extras must say (exploratory)  (Box 1976; AlphaCodium)
+  W1   figure titles that describe rather than state a finding — warning only (Knaflic)
+Abstention format, in a markdown cell where the figure/finding would have been:
+  ⛔ Abstention — <experiment name> — <reason, ≥25 chars, specific>
+A specific abstention relieves one figure from G5 (max two per notebook).
 """
 from __future__ import annotations
 
@@ -64,6 +72,46 @@ def count_bullets_under(nb, heading: str) -> int:
     return len([ln for ln in body.splitlines() if re.match(r"^\s*(\d+\.|[-*])\s+\S", ln)])
 
 
+ABSTAIN_RE = re.compile(r"^⛔\s*Abstention\s*[—:-]\s*(?P<exp>[^\n]+?)\s*[—:-]\s*(?P<reason>[^\n]{25,})", re.M)
+VAGUE = re.compile(r"too (complex|hard|difficult)|out of scope|not enough time|beyond this notebook", re.I)
+
+
+def abstentions(nb) -> list[tuple[str, str, bool]]:
+    """(experiment, reason, specific?) for every ⛔ Abstention block. Specific = ≥25 chars and not a vague phrase."""
+    out = []
+    for m in ABSTAIN_RE.finditer(md_text(nb)):
+        exp, reason = m.group("exp").strip(), m.group("reason").strip()
+        out.append((exp, reason, not VAGUE.search(reason)))
+    return out
+
+
+def experiment_headings(nb) -> list[str]:
+    return [h.strip() for h in re.findall(r"^###\s*Experiment\s*\d+\s*:\s*(.+)$", md_text(nb), re.M)]
+
+
+def exploratory(nb) -> list[str]:
+    """Experiment headings not in the manifest's pre-registered list and not marked (exploratory)."""
+    reg = [e.lower() for e in nb.metadata.get("ml_mastery", {}).get("experiments", [])]
+    out = []
+    for h in experiment_headings(nb):
+        if "(exploratory)" in h.lower():
+            continue
+        if not any(h.lower().startswith(r[:40]) or r.startswith(h.lower()[:40]) for r in reg):
+            out.append(h)
+    return out
+
+
+def descriptive_titles(nb) -> list[str]:
+    """Figure titles that describe rather than state a finding — warn only."""
+    titles = re.findall(r"set_title\(\s*[frb]?['\"]([^'\"]{6,})['\"]", code_text(nb)) + re.findall(r"suptitle\(\s*[frb]?['\"]([^'\"]{6,})['\"]", code_text(nb))
+    bad = []
+    for t in titles:
+        words = t.lower().split()
+        if (" vs " in f" {t.lower()} " or " by " in f" {t.lower()} ") and len(words) <= 6:
+            bad.append(t)
+    return bad
+
+
 def count_figures(nb) -> int:
     code = code_text(nb)
     # Count subplots/figure creations and show() calls; take the max as a conservative figure count.
@@ -97,9 +145,11 @@ def gate_results(nb, path: Path, gates: dict, execute: bool) -> list[tuple[str, 
     missing = [r for r in REGISTERS if r not in md]
     out.append(("G4", not missing, "all registers" if not missing else f"missing {missing}"))
 
-    # G5 visuals
+    # G5 visuals — a specific abstention relieves one figure each (max two)
+    abst = abstentions(nb)
+    relief = min(2, sum(1 for _, _, ok in abst if ok))
     nfig = count_figures(nb)
-    out.append(("G5", nfig >= visuals_min, f"{nfig}/{visuals_min} figures"))
+    out.append(("G5", nfig >= visuals_min - relief, f"{nfig}/{visuals_min} figures" + (f" (−{relief} abstained)" if relief else "")))
 
     # G6 failure modes
     ok = has_heading(nb, "Failure Modes")
@@ -126,6 +176,19 @@ def gate_results(nb, path: Path, gates: dict, execute: bool) -> list[tuple[str, 
     bad = re.findall(r"^\s*(?:from|import)\s+(\d{2}_\w+)", code, re.M)
     out.append(("G11", not bad, "no cross-notebook imports" if not bad else f"imports {bad}"))
 
+    # G13 abstentions must be specific
+    vague = [e for e, _, ok in abst if not ok]
+    out.append(("G13", not vague, f"{len(abst)} abstention(s), all specific" if not vague else f"vague abstention for {vague}"))
+
+    # G14 pre-registration: experiment headings ⊆ manifest list unless marked (exploratory)
+    extra = exploratory(nb)
+    out.append(("G14", not extra, "experiments match manifest" if not extra else f"unregistered: {extra[:2]}"))
+
+    # W1 figure titles (warning only, never fails)
+    desc = descriptive_titles(nb)
+    if desc:
+        out.append(("W1", True, f"warn: descriptive titles {desc[:2]}"))
+
     # G12 execute (optional)
     if execute:
         r = subprocess.run(
@@ -142,7 +205,7 @@ def validate_one(path: Path, gates: dict, execute: bool, quiet: bool = False) ->
     results = gate_results(nb, path, gates, execute)
     passed = all(ok for _, ok, _ in results)
     if not quiet:
-        rel = path.relative_to(ROOT)
+        rel = path.relative_to(ROOT) if path.is_relative_to(ROOT) else path
         print(f"\n{'PASS' if passed else 'FAIL'}  {rel}")
         for g, ok, why in results:
             print(f"  {'✓' if ok else '✗'} {g:<4} {why}")

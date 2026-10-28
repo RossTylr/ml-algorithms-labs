@@ -86,7 +86,7 @@ def load_admissions(n=5000, seed=SEED, start="2022-01-01"):
 
     los = np.exp(0.2 + 0.012 * age + 0.11 * severity + 0.09 * comorb + 0.25 * (adm_type == "emergency")
                  + 0.15 * (dept == "orthopaedics") + r.normal(0, 0.45, n)).clip(0.5, 90)
-    p_readmit = _sigmoid(-3.2 + 0.015 * (age - 62) + 0.12 * severity + 0.25 * comorb + 0.18 * prior + 0.08 * (imd - 3))
+    p_readmit = _sigmoid(-3.6 + 0.02 * (age - 62) + 0.22 * severity + 0.35 * comorb + 0.30 * prior + 0.10 * (imd - 3))
     readmit = r.binomial(1, p_readmit)
     p_died = _sigmoid(-6.0 + 0.04 * (age - 62) + 0.35 * severity + 0.2 * comorb)
     died = r.binomial(1, p_died)

@@ -24,7 +24,7 @@ def add(a) -> None:
         "id": a.id, "path": a.path, "attempt": a.attempt, "verdict": a.verdict,
         "gates": a.gates, "skeptic": a.skeptic, "findings": a.findings,
         "tokens": a.tokens, "usd": a.usd, "seconds": a.seconds, "understood": None,
-        "abstained": a.abstained, "exploratory": a.exploratory,
+        "abstained": a.abstained, "exploratory": a.exploratory, "by": a.by,
     }
     with LEDGER.open("a") as f:
         f.write(json.dumps(rec) + "\n")
@@ -34,7 +34,8 @@ def add(a) -> None:
 def summary() -> None:
     recs = [json.loads(l) for l in LEDGER.read_text().splitlines() if l.strip()] if LEDGER.exists() else []
     built = [r for r in recs if r["verdict"] == "BUILT"]
-    blocked = [r for r in recs if r["verdict"] == "BLOCKED"]
+    latest = {r["id"]: r for r in recs}
+    blocked = [r for r in latest.values() if r["verdict"] == "BLOCKED"]  # a later BUILT row (human unblock) lifts it
     revise = [r for r in recs if r["verdict"] == "REVISE"]
     tok = sorted(r["tokens"] for r in built if r.get("tokens"))
     sec = sorted(r["seconds"] for r in built if r.get("seconds"))
@@ -47,7 +48,8 @@ def summary() -> None:
         "|---|---|---|---|---|---|---|---|---|---|---|---|",
     ]
     for r in reversed(recs[-200:]):
-        lines.append(f"| {r['ts'][:16]} | {r['id']} | {r['attempt']} | **{r['verdict']}** | {r['gates']} | {r['skeptic']} | {r.get('abstained', 0)} | {r.get('exploratory', 0)} | {r.get('tokens') or ''} | {r.get('usd') or ''} | {r.get('seconds') or ''} | {r.get('understood') if r.get('understood') is not None else ''} |")
+        by = f" · {r['by']}" if r.get("by", "builder") != "builder" else ""
+        lines.append(f"| {r['ts'][:16]} | {r['id']} | {r['attempt']}{by} | **{r['verdict']}** | {r['gates']} | {r['skeptic']} | {r.get('abstained', 0)} | {r.get('exploratory', 0)} | {r.get('tokens') or ''} | {r.get('usd') or ''} | {r.get('seconds') or ''} | {r.get('understood') if r.get('understood') is not None else ''} |")
     if blocked:
         lines += ["", "## Blocked — do not retry without a manifest change", ""]
         lines += [f"- `{r['id']}` — {r['findings']}" for r in blocked]
@@ -62,6 +64,7 @@ def main() -> int:
     p.add_argument("--attempt", type=int, default=1); p.add_argument("--findings", default="")
     p.add_argument("--tokens", type=int); p.add_argument("--usd", type=float); p.add_argument("--seconds", type=int)
     p.add_argument("--abstained", type=int, default=0); p.add_argument("--exploratory", type=int, default=0)
+    p.add_argument("--by", default="builder", help="builder, or human for a hand-edited notebook /skeptic passed")
     sub.add_parser("summary")
     a = ap.parse_args()
     add(a) if a.cmd == "add" else summary()

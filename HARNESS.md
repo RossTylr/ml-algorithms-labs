@@ -39,6 +39,8 @@ next.py ──> stub ──> builder ──> validate.py ──> reviewer ──
 
 **D-4.** Revisions return to the same builder context rather than a fresh one; the notebook is already loaded.
 
+**Human unblock.** A BLOCKED notebook may be edited by hand. `/skeptic <path>` on it with a PASS verdict makes it BUILT: set its status to `"built"`, record a ledger row with attempt 3 and `by=human` (`python scripts/ledger.py add --id <id> --path <path> --attempt 3 --verdict BUILT --gates "<x>/<y> pass" --skeptic PASS --by human`), run `scripts/little_book.py`, and commit as for any BUILT notebook.
+
 ## 3. Three configurations, tried in order
 
 **T0 — headless.** `scripts/loop.sh N` makes one `claude -p` call per notebook, gates it, records it, commits it. No agents, no reviewer. This measures the floor: whether one prompt plus `CLAUDE.md` plus the stub produces a gate-passing notebook, and at what cost in tokens and time.

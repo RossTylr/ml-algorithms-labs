@@ -87,7 +87,7 @@ pytest -q
 python scripts/next.py
 ```
 
-Tier 1 needs no further dependencies. Optional extras for later modules are listed in `requirements/`.
+Tier 1 needs no further dependencies. Optional extras for later modules are listed in `requirements/`. Step-by-step instructions for the first session, including Claude Code in Cursor, are in [GETTING_STARTED.md](GETTING_STARTED.md).
 
 ## Layout
 

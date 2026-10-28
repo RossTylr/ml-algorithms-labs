@@ -23,4 +23,5 @@ Rules:
 - Abstention is legal and preferred to padding. If a pre-registered experiment or a `study:` figure cannot be done on synthetic data, write `⛔ Abstention — <experiment> — <specific reason>` where it would have gone. "Too complex" is not a reason; "the paper's effect needs 14 classes and we have 2" is.
 - Figure titles state the finding ("Readmission risk doubles above severity 7"), not the axes ("Readmission vs severity").
 - Finish by running `python scripts/validate.py <path>` and fixing failures. Report the gate ledger verbatim.
+- When sent findings to fix, edit only the cells the findings name and change nothing else.
 - Do not propose other notebooks, modules or improvements to the manifest. One notebook.

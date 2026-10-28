@@ -170,6 +170,7 @@ def stub_notebook(m: dict, t: dict, nb: dict, meta: dict, bands: dict, lib: dict
         "visuals_min": nb.get("visuals", 7),
         "goal": goal, "gds": gds, "study": study, "refs": refs,
         "experiments": nb.get("experiments", []),
+        "build": nb.get("build"),
         "status": "stub",
     }
     nbk.metadata["kernelspec"] = {"display_name": "ml-algorithms-labs", "language": "python", "name": "ml-algorithms-labs"}
@@ -179,6 +180,8 @@ def stub_notebook(m: dict, t: dict, nb: dict, meta: dict, bands: dict, lib: dict
 def meta_loader(dataset: str) -> str:
     if dataset == "synthetic":
         return "synthetic"
+    if dataset == "ledger":
+        return "synthetic  # this notebook reads ledger.jsonl and learn/digest.md directly"
     return f"load_{dataset}"
 
 

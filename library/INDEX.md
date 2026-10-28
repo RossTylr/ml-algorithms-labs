@@ -1,6 +1,6 @@
 # Library Index
 
-**Files in folder** 292 · **Curated** 140 (A 54 · B 13 · C 15 · D 58) · **Cited by manifest** 105
+**Files in folder** 292 · **Curated** 140 (A 54 · B 13 · C 15 · D 58) · **Cited by manifest** 110
 
 Kinds: **A** seminal method (builder reproduces a figure) · **B** clinical (becomes a subject) · **C** critique (skeptic check) · **D** reference only.
 
@@ -62,7 +62,7 @@ Kinds: **A** seminal method (builder reproduces a figure) · **B** clinical (bec
 | `edge2025` | A | 2025 | From Local to Global: A GraphRAG Approach |  | 1 |
 | `kozlowski2025` | A | 2025 | Semantic Structure in Large Language Model Embeddings |  | 1 |
 | `contrastive2025` | A | 2025 | A Statistical Theory of Contrastive Pre-training | spectral view, toy | 1 |
-| `luo2003` | B | 2003 | Measures of spatial accessibility to health care in a GIS environment (2SFCA) | two-step floating catchment on a synthetic grid | 0 |
+| `luo2003` | B | 2003 | Measures of spatial accessibility to health care in a GIS environment (2SFCA) | two-step floating catchment on a synthetic grid | 2 |
 | `rajpurkar2017` | B | 2017 | CheXNet: Radiologist-Level Pneumonia Detection on Chest X-Rays | CheXNet in miniature: 2-class on patches with class-activation map | 1 |
 | `esteva2017` | B | 2017 | Dermatologist-level classification of skin cancer with deep neural networks | transfer vs scratch at 100/1k/10k patches | 1 |
 | `ravi2017` | B | 2017 | Deep Learning for Health Informatics |  | 0 |
@@ -72,7 +72,7 @@ Kinds: **A** seminal method (builder reproduces a figure) · **B** clinical (bec
 | `sideygibbons2019` | B | 2019 | Machine learning in medicine: a practical introduction | GLM vs SVM vs ANN comparison table on screening (project 01) | 0 |
 | `esteva2020` | B | 2020 | Deep learning-enabled medical computer vision |  | 0 |
 | `jumper2021` | B | 2021 | Highly accurate protein structure prediction with AlphaFold | reference only — not reproducible at this scale | 0 |
-| `macnab2022` | B | 2022 | Bayesian disease mapping: Past, present, and future | BYM/CAR model on a synthetic 50-area grid | 0 |
+| `macnab2022` | B | 2022 | Bayesian disease mapping: Past, present, and future | BYM/CAR model on a synthetic 50-area grid | 2 |
 | `brodeur2024` | B | 2024 | Superhuman performance of a large language model on the reasoning tasks of a physician | what the benchmark measured vs what was claimed | 0 |
 | `nori2025` | B | 2025 | Sequential Diagnosis with Language Models | gatekeeper pattern; cost-vs-accuracy frontier | 1 |
 | `box1976` | C | 1976 | Science and Statistics | 'all models are wrong' — does the notebook say how this one is wrong? | 1 |
@@ -85,11 +85,11 @@ Kinds: **A** seminal method (builder reproduces a figure) · **B** clinical (bec
 | `amrhein2019` | C | 2019 | Scientists rise up against statistical significance | dichotomania — 'significant / not significant' in Findings? | 2 |
 | `zeng2022` | C | 2022 | Are Transformers Effective for Time Series Forecasting? | DLinear beats the transformer on vitals | 1 |
 | `rajpurkar2022` | C | 2022 | AI in health and medicine | does the Clinical Reading say the result is retrospective and synthetic, and that the bar is prospective? | 1 |
-| `dellacqua2023` | C | 2023 | Navigating the Jagged Technological Frontier | flag where builder difficulty (attempts) diverges from method difficulty | 0 |
+| `dellacqua2023` | C | 2023 | Navigating the Jagged Technological Frontier | flag where builder difficulty (attempts) diverges from method difficulty | 1 |
 | `mirzadeh2024` | C | 2024 | GSM-Symbolic: Understanding the Limitations of Mathematical Reasoning in LLMs | LLM reasoning overclaim? | 1 |
 | `shalizi2024` | C | 2024 | The Truth about Linear Regression | are OLS coefficients called 'effects'? | 2 |
 | `chen2025` | C | 2025 | Reasoning Models Don't Always Say What They Think | CoT taken as faithful? | 1 |
-| `kalai2025` | C | 2025 | Why Language Models Hallucinate | did the gate reward padding over abstention? | 0 |
+| `kalai2025` | C | 2025 | Why Language Models Hallucinate | did the gate reward padding over abstention? | 1 |
 | `turing1950` | D | 1950 | Computing Machinery and Intelligence |  | 0 |
 | `dean2004` | D | 2004 | MapReduce: Simplified Data Processing on Large Clusters |  | 0 |
 | `dekking2005` | D | 2005 | A Modern Introduction to Probability and Statistics |  | 2 |
@@ -104,7 +104,7 @@ Kinds: **A** seminal method (builder reproduces a figure) · **B** clinical (bec
 | `silver2016` | D | 2016 | Mastering the game of Go with deep neural networks and tree search |  | 0 |
 | `heylighen2016` | D | 2016 | Stigmergy as a universal coordination mechanism I | theoretical basis for the no-coordinator harness | 0 |
 | `goodfellow2016` | D | 2016 | Deep Learning |  | 0 |
-| `donoho2017` | D | 2017 | 50 Years of Data Science | six divisions → gds: tag | 1 |
+| `donoho2017` | D | 2017 | 50 Years of Data Science | six divisions → gds: tag | 2 |
 | `hamilton2018` | D | 2018 | Representation Learning on Graphs: Methods and Applications |  | 1 |
 | `ng2022` | D | 2018 | Machine Learning Yearning | error analysis; human-level performance | 4 |
 | `sutton2018` | D | 2018 | Reinforcement Learning: An Introduction |  | 3 |
@@ -135,7 +135,7 @@ Kinds: **A** seminal method (builder reproduces a figure) · **B** clinical (bec
 | `murphy2023` | D | 2023 | Probabilistic Machine Learning: Advanced Topics |  | 2 |
 | `prince2023` | D | 2023 | Understanding Deep Learning |  | 4 |
 | `bellemare2023` | D | 2023 | Distributional Reinforcement Learning |  | 1 |
-| `geocomp2023` | D | 2023 | Geocomputation: a practical primer |  | 0 |
+| `geocomp2023` | D | 2023 | Geocomputation: a practical primer |  | 2 |
 | `ridnik2024` | D | 2024 | Code Generation with AlphaCodium: From Prompt Engineering to Flow Engineering | tests-first → pre-registration in the harness | 0 |
 | `anthropic2024` | D | 2024 | Building effective agents | evaluator–optimiser = builder/skeptic | 0 |
 | `fleuret2024` | D | 2024 | The Little Book of Deep Learning | format for LITTLE_BOOK.md | 2 |

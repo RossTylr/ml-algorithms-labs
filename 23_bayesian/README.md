@@ -1,6 +1,6 @@
 # Module 23 — Bayesian Methods
 
-**Tier** 3 · **Notebooks** 8 · **Prerequisites** 00, 02
+**Tier** 3 · **Notebooks** 9 · **Prerequisites** 00, 02
 
 > Uncertainty as a first-class clinical output.
 
@@ -16,6 +16,7 @@
 | 02.03 | [Bayesian Optimisation](02_models/03_bayesian_optimisation.ipynb) | P2 | decide | `admissions` |  | Tuning a readmission model; dose finding |
 | 03.01 | [PyMC, Stan & NumPyro](03_programming/01_pymc_stan_numpyro.ipynb) | P3 | explain | `trial` |  | A full trial model with covariates |
 | 03.02 | [Bayesian Nonparametrics](03_programming/02_bayesian_nonparametrics.ipynb) | P1 | predict | `cohort` |  | Phenotypes without choosing k |
+| 03.03 | [Bayesian Disease Mapping — BYM / CAR](03_programming/03_bayesian_disease_mapping_bym_car.ipynb) | P1 | explain | `areas` | `macnab2022` | Smoothed area-level disease rates on a synthetic 50-area grid — where is risk really high, and where is it just small numbers? |
 
 ## Priority bands
 

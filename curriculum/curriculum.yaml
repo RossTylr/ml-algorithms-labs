@@ -54,6 +54,8 @@ datasets:
   referrals:   {loader: load_referrals,   band: P4, domain: "referral network between clinicians, teams and sites", in_spirit_of: "care-pathway network analysis"}
   imaging:     {loader: load_imaging,     band: P1, domain: "synthetic 16×16 lesion patches, present/absent with shape and intensity variation", in_spirit_of: "patch-level lesion detection"}
   evac:        {loader: load_evac,        band: P5, domain: "casualty evacuation grid — point of injury → Role 1 → Role 2 under terrain, threat and clock", in_spirit_of: "medical evacuation planning"}
+  areas:       {loader: load_areas,       band: P1, domain: "50 synthetic areas on a grid — population, expected counts, observed counts with spatial + unstructured risk; adjacency; facility sites", in_spirit_of: "BYM disease mapping; 2SFCA access"}
+  ledger:      {loader: "ledger.jsonl + learn/digest.md", band: P4, domain: "this repo's own build record", in_spirit_of: "Donoho GDS6"}
   synthetic:   {loader: datasets.synthetic, band: all, domain: "controlled generators with known ground truth"}
 
 tiers:
@@ -756,6 +758,7 @@ modules:
     slug: reinforcement_learning
     title: Reinforcement Learning
     tier: 3
+    order: 24.5   # build after 23 Bayesian and 24 PGMs — decisions follow inference (Hardt & Recht; Kochenderfer)
     prereqs: ["00", "15"]
     purpose: "Sequential decisions under uncertainty — dosing, evacuation, resource allocation."
     topics:
@@ -849,6 +852,7 @@ modules:
         notebooks:
           - {n: 1, title: "PyMC, Stan & NumPyro", band: P3, goal: explain, gds: 4, subject: "A full trial model with covariates", dataset: trial, visuals: 6, experiments: ["DAG", "posteriors"]}
           - {n: 2, title: "Bayesian Nonparametrics", band: P1, goal: predict, gds: 4, subject: "Phenotypes without choosing k", dataset: cohort, visuals: 5, experiments: ["DP mixture"]}
+          - {n: 3, title: "Bayesian Disease Mapping — BYM / CAR", band: P1, goal: explain, gds: 4, subject: "Smoothed area-level disease rates on a synthetic 50-area grid — where is risk really high, and where is it just small numbers?", dataset: areas, study: "macnab2022", refs: [macnab2022, geocomp2023], visuals: 8, experiments: ["raw SMR vs BYM-smoothed map", "spatial vs unstructured variance share", "small-area shrinkage — which areas move most", "neighbourhood structure sensitivity (queen vs rook)"]}
 
   - id: "24"
     slug: pgm
@@ -946,6 +950,10 @@ modules:
         notebooks:
           - {n: 1, title: "Propensity Scores & Instrumental Variables", band: P3, goal: explain, gds: 4, subject: "Did the treatment work when it wasn't randomised?", dataset: admissions, refs: [hardt2021], visuals: 7, experiments: ["overlap", "IV"]}
           - {n: 2, title: "Diff-in-Diff, DoWhy & Double ML", band: P3, goal: explain, gds: 4, subject: "A policy change across sites; graphs; debiased estimation", dataset: admissions, visuals: 8, experiments: ["parallel trends", "refutation", "cross-fitting"]}
+      - slug: spatial
+        title: Spatial Access
+        notebooks:
+          - {n: 1, title: "Spatial Accessibility to Care — 2SFCA", band: P5, goal: decide, gds: 4, subject: "Travel-time access to a Role 2 / primary-care site on a synthetic grid — where should the next facility go?", dataset: areas, study: "luo2003", refs: [luo2003, geocomp2023], visuals: 8, experiments: ["catchment radius sweep", "gravity vs threshold catchments", "add one facility — which placement raises the worst-served area most", "evacuation clock as the distance metric"]}
       - slug: recommenders
         title: Recommender Systems
         notebooks:
@@ -995,6 +1003,10 @@ modules:
         notebooks:
           - {n: 1, title: "Calibration — Reliability, Platt, Isotonic", band: P1, goal: predict, gds: 6, subject: "Does 70% risk mean 70%?", dataset: screening, visuals: 6, study: "TRIPOD calibration reporting", experiments: ["reliability before/after"]}
           - {n: 2, title: "Bias–Variance Decomposition", band: P2, goal: decide, gds: 6, subject: "LOS — bias² + variance + noise", dataset: admissions, visuals: 6, experiments: ["learning curves"]}
+      - slug: meta
+        title: Science About This Repo
+        notebooks:
+          - {n: 1, title: "Science About This Repo — the Ledger and the Digest as Data", band: P4, goal: explain, gds: 6, subject: "After every other notebook is built: where did a strong model get it wrong first time, which registers slipped, where did Clinical Readings overclaim — the jagged frontier across ML, measured", dataset: ledger, refs: [donoho2017, dellacqua2023, kalai2025], visuals: 8, build: last, experiments: ["attempts and skeptic findings by module and by tier", "which named checks fire most, and where", "abstention rate vs figure count — did the gate reward padding?", "builder difficulty vs reader difficulty (quiz scores)"]}
       - slug: fairness
         title: Fairness
         notebooks:

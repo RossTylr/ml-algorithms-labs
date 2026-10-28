@@ -1,6 +1,6 @@
 # Module 28 — Specialised & Emerging
 
-**Tier** 3 · **Notebooks** 10 · **Prerequisites** None
+**Tier** 3 · **Notebooks** 11 · **Prerequisites** None
 
 > Methods the clinic has always needed.
 
@@ -12,12 +12,13 @@
 | 01.02 | [Random Survival Forests & DeepSurv](01_survival/02_random_survival_forests_deepsurv.ipynb) | P3 | explain | `trial` |  | Non-linear survival |
 | 02.01 | [Propensity Scores & Instrumental Variables](02_causal/01_propensity_scores_instrumental_variables.ipynb) | P3 | explain | `admissions` |  | Did the treatment work when it wasn't randomised? |
 | 02.02 | [Diff-in-Diff, DoWhy & Double ML](02_causal/02_diff_in_diff_dowhy_double_ml.ipynb) | P3 | explain | `admissions` |  | A policy change across sites; graphs; debiased estimation |
-| 03.01 | [Collaborative Filtering & Matrix Factorisation](03_recommenders/01_collaborative_filtering_matrix_factorisation.ipynb) | P2 | decide | `prescribing` |  | Patients like this one responded to… |
-| 03.02 | [NCF, Content-Based, Hybrid & Two-Tower](03_recommenders/02_ncf_content_based_hybrid_two_tower.ipynb) | P2 | decide | `notes` | `manning2009` | Guideline retrieval |
-| 04.01 | [LoRA, QLoRA & Quantisation](04_llm/01_lora_qlora_quantisation.ipynb) | P5 | decide | `notes` |  | A clinical note model small enough to run offline at a forward site |
-| 04.02 | [RAG & Agents](04_llm/02_rag_agents.ipynb) | P1 | predict | `notes` | `lewis2021` | Guideline-grounded answers; a Sequential-Diagnosis-style gatekeeper loop scored on accuracy AND information cost |
-| 05.01 | [Vision-Language, Audio & Knowledge Graph Embeddings](05_multimodal/01_vision_language_audio_knowledge_graph_embeddings.ipynb) | P1 | predict | `synthetic` |  | Image–report pairing; dictation; drug–disease graph |
-| 06.01 | [Genetic Algorithms, CMA-ES & NEAT](06_evolutionary/01_genetic_algorithms_cma_es_neat.ipynb) | P4 | predict | `synthetic` |  | Rota optimisation; evolving a monitoring controller |
+| 03.01 | [Spatial Accessibility to Care — 2SFCA](03_spatial/01_spatial_accessibility_to_care_2sfca.ipynb) | P5 | decide | `areas` | `luo2003` | Travel-time access to a Role 2 / primary-care site on a synthetic grid — where should the next facility go? |
+| 04.01 | [Collaborative Filtering & Matrix Factorisation](04_recommenders/01_collaborative_filtering_matrix_factorisation.ipynb) | P2 | decide | `prescribing` |  | Patients like this one responded to… |
+| 04.02 | [NCF, Content-Based, Hybrid & Two-Tower](04_recommenders/02_ncf_content_based_hybrid_two_tower.ipynb) | P2 | decide | `notes` | `manning2009` | Guideline retrieval |
+| 05.01 | [LoRA, QLoRA & Quantisation](05_llm/01_lora_qlora_quantisation.ipynb) | P5 | decide | `notes` |  | A clinical note model small enough to run offline at a forward site |
+| 05.02 | [RAG & Agents](05_llm/02_rag_agents.ipynb) | P1 | predict | `notes` | `lewis2021` | Guideline-grounded answers; a Sequential-Diagnosis-style gatekeeper loop scored on accuracy AND information cost |
+| 06.01 | [Vision-Language, Audio & Knowledge Graph Embeddings](06_multimodal/01_vision_language_audio_knowledge_graph_embeddings.ipynb) | P1 | predict | `synthetic` |  | Image–report pairing; dictation; drug–disease graph |
+| 07.01 | [Genetic Algorithms, CMA-ES & NEAT](07_evolutionary/01_genetic_algorithms_cma_es_neat.ipynb) | P4 | predict | `synthetic` |  | Rota optimisation; evolving a monitoring controller |
 
 ## Priority bands
 

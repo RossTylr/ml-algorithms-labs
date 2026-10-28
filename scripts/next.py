@@ -44,7 +44,9 @@ def built_count() -> int:
 
 def candidates(module: str | None):
     manifest = yaml.safe_load((ROOT / "curriculum" / "curriculum.yaml").read_text())
-    mods = sorted(manifest["modules"], key=lambda m: (m["tier"], m["id"]))
+    mods = sorted(manifest["modules"], key=lambda m: (m["tier"], float(m.get("order", m["id"]))))
+    total = sum(len(t["notebooks"]) for m in manifest["modules"] for t in m["topics"])
+    n_built = built_count()
     skip = blocked_ids()
     for m in mods:
         if module and m["id"] != module:
@@ -53,8 +55,11 @@ def candidates(module: str | None):
         for p in sorted(mdir.glob("*/*.ipynb")):
             nb = nbformat.read(p, as_version=4)
             meta = nb.metadata.get("ml_mastery", {})
-            if meta.get("status") == "stub" and meta.get("id") not in skip:
-                yield p, meta
+            if meta.get("status") != "stub" or meta.get("id") in skip:
+                continue
+            if meta.get("build") == "last" and n_built < total - 1:
+                continue  # 29.meta.1 waits until everything else is BUILT
+            yield p, meta
 
 
 def main() -> int:

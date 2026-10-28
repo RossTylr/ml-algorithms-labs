@@ -355,4 +355,49 @@ def load_evac(size=6, seed=SEED):
     }
 
 
+# ─────────────────────────── P1/P5 areas (disease mapping, access) ───────────────────────────
+def load_areas(n_side=7, n_facilities=3, seed=SEED, return_truth=False):
+    """
+    Synthetic small areas on an n_side×n_side grid (default 49 ≈ 50). Each area has population, expected
+    count (from age structure), and observed count drawn with relative risk = exp(spatial + unstructured).
+    The spatial component is a smooth field (Gaussian kernel on the grid), so neighbouring areas share risk —
+    exactly what a BYM/CAR model is built to recover. Facilities sit on a few cells for 2SFCA.
+
+    Returns areas_df (area_id, row, col, population, expected, observed, has_facility, travel_min_to_nearest)
+    and adjacency (queen) as a dict {area_id: [neighbour ids]}. return_truth adds the true log-RR components.
+    """
+    r = _rng(seed)
+    n = n_side * n_side
+    rows, cols = np.divmod(np.arange(n), n_side)
+    pop = r.lognormal(np.log(4000), 0.5, n).astype(int)
+    expected = pop * r.uniform(0.004, 0.009, n)
+    # smooth spatial field: kernel-weighted sum of a few random bumps
+    bumps = r.uniform(0, n_side - 1, (3, 2)); amp = r.normal(0, 0.5, 3)
+    d2 = ((rows[:, None] - bumps[:, 0]) ** 2 + (cols[:, None] - bumps[:, 1]) ** 2)
+    spatial = (amp * np.exp(-d2 / (2 * 1.8 ** 2))).sum(1)
+    unstructured = r.normal(0, 0.15, n)
+    rr = np.exp(spatial + unstructured)
+    observed = r.poisson(expected * rr)
+    fac = np.zeros(n, int); fac[r.choice(n, n_facilities, replace=False)] = 1
+    fr, fc = rows[fac == 1], cols[fac == 1]
+    dist = np.sqrt((rows[:, None] - fr) ** 2 + (cols[:, None] - fc) ** 2).min(1)
+    travel = (dist * 9 + r.normal(0, 2, n)).clip(2, None).round(0)
+    df = pd.DataFrame({"area_id": np.arange(n), "row": rows, "col": cols, "population": pop,
+                       "expected": expected.round(2), "observed": observed, "has_facility": fac,
+                       "travel_min_to_nearest": travel})
+    adj = {}
+    for i in range(n):
+        nb = []
+        for dr in (-1, 0, 1):
+            for dc in (-1, 0, 1):
+                if dr == dc == 0: continue
+                rr_, cc_ = rows[i] + dr, cols[i] + dc
+                if 0 <= rr_ < n_side and 0 <= cc_ < n_side:
+                    nb.append(int(rr_ * n_side + cc_))
+        adj[i] = nb
+    if return_truth:
+        return df, adj, {"log_rr": spatial + unstructured, "spatial": spatial, "unstructured": unstructured}
+    return df, adj
+
+
 from . import synthetic  # noqa: E402,F401

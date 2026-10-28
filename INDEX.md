@@ -25,12 +25,12 @@
 | 20 | [Graph Neural Networks](20_gnns/README.md) | 3 | 4 | P2 P4 |
 | 21 | [Reinforcement Learning](21_reinforcement_learning/README.md) | 3 | 15 | P1 P2 P3 P4 P5 |
 | 22 | [Time Series & Forecasting](22_time_series/README.md) | 2 | 9 | P4 |
-| 23 | [Bayesian Methods](23_bayesian/README.md) | 3 | 8 | P1 P2 P3 P4 |
+| 23 | [Bayesian Methods](23_bayesian/README.md) | 3 | 9 | P1 P2 P3 P4 |
 | 24 | [Probabilistic Graphical Models](24_pgm/README.md) | 3 | 6 | P1 P2 P4 P5 |
 | 25 | [Meta-Learning](25_meta_learning/README.md) | 3 | 2 | P1 |
 | 26 | [AutoML & NAS](26_automl/README.md) | 3 | 3 | P1 P2 |
 | 27 | [Explainability](27_explainability/README.md) | 3 | 6 | P1 P2 |
-| 28 | [Specialised & Emerging](28_specialised/README.md) | 3 | 10 | P1 P2 P3 P4 P5 |
-| 29 | [Evaluation & Metrics](29_evaluation/README.md) | 1 | 9 | P1 P2 |
+| 28 | [Specialised & Emerging](28_specialised/README.md) | 3 | 11 | P1 P2 P3 P4 P5 |
+| 29 | [Evaluation & Metrics](29_evaluation/README.md) | 1 | 10 | P1 P2 P4 |
 
-**Total notebooks**: 263
+**Total notebooks**: 266

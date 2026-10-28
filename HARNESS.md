@@ -151,6 +151,24 @@ learn/                       queue/ and digest.md
 
 ---
 
+## 6b. Why no coordinator works — stigmergy
+
+Heylighen (2016, `library:heylighen2016`) defines stigmergy as coordination through *traces left in a shared medium*, not
+messages between agents. That is this harness exactly: builder and skeptic never address each other; they read and write
+the repo — stub → notebook → ledger → digest → next stub. A coordinator would be a second medium competing with the first.
+**H11**: no agent file may name another agent. Checked by `tests/test_harness.py`.
+
+Anthropic's *Building effective agents* (`library:anthropic2024`) calls the builder/skeptic pair an evaluator–optimiser
+loop and recommends exactly one more pattern — routing by task type — which `/build-next` now does by tier.
+
+## 6c. Learning loop additions (from the library)
+
+- **Sixth quiz question** on every `study:` notebook: *what did the paper claim that this synthetic reproduction could not test?*
+- **Hints at a cost** (Nori 2025, Sequential Diagnosis): each question has H1/H2; score = correct − 0.5·hints.
+- **Teach-back on the jagged edge** (Dell'Acqua 2023): `next.py` sets teach-back where the last skeptic verdict on that topic was REVISE, else every fifth.
+- **The Little Book** (Fleuret 2024): `scripts/little_book.py` stitches every built notebook's 🗣️ paragraph and `# CENTRAL` figure into `LITTLE_BOOK.md`.
+- **The closing notebook** (Donoho GDS6): `29.meta.1` is built last, from the ledger and digest.
+
 ## 7. Risks recorded
 
 - **R1 Skeptic drift.** The skeptic will try to be helpful and suggest additions. The agent file forbids it and the skill truncates output to three findings. Watch the digest for "you could also…" phrasing — that is the leak.

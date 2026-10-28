@@ -36,6 +36,17 @@ def blocked_ids() -> set[str]:
     return out
 
 
+def revise_topics() -> set[str]:
+    """Topics (NN.MM) whose most recent ledger record carried a skeptic REVISE — teach-back targets (Dell'Acqua: the jagged edge)."""
+    if not LEDGER.exists():
+        return set()
+    last = {}
+    for ln in LEDGER.read_text().splitlines():
+        if ln.strip():
+            rec = json.loads(ln); last[rec["id"][:5]] = rec.get("skeptic", "")
+    return {k for k, v in last.items() if v.startswith("REVISE")}
+
+
 def built_count() -> int:
     if not LEDGER.exists():
         return 0
@@ -69,12 +80,13 @@ def main() -> int:
     ap.add_argument("--json", action="store_true")
     a = ap.parse_args()
     base = built_count()
+    jagged = revise_topics()
     out = []
     for i, (p, meta) in enumerate(candidates(a.module)):
         if i >= a.n:
             break
         rel = str(p.relative_to(ROOT))
-        teachback = (base + i + 1) % 5 == 0
+        teachback = rec_topic_jagged = (meta["id"][:5] in jagged) or ((base + i + 1) % 5 == 0)
         out.append({"path": rel, "id": meta["id"], "band": meta.get("band"), "visuals_min": meta.get("visuals_min"), "teachback": teachback})
     if not out:
         print("NONE", file=sys.stderr); return 1

@@ -22,7 +22,7 @@ Change the manifest, re-run `scripts/scaffold.py`; never hand-edit a README or I
 5. commit when PASS                             # message: "nb(04.01.01): OLS intuition — PASS G1–G12"
 ```
 A notebook with `metadata.ml_mastery.status == "stub"` and `_objective_` still in it is unbuilt.
-When built, set `status: "built"` in the notebook metadata.
+When built, set `status: "built"` in the notebook metadata. Gates are G1–G14 (G12 execute is optional, G13 abstention, G14 pre-registration).
 
 ## Hard constraints
 - HC-1 Self-contained: no notebook imports from another notebook. Only `shared/` and `datasets/`.
@@ -33,25 +33,39 @@ When built, set `status: "built"` in the notebook metadata.
 - HC-6 Clinical Reading says what a clinician would do differently and what they must NOT conclude.
 - HC-7 Synthetic data only. `study:` entries are "in the spirit of" — never claim to reproduce a paper's numbers.
 - HC-8 British English. Patients, not users. Sensitivity/specificity, not just precision/recall.
+- HC-9 Pre-registration: the experiments are the manifest's `experiments:` list, in order. Extras are headed `(exploratory)`.
+- HC-10 Abstention beats padding: `⛔ Abstention — <experiment> — <specific reason>` is a legal, gate-accepted answer.
+- HC-11 Goal discipline: the title cell's `goal:` (predict / explain / decide) bounds every claim in Findings and Clinical Reading.
+- HC-12 Figure titles state the finding, not the axes. Exactly one code cell is marked `# CENTRAL`.
 
 ## Registers — what each sounds like
 - 🗣️ Plain: an analogy a nurse or a section commander follows first time. No undefined jargon.
 - 💻 Developer: pseudocode, API, complexity, memory. A dev could implement from it.
 - 🔬 Technical: notation, objective, assumptions, convergence. Citeable.
 
+## Manifest fields on every notebook
+`band` P1–P5 · `goal` predict|explain|decide · `gds` 1–6 (Donoho) · `dataset` · `study` (library key: reproduce that paper's central figure, in spirit) · `refs` (library keys → References cell) · `visuals` · `experiments` (pre-registered) · `build: last` (29.meta only).
+The library is `library/curated.yaml`; the builder reads a PDF only when `study:` names it.
+
 ## Priority bands (clinical framing, from the manifest)
 P1 Diagnostics · P2 Treatment · P3 Efficacy · P4 Health tech / operations · P5 Military-medicine thread.
 The band is on the title cell. The Clinical Reading answers the band's question.
 
 ## Datasets (all synthetic, `datasets/__init__.py`)
-screening · admissions · trial · vitals · prescribing · cohort · notes · referrals · imaging · evac · synthetic.*
+screening · admissions · trial · vitals · prescribing · cohort · notes · referrals · imaging · evac · areas · synthetic.*
 Each has a known generating mechanism. Use `return_truth=True` where offered to check the method against truth.
+`datasets.baselines.clinician_baseline(name, df)` gives the rule-based human yardstick for the error-analysis experiment.
 
 ## Layout
 ```
 curriculum/curriculum.yaml   manifest
 scripts/scaffold.py          manifest → tree + stubs + READMEs + INDEX.md
-scripts/validate.py          gates G1–G12
+scripts/validate.py          gates G1–G14 (+W1 warning)
+scripts/next.py              next stub in build order; teach-back on the jagged edge
+scripts/ledger.py            ledger.jsonl → LEDGER.md
+scripts/little_book.py       built 🗣️ paragraphs + # CENTRAL figures → LITTLE_BOOK.md
+scripts/library.py           library/curated.yaml + listing.txt → INDEX.md; checks manifest keys
+scripts/enrich_manifest.py   one-off, idempotent: goal/gds/study/refs/error-analysis
 shared/                      plotting · evaluation · explanation · experiment · rl
 datasets/                    ten clinical generators + synthetic/
 NN_module/MM_topic/KK_notebook.ipynb

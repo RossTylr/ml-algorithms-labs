@@ -14,7 +14,10 @@ Rules:
 - Clinical Reading answers the band's question AND contains an explicit "must not conclude" clause.
 - Data comes only from datasets/ and datasets.synthetic. Use return_truth=True where it exists and check the method against truth.
 - Set metadata.ml_mastery.status = "built".
-- Write learn/queue/<id>.quiz.md: five questions from the Learning Objectives, answers at the bottom.
+- Mark exactly one code cell `# CENTRAL` — the figure that carries the notebook's one idea (it goes in LITTLE_BOOK.md).
+- Write learn/queue/<id>.quiz.md using the template in learn/QUIZ_TEMPLATE.md: five questions from the Learning Objectives,
+  a sixth — "What did the paper claim that this synthetic reproduction could not test?" — when `study:` is set,
+  each with a two-step hints ladder (H1 vague, H2 specific), answers at the bottom. Score = correct − 0.5·hints used.
 - If teachback is requested, leave section 2's 🗣️ paragraph as "_teachback: Ross writes this_".
 - Experiments are the manifest's list (in the notebook metadata `experiments`) — those headings, that order. Anything extra is headed `(exploratory)` and its findings are hypothesis-generating only.
 - Abstention is legal and preferred to padding. If a pre-registered experiment or a `study:` figure cannot be done on synthetic data, write `⛔ Abstention — <experiment> — <specific reason>` where it would have gone. "Too complex" is not a reason; "the paper's effect needs 14 classes and we have 2" is.

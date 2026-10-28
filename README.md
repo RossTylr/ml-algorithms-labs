@@ -1,7 +1,7 @@
 # ML Mastery — Health Data Science Edition
 
 > Every major machine-learning algorithm, taught through a clinical problem.
-> 30 modules · 263 notebooks · three explanation registers · visual-first · machine-gated.
+> 30 modules · 266 notebooks · three explanation registers · visual-first · machine-gated · paper-anchored.
 
 ## Why this repo exists
 
@@ -88,7 +88,14 @@ git commit -am "nb(04.01.01): OLS intuition — PASS G1–G12"
 
 Gates (from `curriculum/curriculum.yaml`): title metadata · objectives · setup/seed · three registers ·
 visual count · failure modes · RFI block · clinical reading · connections · takeaways · no cross-notebook
-imports · executes clean.
+imports · executes clean · **specific abstention** · **pre-registered experiments**. A warning (not a failure)
+flags figure titles that describe rather than state a finding.
+
+## The library
+
+Ross's paper collection is catalogued in `library/` (140 curated of 292 files). Each notebook's `study:` names the
+paper whose central figure it reproduces *in spirit*; `refs:` fill the References cell; the critique papers are the
+skeptic's named checks. See `library/INDEX.md` and `HARNESS.md` §6b–6c for how the library shaped the loop.
 
 ## Layout
 

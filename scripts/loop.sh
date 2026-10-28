@@ -12,7 +12,8 @@ for _ in $(seq 1 "$N"); do
   echo "▶ $ID  $P  (teachback=$TB)"
   T0=$(date +%s)
   for ATTEMPT in 1 2 3; do
-    claude -p --output-format json \
+    claude -p --permission-mode acceptEdits --allowedTools "Bash(python scripts/validate.py:*)" \
+      --output-format json \
       "Read CLAUDE.md. Build the notebook at $P in place: fill every placeholder, keep every section heading, meet its visuals_min, set metadata.ml_mastery.status to \"built\". Teachback=$TB (if true, leave the 🗣️ Plain paragraph of section 2 as '_teachback: Ross writes this_'). Mark one code cell # CENTRAL. Write learn/queue/$ID.quiz.md per learn/QUIZ_TEMPLATE.md (six questions if study is set, hints ladder, answers at the bottom). Then run: python scripts/validate.py $P $EXEC and fix anything that fails before finishing." \
       > "/tmp/build_$ID.json" || true
     if python scripts/validate.py "$P" $EXEC > "/tmp/gate_$ID.txt"; then VER=BUILT; break; else VER=REVISE; fi

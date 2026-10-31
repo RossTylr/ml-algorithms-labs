@@ -64,19 +64,20 @@ def load_screening(n=2000, n_biomarkers=12, prevalence=0.15, seed=SEED, return_t
 def load_admissions(n=5000, seed=SEED, start="2022-01-01"):
     """
     Acute admissions with LOS, 30-day readmission and in-hospital mortality driven by a known model.
-    Includes a daily arrival series usable for time-series notebooks (groupby admit_date).
+    Admit days are drawn over 1095 days in proportion to a daily rate with a weekday uplift (×1.25 Mon–Fri) and a
+    winter surge (up to ×1.4, peaking mid-January), so the daily arrival series (groupby admit_date) has weekly
+    seasonality and a winter peak for time-series notebooks.
 
     Columns: patient_id, admit_date, age, sex, department, admission_type, severity (1-10),
              comorbidity_count, prior_admissions, deprivation_quintile, gp_practice,
              los_days, readmit_30d, died, discharge_destination (leaks `died` — for leakage notebooks)
     """
     r = _rng(seed)
-    days = r.exponential(1.0, n).cumsum()
-    days = (days / days.max() * 1095).astype(int)  # ~3 years
-    admit = pd.to_datetime(start) + pd.to_timedelta(days, unit="D")
-    # weekly seasonality + winter surge for the arrival series
-    dow = admit.dayofweek.values
-    weekend = (dow >= 5)
+    # arrival series: weekday uplift (elective lists) × winter surge peaking on day 15 of the year
+    cal = pd.date_range(start, periods=1095, freq="D")
+    rate = np.asarray((1 + 0.25 * (cal.day_of_week < 5)) * (1 + 0.4 * np.maximum(0, np.cos(2 * np.pi * (cal.day_of_year - 15) / 365))))
+    admit = cal[np.sort(r.choice(len(cal), n, p=rate / rate.sum()))]
+    weekend = admit.day_of_week.values >= 5
 
     age = r.normal(62, 18, n).clip(18, 98)
     sex = r.choice(["F", "M"], n)
@@ -230,19 +231,24 @@ def load_prescribing(n_patients=10000, seed=SEED, as_frame=False):
 # ─────────────────────────── P1 cohort ───────────────────────────
 def load_cohort(n=10000, seed=SEED):
     """
-    Population health records with five latent risk segments (ground truth in `segment`).
-    15 numeric features; segments differ in means and spreads so clustering is learnable but not trivial.
+    Population health records with five latent risk segments (ground truth in `segment`). The n patients are split
+    35 / 25 / 20 / 12 / 8 % across healthy / rising_risk / chronic_stable / complex / frail (largest remainder, so the
+    sizes sum to n). 15 numeric features; segments differ in means and spreads so clustering is learnable but not trivial.
     """
     r = _rng(seed)
-    segs = {
-        "healthy":        (3500, dict(age=38, bmi=24, sbp=118, hba1c=5.3, egfr=95, ldl=2.8, gp_visits=1, ed_visits=0.1, meds=0.5, smoker=0.1, alcohol=5, activity=4, imd=3, sleep=7.2, pain=1)),
-        "rising_risk":    (2500, dict(age=52, bmi=29, sbp=134, hba1c=5.9, egfr=85, ldl=3.4, gp_visits=3, ed_visits=0.3, meds=2, smoker=0.25, alcohol=12, activity=2.5, imd=3.4, sleep=6.6, pain=2.5)),
-        "chronic_stable": (2000, dict(age=66, bmi=30, sbp=138, hba1c=7.1, egfr=70, ldl=2.5, gp_visits=6, ed_visits=0.6, meds=5, smoker=0.15, alcohol=6, activity=2, imd=3.5, sleep=6.4, pain=4)),
-        "complex":        (1200, dict(age=74, bmi=28, sbp=142, hba1c=7.8, egfr=52, ldl=2.3, gp_visits=12, ed_visits=2.2, meds=9, smoker=0.1, alcohol=3, activity=1, imd=3.8, sleep=5.8, pain=6)),
-        "frail":          (800,  dict(age=84, bmi=23, sbp=130, hba1c=6.4, egfr=40, ldl=2.0, gp_visits=15, ed_visits=3.5, meds=11, smoker=0.03, alcohol=1, activity=0.5, imd=3.6, sleep=5.5, pain=6.5)),
+    segs = {  # name: (percent of n, feature means)
+        "healthy":        (35, dict(age=38, bmi=24, sbp=118, hba1c=5.3, egfr=95, ldl=2.8, gp_visits=1, ed_visits=0.1, meds=0.5, smoker=0.1, alcohol=5, activity=4, imd=3, sleep=7.2, pain=1)),
+        "rising_risk":    (25, dict(age=52, bmi=29, sbp=134, hba1c=5.9, egfr=85, ldl=3.4, gp_visits=3, ed_visits=0.3, meds=2, smoker=0.25, alcohol=12, activity=2.5, imd=3.4, sleep=6.6, pain=2.5)),
+        "chronic_stable": (20, dict(age=66, bmi=30, sbp=138, hba1c=7.1, egfr=70, ldl=2.5, gp_visits=6, ed_visits=0.6, meds=5, smoker=0.15, alcohol=6, activity=2, imd=3.5, sleep=6.4, pain=4)),
+        "complex":        (12, dict(age=74, bmi=28, sbp=142, hba1c=7.8, egfr=52, ldl=2.3, gp_visits=12, ed_visits=2.2, meds=9, smoker=0.1, alcohol=3, activity=1, imd=3.8, sleep=5.8, pain=6)),
+        "frail":          (8,  dict(age=84, bmi=23, sbp=130, hba1c=6.4, egfr=40, ldl=2.0, gp_visits=15, ed_visits=3.5, meds=11, smoker=0.03, alcohol=1, activity=0.5, imd=3.6, sleep=5.5, pain=6.5)),
     }
+    size = {k: n * pct // 100 for k, (pct, _) in segs.items()}
+    for k in sorted(segs, key=lambda k: n * segs[k][0] % 100, reverse=True)[: n - sum(size.values())]:
+        size[k] += 1
     frames = []
-    for name, (cnt, mu) in segs.items():
+    for name, (_, mu) in segs.items():
+        cnt = size[name]
         d = {k: r.normal(v, max(abs(v) * 0.18, 0.3), cnt) for k, v in mu.items()}
         d["smoker"] = r.binomial(1, mu["smoker"], cnt)
         d["imd"] = r.choice([1, 2, 3, 4, 5], cnt)

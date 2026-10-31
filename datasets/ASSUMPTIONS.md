@@ -31,7 +31,10 @@ Values are the defaults; a notebook may override the keyword arguments. Not list
 | screening | bm_05 shift when diseased (weak) | +0.3 | SD | synthetic | true | 00 02 03 04 05 06 08 11 14 23 24 29 |
 | screening | bm_12 = bm_01 + noise — collinear-pair noise SD | 0.1 | SD | synthetic | true | 00 02 03 04 05 06 08 11 14 23 24 29 |
 | admissions | `load_admissions` n — admissions | 5000 | count | synthetic | true | 00 01 02 03 04 06 19 21 22 23 26 27 28 29 |
-| admissions | calendar span of admit dates (exponential gaps rescaled) | 1095 | days | synthetic | true | 00 01 02 03 04 06 19 21 22 23 26 27 28 29 |
+| admissions | calendar span — admit days drawn from a daily rate over | 1095 | days | synthetic | true | 00 01 02 03 04 06 19 21 22 23 26 27 28 29 |
+| admissions | weekday arrival uplift — rate × (1 + a) Mon–Fri | 0.25 | × weekend rate | synthetic | true | 00 01 02 03 04 06 19 21 22 23 26 27 28 29 |
+| admissions | winter surge amplitude — rate × (1 + b·max(0, cos(2π(day − peak)/365))) | 0.4 | × base rate | synthetic | true | 00 01 02 03 04 06 19 21 22 23 26 27 28 29 |
+| admissions | winter surge peak | 15 (mid-January) | day of year | synthetic | true | 00 01 02 03 04 06 19 21 22 23 26 27 28 29 |
 | admissions | start date | 2022-01-01 | date | synthetic | true | 00 01 02 03 04 06 19 21 22 23 26 27 28 29 |
 | admissions | patient_id pool — n // 2 ids drawn with replacement (repeat patients) | 2500 | count | synthetic | true | 00 01 02 03 04 06 19 21 22 23 26 27 28 29 |
 | admissions | age — mean | 62 | years | synthetic | true | 00 01 02 03 04 06 19 21 22 23 26 27 28 29 |
@@ -127,7 +130,8 @@ Values are the defaults; a notebook may override the keyword arguments. Not list
 | prescribing | adverse event — nsaid + warfarin or nsaid + doac | 1.0 | probability | synthetic | true | 01 09 28 |
 | prescribing | adverse event — opioid + benzodiazepine | 1.0 | probability | synthetic | true | 01 09 28 |
 | prescribing | adverse event — ssri + mirtazapine | 0.6 | probability | synthetic | true | 01 09 28 |
-| cohort | `load_cohort` segment sizes — healthy / rising_risk / chronic_stable / complex / frail (the n argument is not used) | 3500 / 2500 / 2000 / 1200 / 800 | patients | synthetic | true | 00 03 05 06 07 08 10 23 29 |
+| cohort | `load_cohort` n — patients | 10000 | count | synthetic | true | 00 03 05 06 07 08 10 23 29 |
+| cohort | segment shares of n — healthy / rising_risk / chronic_stable / complex / frail (largest remainder) | 35 / 25 / 20 / 12 / 8 | % of n | synthetic | true | 00 03 05 06 07 08 10 23 29 |
 | cohort | segments | 5 | count | synthetic | true | 00 03 05 06 07 08 10 23 29 |
 | cohort | feature SD rule — max(0.18 × |segment mean|, 0.3) | 0.18; floor 0.3 | fraction; feature units | synthetic | true | 00 03 05 06 07 08 10 23 29 |
 | cohort | age — segment means, healthy / rising_risk / chronic_stable / complex / frail | 38 / 52 / 66 / 74 / 84 | years | synthetic | true | 00 03 05 06 07 08 10 23 29 |

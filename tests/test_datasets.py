@@ -91,7 +91,7 @@ def test_vitals_onsets_hand_truth():
     assert load_vitals(n_patients=n, hours=hours, deterioration_rate=0.0)["onset_hour"].notna().sum() == 0
 
 def test_cohort_segments_hand_truth():
-    """The mechanism fixes five segments of 3500/2500/2000/1200/800 patients, so exactly five appear, at exactly those sizes."""
+    """Shares 35/25/20/12/8 % of the default n = 10000 give five segments of exactly 3500/2500/2000/1200/800 patients."""
     counts = load_cohort()["segment"].value_counts().to_dict()
     assert counts == {"healthy": 3500, "rising_risk": 2500, "chronic_stable": 2000, "complex": 1200, "frail": 800}
 
@@ -100,3 +100,14 @@ def test_areas_adjacency_hand_truth():
     from datasets import load_areas
     _, adj, _ = load_areas(n_side=7, return_truth=True)
     assert sum(len(v) for v in adj.values()) == 312
+
+def test_cohort_honours_n_hand_truth():
+    """n × 35/25/20/12/8 % with n = 500 is 175/125/100/60/40 — whole numbers, so no remainder to place and 500 rows."""
+    df = load_cohort(n=500)
+    assert len(df) == 500 and df["segment"].value_counts().to_dict() == {"healthy": 175, "rising_risk": 125, "chronic_stable": 100, "complex": 60, "frail": 40}
+
+def test_admissions_seasonality_hand_truth():
+    """Days are drawn ∝ (1 + 0.25·weekday)(1 + 0.4·max(0, cos(2π(doy − 15)/365))): weekday/weekend arrivals → 1.25; January/July → 1 + 0.4·0.99 ≈ 1.40."""
+    d = load_admissions(n=50000)["admit_date"].value_counts()
+    assert abs(d[d.index.day_of_week < 5].mean() / d[d.index.day_of_week >= 5].mean() - 1.25) < 0.05
+    assert abs(d[d.index.month == 1].mean() / d[d.index.month == 7].mean() - 1.40) < 0.06

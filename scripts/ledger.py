@@ -4,7 +4,6 @@
     python scripts/ledger.py add --id 00.01.01 --path ... --attempt 1 --verdict BUILT \
         --gates "G1..G11 pass" --skeptic PASS --tokens 91000 --seconds 540
     python scripts/ledger.py summary
-    python scripts/ledger.py spent --after 12     # usd summed over rows after line 12 (one run's rows)
 """
 from __future__ import annotations
 
@@ -74,12 +73,6 @@ def summary() -> list[str]:
     return head
 
 
-def spent(after: int) -> float:
-    """usd over the ledger rows after line `after` — the rows one run appended. Rows without usd count as 0."""
-    rows = [ln for ln in LEDGER.read_text().splitlines() if ln.strip()] if LEDGER.exists() else []
-    return round(sum(json.loads(ln).get("usd") or 0 for ln in rows[after:]), 2)
-
-
 def main() -> int:
     ap = argparse.ArgumentParser(); sub = ap.add_subparsers(dest="cmd", required=True)
     p = sub.add_parser("add")
@@ -90,12 +83,9 @@ def main() -> int:
     p.add_argument("--abstained", type=int, default=0); p.add_argument("--exploratory", type=int, default=0)
     p.add_argument("--by", default="builder", help="builder, or human for a hand-edited notebook /skeptic passed")
     sub.add_parser("summary")
-    sub.add_parser("spent").add_argument("--after", type=int, default=0, help="ledger line count when the run started")
     a = ap.parse_args()
     if a.cmd == "add":
         add(a)
-    elif a.cmd == "spent":
-        print(spent(a.after))
     else:
         print("\n".join(summary()))
     return 0

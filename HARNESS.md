@@ -36,7 +36,7 @@ next.py ──> stub ──> builder ──> validate.py ──> reviewer ──
 | BLOCKED | three attempts failed, or a dependency cannot be installed | the loop | status `blocked`; committed `nb(<id>): <title> — BLOCKED attempt N`; with a count the run moves to the next stub |
 | ACCEPTED | a person's hand edit of a BUILT or BLOCKED notebook passed `/skeptic` and every gate | a human, through `/skeptic` | status `accepted`; ledger `by=human`; treated as built, counted apart |
 
-**Stopping.** A run given a count stops when the count is spent, after two BLOCKED notebooks in a row, or — with `--usd <ceiling>` — before the next notebook once the usd on this run's ledger rows exceeds the ceiling (`ceiling reached`; rows without usd count as zero). Every notebook attempted counts toward the count. `scripts/loop.sh` applies the same three rules in T0.
+**Stopping.** A run given a count stops when the count is spent or after two BLOCKED notebooks in a row. Every notebook attempted counts toward the count. `scripts/loop.sh` applies the same rules in T0.
 
 **D-3.** The validator runs before the reviewer, so the expensive model is not spent on a notebook with no figures.
 
@@ -56,7 +56,7 @@ next.py ──> stub ──> builder ──> validate.py ──> reviewer ──
 
 **D-5.** Parallelism is permitted; a coordinator is not. If two seats ever need to talk, the design is wrong.
 
-**Unattended.** A nightly scheduled task runs `/build-next 4 --usd 6`: the loop itself stops at the usd ceiling, rather than a prompt asking it to. The ledger and the learning queue are what a returning reader sees in the morning.
+**Unattended.** A nightly scheduled task runs `/build-next 4`: the count bounds the night's work and two BLOCKED in a row end it early. The ledger and the learning queue are what a returning reader sees in the morning.
 
 ### Why no coordinator works
 
@@ -87,7 +87,7 @@ Morning cadence, fifteen minutes: read the ledger, take the quizzes, read the di
 | Prompt | Effect |
 |---|---|
 | `/build-next` | one notebook through the full loop |
-| `/build-next N [--usd <ceiling>]` | N notebooks in sequence; BLOCKED is committed and the run moves on; two BLOCKED in a row, or this run's usd above the ceiling, stop it |
+| `/build-next N` | N notebooks in sequence; BLOCKED is committed and the run moves on; two BLOCKED in a row stop it |
 | `/skeptic <path>` | the reviewer alone, on any notebook including one edited by hand |
 | `claude -p "Read AGENTS.md. Build <path> in place; then run python scripts/validate.py <path> and fix failures."` | the headless floor, no agents |
 
@@ -134,4 +134,4 @@ learn/                       quiz queue, digest, quiz template
 | R2 | Gate gaming — seven trivial plots satisfy the visual count | the reviewer's brief asks whether each figure carries the argument; a specific abstention is a legal alternative to padding (Kalai et al. 2025) |
 | R3 | Register collapse — the plain register drifts into developer prose with analogies attached | the reviewer tests the plain paragraph against a reader with no background, first time |
 | R4 | Clinical overclaim — a clinical reading implying a synthetic result transfers to practice | the reviewer's LEVEL check (Findings and Clinical Reading claim only synthetic-mechanism correctness) and FORMULA check (the "must not conclude" clause is specific to this notebook's method and dataset, not boilerplate), with PROSPECTIVE: the result is retrospective and synthetic and the bar is prospective (Rajpurkar et al. 2022) |
-| R5 | Cost runaway when unattended | the loop and the scheduled task take a count; the ledger tracks tokens and usd; `--usd <ceiling>` stops the run once its own ledger rows exceed the ceiling; two BLOCKED in a row stop it too |
+| R5 | Cost runaway when unattended | the loop and the scheduled task take a count; two BLOCKED in a row stop the run; the ledger tracks tokens, and weekly usage % is recorded before and after a run (GETTING_STARTED C4) |

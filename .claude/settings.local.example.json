@@ -8,8 +8,7 @@
       "Bash(git status)",
       "Bash(git log *)",
       "Bash(git diff *)",
-      "Bash(python -c 'import json,sys;p,s=sys.argv[1:];nb=json.load(open(p));nb[\"metadata\"][\"ml_mastery\"][\"status\"]=s;open(p,\"w\").write(json.dumps(nb,indent=1,ensure_ascii=False))' *)",
-      "Bash(wc -l ledger.jsonl)"
+      "Bash(python -c 'import json,sys;p,s=sys.argv[1:];nb=json.load(open(p));nb[\"metadata\"][\"ml_mastery\"][\"status\"]=s;open(p,\"w\").write(json.dumps(nb,indent=1,ensure_ascii=False))' *)"
     ],
     "additionalDirectories": [
       "/Users/rosstaylor/Downloads/Artificial Intelligence and Data Science"

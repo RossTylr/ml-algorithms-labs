@@ -82,17 +82,17 @@ claude -p "Read AGENTS.md. Build 04_regression/04_regularised/02_lasso.ipynb in 
 Once C4 holds, schedule the loop. In Claude Code:
 
 ```
-/schedule "nightly build" --cron "0 2 * * *" --prompt "/build-next 4 --usd 6"
+/schedule "nightly build" --cron "0 2 * * *" --prompt "/build-next 4"
 ```
 
-Or use the scheduled-task interface in the Claude app with the same prompt and cadence. `--usd 6` stops the run with `ceiling reached` once this run's ledger rows exceed $6; rows without usd count as zero. The morning check is Part E.
+Or use the scheduled-task interface in the Claude app with the same prompt and cadence. The count bounds the night's work, and two BLOCKED notebooks in a row stop it early. The morning check is Part E.
 
 ## The complete prompt set
 
 | Prompt | Use |
 |---|---|
 | `/build-next` | the normal case |
-| `/build-next N [--usd <ceiling>]` | N in sequence; BLOCKED is committed and the run moves on; stops after two BLOCKED in a row or at the usd ceiling |
+| `/build-next N` | N in sequence; BLOCKED is committed and the run moves on; stops after two BLOCKED in a row |
 | `/skeptic <path>` | review alone, on any notebook |
 | `claude -p "Read AGENTS.md. Build <path> in place. Then run python scripts/validate.py <path> and fix any failures."` | headless, no agents |
 

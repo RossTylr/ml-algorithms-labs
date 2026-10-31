@@ -17,10 +17,11 @@ Each step states which. Expected results are given so a departure is visible str
 | A4 | Terminal | `source .venv/bin/activate` | prompt shows `(.venv)` |
 | A5 | Terminal | `pip install -r requirements/base.txt pytest` | about two minutes; no errors |
 | A6 | Terminal | `python -m ipykernel install --user --name ml-algorithms-labs` | `Installed kernelspec …` — needed for gate G12 |
-| A7 | Terminal | `pytest -q` | `29 passed` |
-| A8 | Terminal | `python scripts/next.py` | `00_mathematical_foundations/01_linear_algebra/01_vectors_matrices_operations.ipynb` |
+| A7 | Terminal | `cp .claude/settings.local.example.json .claude/settings.local.json` | no output; Claude Code now runs the loop's `python scripts/…`, `pytest` and `git` add/commit/status/log/diff commands without asking (the copy is git-ignored, so local edits stay local) |
+| A8 | Terminal | `pytest -q` | `29 passed` |
+| A9 | Terminal | `python scripts/next.py` | `00_mathematical_foundations/01_linear_algebra/01_vectors_matrices_operations.ipynb` |
 
-If A7 or A8 differs, stop and fix before building anything. Nothing downstream is meaningful until the scaffold is proven.
+If A8 or A9 differs, stop and fix before building anything. Nothing downstream is meaningful until the scaffold is proven.
 
 ## Part B — the first build, headless (the floor)
 

@@ -16,3 +16,4 @@ mlruns/
 wandb/
 lightning_logs/
 .env
+.claude/settings.local.json

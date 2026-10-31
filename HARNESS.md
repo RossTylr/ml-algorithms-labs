@@ -1,6 +1,6 @@
 # Harness
 
-How the notebooks get built: the loop, the agents, the gates, and the learning cadence that runs alongside. Companion to `CLAUDE.md`, which governs what a notebook is; this document governs how the loop runs. Design decisions are recorded inline as D-1 to D-6 with their reasoning.
+How the notebooks get built: the loop, the agents, the gates, and the learning cadence that runs alongside. Companion to `CLAUDE.md`, which governs what a notebook is; this document governs how the loop runs. Design decisions are recorded inline as D-1 to D-7 with their reasoning.
 
 ## 1. Origin and what was kept
 
@@ -29,15 +29,19 @@ next.py ──> stub ──> builder ──> validate.py ──> reviewer ──
                               at most two revision cycles, then BLOCKED
 ```
 
-| Verdict | Meaning | Decided by |
-|---|---|---|
-| BUILT | every gate passes and the reviewer found nothing it could substantiate | validator and reviewer |
-| REVISE | a gate failed, or the reviewer has one to three substantiated findings | either |
-| BLOCKED | three attempts failed, or a dependency cannot be installed | the loop |
+| Verdict | Meaning | Decided by | Then |
+|---|---|---|---|
+| BUILT | every gate passes and the reviewer found nothing it could substantiate | validator and reviewer | status `built`; committed `nb(<id>): built — PASS G1–G14, skeptic PASS` |
+| REVISE | a gate failed, or the reviewer has one to three substantiated findings | either | back to the same builder; never terminal |
+| BLOCKED | three attempts failed, or a dependency cannot be installed | the loop | status `blocked`; committed `nb(<id>): <title> — BLOCKED attempt N`; with a count the run moves to the next stub |
+
+**Stopping.** A run given a count stops when the count is spent, after two BLOCKED notebooks in a row, or — with `--usd <ceiling>` — before the next notebook once the usd on this run's ledger rows exceeds the ceiling (`ceiling reached`; rows without usd count as zero). Every notebook attempted counts toward the count. `scripts/loop.sh` applies the same three rules in T0.
 
 **D-3.** The validator runs before the reviewer, so the expensive model is not spent on a notebook with no figures.
 
 **D-4.** Revisions return to the same builder context rather than a fresh one; the notebook is already loaded.
+
+**D-7.** A BLOCKED notebook is committed exactly as a BUILT one is. A failed attempt is a result, not an absence: the ledger row and the digest findings describe a notebook, and the ledger must point at a commit that holds it as the reviewer saw it. Left uncommitted, its quiz and digest entry are swept into the next notebook's commit under the wrong id, and the notebook itself survives only as a dirty file that a reset discards.
 
 **Human unblock.** A BLOCKED notebook may be edited by hand. `/skeptic <path>` on it with a PASS verdict makes it BUILT: set its status to `"built"`, record a ledger row with attempt 3 and `by=human` (`python scripts/ledger.py add --id <id> --path <path> --attempt 3 --verdict BUILT --gates "<x>/<y> pass" --skeptic PASS --by human`), run `scripts/little_book.py`, and commit as for any BUILT notebook.
 
@@ -82,7 +86,7 @@ Morning cadence, fifteen minutes: read the ledger, take the quizzes, read the di
 | Prompt | Effect |
 |---|---|
 | `/build-next` | one notebook through the full loop |
-| `/build-next N` | N notebooks, sequentially, stopping on BLOCKED |
+| `/build-next N [--usd <ceiling>]` | N notebooks in sequence; BLOCKED is committed and the run moves on; two BLOCKED in a row, or this run's usd above the ceiling, stop it |
 | `/skeptic <path>` | the reviewer alone, on any notebook including one edited by hand |
 | `claude -p "Read CLAUDE.md. Build <path> in place; then run python scripts/validate.py <path> and fix failures."` | the headless floor, no agents |
 

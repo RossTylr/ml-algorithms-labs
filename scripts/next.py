@@ -8,7 +8,7 @@ BLOCKED notebooks (in ledger.jsonl) are skipped too.
     python scripts/next.py                 # one path
     python scripts/next.py --n 5           # five paths
     python scripts/next.py --module 04     # restrict to a module
-    python scripts/next.py --json          # path + id + teachback flag
+    python scripts/next.py --json          # path + id + title + teachback flag
 """
 from __future__ import annotations
 
@@ -70,7 +70,7 @@ def candidates(module: str | None):
                 continue
             if meta.get("build") == "last" and n_built < total - 1:
                 continue  # 29.meta.1 waits until everything else is BUILT
-            yield p, meta
+            yield p, meta, nb.cells[0].source.splitlines()[0].lstrip("# ").strip()
 
 
 def main() -> int:
@@ -82,12 +82,12 @@ def main() -> int:
     base = built_count()
     jagged = revise_topics()
     out = []
-    for i, (p, meta) in enumerate(candidates(a.module)):
+    for i, (p, meta, title) in enumerate(candidates(a.module)):
         if i >= a.n:
             break
         rel = str(p.relative_to(ROOT))
         teachback = (meta["id"][:5] in jagged) or ((base + i + 1) % 5 == 0)
-        out.append({"path": rel, "id": meta["id"], "band": meta.get("band"), "visuals_min": meta.get("visuals_min"), "teachback": teachback})
+        out.append({"path": rel, "id": meta["id"], "title": title, "band": meta.get("band"), "visuals_min": meta.get("visuals_min"), "teachback": teachback})
     if not out:
         print("NONE", file=sys.stderr); return 1
     for rec in out:

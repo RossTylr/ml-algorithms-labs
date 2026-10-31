@@ -89,7 +89,7 @@ Or use the scheduled-task interface in the Claude app with the same prompt and c
 | Prompt | Use |
 |---|---|
 | `/build-next` | the normal case |
-| `/build-next N` | N in sequence; stops on BLOCKED |
+| `/build-next N [--usd <ceiling>]` | N in sequence; BLOCKED is committed and the run moves on; stops after two BLOCKED in a row or at the usd ceiling |
 | `/skeptic <path>` | review alone, on any notebook |
 | `claude -p "Read CLAUDE.md. Build <path> in place. Then run python scripts/validate.py <path> and fix any failures."` | headless, no agents |
 

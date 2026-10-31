@@ -17,7 +17,7 @@ Each step states which. Expected results are given so a departure is visible str
 | A4 | Terminal | `source .venv/bin/activate` | prompt shows `(.venv)` |
 | A5 | Terminal | `pip install -r requirements/base.txt pytest` | about two minutes; no errors |
 | A6 | Terminal | `python -m ipykernel install --user --name ml-algorithms-labs` | `Installed kernelspec …` — needed for gate G12 |
-| A7 | Terminal | `cp .claude/settings.local.example.json .claude/settings.local.json` | no output; Claude Code now runs the loop's `python scripts/…`, `pytest` and `git` add/commit/status/log/diff commands without asking (the copy is git-ignored, so local edits stay local) |
+| A7 | Terminal | `cp .claude/settings.local.example.json .claude/settings.local.json`, then edit the papers path in `additionalDirectories` if yours differs | no output; Claude Code now runs every command in /build-next and /skeptic without asking and can read the papers folder (the copy is git-ignored, so local edits stay local). File edits still ask unless you start claude with `--permission-mode acceptEdits` for unattended runs |
 | A8 | Terminal | `pytest -q` | `57 passed, 1 deselected` (the deselected test executes notebooks; it runs nightly) |
 | A9 | Terminal | `python scripts/next.py` | the path of the first notebook in build order whose status is `stub` (on an empty scaffold, `00_mathematical_foundations/01_linear_algebra/01_vectors_matrices_operations.ipynb` — test H1) |
 

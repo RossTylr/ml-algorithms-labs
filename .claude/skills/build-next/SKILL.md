@@ -8,7 +8,7 @@ Run this loop N times (default 1). Every notebook attempted counts toward N, wha
 
 Stop rules:
 - With N given, BLOCKED does not stop the run: the notebook is committed (step 10) and the loop moves to the next stub. Stop after two consecutive BLOCKED.
-- At the start, record START = the number of lines in `ledger.jsonl` (0 if it does not exist). If `--usd` is given, before each notebook run `python scripts/ledger.py spent --after <START>`; if the sum exceeds the ceiling, print `ceiling reached` and stop. Rows without usd count as zero.
+- At the start, record START = the line count from `wc -l ledger.jsonl` (0 if the file does not exist). If `--usd` is given, before each notebook run `python scripts/ledger.py spent --after <START>`; if the sum exceeds the ceiling, print `ceiling reached` and stop. Rows without usd count as zero.
 
 1. `python scripts/next.py --json` → path, id, title, teachback.
 2. Launch the **builder** subagent with: "Build `<path>`. teachback=<flag>." — model **opus** if the notebook's module is tier 3 (see INDEX.md), else the agent default (sonnet). Wait for its gate ledger.

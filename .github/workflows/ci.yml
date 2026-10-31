@@ -2,8 +2,11 @@ name: ci
 on:
   push: {branches: [main]}
   pull_request: {branches: [main]}
+  schedule: [{cron: "0 3 * * *"}]
+  workflow_dispatch:
 jobs:
   gate:
+    if: github.event_name == 'push' || github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     strategy: {matrix: {python: ["3.10", "3.12"]}}
     steps:
@@ -12,7 +15,20 @@ jobs:
         with: {python-version: "${{ matrix.python }}"}
       - run: pip install -r requirements/base.txt pytest ruff
       - run: ruff check shared datasets scripts
-      - run: pytest -q
+      - name: Tests (default tier — not slow, not execute)
+        run: pytest -q
       - run: python scripts/scaffold.py --dry-run
       - name: Gate built notebooks (G1–G14)
         run: python scripts/validate.py --all --built-only
+  nightly:
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: pip install -r requirements/base.txt pytest
+      - name: Kernel the notebooks name (G12)
+        run: python -m ipykernel install --user --name ml-algorithms-labs
+      - name: Tests (every tier)
+        run: pytest -m "slow or execute or not slow"

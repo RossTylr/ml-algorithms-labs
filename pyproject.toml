@@ -37,6 +37,11 @@ include = ["shared*", "datasets*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+markers = [
+  "slow: over 15 s; nightly only",
+  "execute: runs a notebook end to end (G12); nightly only",
+]
+addopts = "-m 'not slow and not execute'"
 
 [tool.ruff]
 line-length = 120

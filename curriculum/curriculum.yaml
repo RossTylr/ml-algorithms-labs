@@ -87,7 +87,7 @@ modules:
       - slug: probability
         title: Probability
         notebooks:
-          - {n: 1, title: "Probability Fundamentals & Bayes", band: P1, goal: explain, gds: 3, subject: "Screening a rare disease — prevalence, sensitivity, specificity, and what a positive result really means", dataset: screening, visuals: 8, study: "Gigerenzer natural-frequency reasoning", experiments: ["simulate 10k screens vs theory", "rare disease → most positives false", "posterior after 1/5/10/50 tests"]}
+          - {n: 1, title: "Probability Fundamentals & Bayes", band: P1, goal: explain, gds: 3, subject: "Screening a rare disease — prevalence, sensitivity, specificity, and what a positive result really means — in the spirit of Gigerenzer natural-frequency reasoning", dataset: screening, visuals: 8, experiments: ["simulate 10k screens vs theory", "rare disease → most positives false", "posterior after 1/5/10/50 tests"]}
           - {n: 2, title: "Distributions & Sampling", band: P4, goal: predict, gds: 3, subject: "ED arrivals per hour (Poisson), LOS (log-normal), survival to event (exponential), test positivity (Binomial)", dataset: admissions, refs: [dekking2005, downey2024], visuals: 10, experiments: ["convergence at n=10..10k", "Binomial→Poisson for rare events", "fit and test goodness of fit on LOS"]}
           - {n: 3, title: "MLE & MAP Estimation", band: P1, goal: predict, gds: 3, subject: "Estimating a test's true positive rate from a validation sample", dataset: screening, refs: [murphy2022], visuals: 8, experiments: ["MLE convergence 5→1000 patients", "MAP with a published-prior vs flat", "MLE under a misspecified model"]}
       - slug: optimisation
@@ -299,7 +299,7 @@ modules:
       - slug: logistic
         title: Logistic Regression
         notebooks:
-          - {n: 1, title: "Sigmoid & Decision Boundary", band: P1, goal: predict, gds: 4, subject: "Disease present/absent from two biomarkers — the baseline that every 'radiologist-level' claim is measured against", dataset: screening, refs: [hardt2021], visuals: 9, study: "Framingham-style risk scoring", experiments: ["threshold sweep sensitivity/specificity", "noise", "perfect separation blow-up", "error analysis: 20 worst cases, categorised, vs clinician baseline"]}
+          - {n: 1, title: "Sigmoid & Decision Boundary", band: P1, goal: predict, gds: 4, subject: "Disease present/absent from two biomarkers — the baseline that every 'radiologist-level' claim is measured against — in the spirit of Framingham-style risk scoring", dataset: screening, refs: [hardt2021], visuals: 9, experiments: ["threshold sweep sensitivity/specificity", "noise", "perfect separation blow-up", "error analysis: 20 worst cases, categorised, vs clinician baseline"]}
           - {n: 2, title: "Multiclass & Regularisation", band: P5, goal: decide, gds: 4, subject: "Triage category T1–T4 from injury features", dataset: synthetic, visuals: 7, experiments: ["OvR vs softmax", "L1/L2 paths", "per-class ROC"]}
       - slug: knn
         title: k-Nearest Neighbours
@@ -314,7 +314,7 @@ modules:
       - slug: decision_trees
         title: Decision Trees
         notebooks:
-          - {n: 1, title: "Splitting Criteria & Visualisation", band: P1, goal: predict, gds: 4, subject: "A clinical decision rule learned from data — mixed features", dataset: screening, visuals: 9, study: "Ottawa ankle rule style decision rules", experiments: ["unlimited depth memorises", "Gini vs entropy", "categoricals without encoding", "error analysis: 20 worst cases, categorised, vs clinician baseline"]}
+          - {n: 1, title: "Splitting Criteria & Visualisation", band: P1, goal: predict, gds: 4, subject: "A clinical decision rule learned from data — mixed features — in the spirit of Ottawa ankle rule style decision rules", dataset: screening, visuals: 9, experiments: ["unlimited depth memorises", "Gini vs entropy", "categoricals without encoding", "error analysis: 20 worst cases, categorised, vs clinician baseline"]}
           - {n: 2, title: "Pruning & Overfitting", band: P1, goal: predict, gds: 4, subject: "Same — a rule a clinician could carry", dataset: screening, refs: [esl2009], visuals: 7, experiments: ["depth U-curve", "CCP alpha", "min_samples_leaf", "error analysis: 20 worst cases, categorised, vs clinician baseline"]}
           - {n: 3, title: "ID3, C4.5 & Gain Ratio", band: P1, goal: predict, gds: 4, subject: "Categorical-heavy symptom data", dataset: notes, visuals: 5, experiments: ["gain vs gain ratio", "missing strategies", "error analysis: 20 worst cases, categorised, vs clinician baseline"]}
       - slug: svm
@@ -482,7 +482,7 @@ modules:
       - slug: apriori
         title: Apriori
         notebooks:
-          - {n: 1, title: "Support, Confidence & Lift", band: P2, goal: explain, gds: 4, subject: "Co-prescription patterns across 10k patients", dataset: prescribing, refs: [needham2020], visuals: 8, study: "FAERS-style pharmacovigilance signals", experiments: ["min_support explosion", "by age band", "high-confidence lift≈1 traps"]}
+          - {n: 1, title: "Support, Confidence & Lift", band: P2, goal: explain, gds: 4, subject: "Co-prescription patterns across 10k patients — in the spirit of FAERS-style pharmacovigilance signals", dataset: prescribing, refs: [needham2020], visuals: 8, experiments: ["min_support explosion", "by age band", "high-confidence lift≈1 traps"]}
           - {n: 2, title: "Frequent Itemset Generation", band: P2, goal: explain, gds: 4, subject: "The lattice", dataset: prescribing, visuals: 5, experiments: ["pruning per level"]}
       - slug: fp_eclat
         title: FP-Growth & Eclat
@@ -518,7 +518,7 @@ modules:
       - slug: learned
         title: Learned & Ensemble
         notebooks:
-          - {n: 1, title: "Autoencoder Reconstruction Error", band: P4, goal: predict, gds: 4, subject: "Deterioration as a bad reconstruction", dataset: vitals, refs: [mehta2019], visuals: 6, study: "NEWS2 early-warning comparison", experiments: ["threshold", "vs IF", "vs NEWS2-style score"]}
+          - {n: 1, title: "Autoencoder Reconstruction Error", band: P4, goal: predict, gds: 4, subject: "Deterioration as a bad reconstruction — in the spirit of NEWS2 early-warning comparison", dataset: vitals, refs: [mehta2019], visuals: 6, experiments: ["threshold", "vs IF", "vs NEWS2-style score"]}
           - {n: 2, title: "SUOD & Method Comparison", band: P5, goal: predict, gds: 4, subject: "Deployed monitoring with intermittent data — method × failure-type matrix", dataset: vitals, visuals: 7, experiments: ["method × anomaly-type"]}
 
   - id: "11"
@@ -646,7 +646,7 @@ modules:
       - slug: tasks
         title: Beyond Classification
         notebooks:
-          - {n: 1, title: "U-Net Segmentation", band: P1, goal: predict, gds: 4, subject: "Lesion boundary pixel labelling", dataset: imaging, visuals: 7, study: "U-Net (Ronneberger 2015) on biomedical segmentation", experiments: ["skips", "imbalance", "error analysis: 20 worst cases, categorised, vs clinician baseline"]}
+          - {n: 1, title: "U-Net Segmentation", band: P1, goal: predict, gds: 4, subject: "Lesion boundary pixel labelling — in the spirit of U-Net (Ronneberger 2015) on biomedical segmentation", dataset: imaging, visuals: 7, experiments: ["skips", "imbalance", "error analysis: 20 worst cases, categorised, vs clinician baseline"]}
           - {n: 2, title: "Object Detection — YOLO, R-CNN family, FPN", band: P1, goal: predict, gds: 4, subject: "Boxes around multiple lesions", dataset: synthetic, study: "redmon2018", refs: [kirillov2023], visuals: 8, experiments: ["anchors", "NMS", "pyramid", "error analysis: 20 worst cases, categorised, vs clinician baseline"]}
           - {n: 3, title: "ConvNeXt", band: P1, goal: predict, gds: 4, subject: "Transformer tricks in a CNN", dataset: imaging, visuals: 5, experiments: ["ablation ladder", "error analysis: 20 worst cases, categorised, vs clinician baseline"]}
 
@@ -689,7 +689,7 @@ modules:
         title: Core Architectures
         notebooks:
           - {n: 1, title: "Full Transformer", band: P1, goal: predict, gds: 4, subject: "Code→description from scratch", dataset: notes, visuals: 7, experiments: ["curve", "attention evolution"]}
-          - {n: 2, title: "BERT", band: P1, goal: predict, gds: 4, subject: "Masked LM on triage notes; fine-tune for urgency — and what a 'physician-level' benchmark actually measured", dataset: notes, visuals: 7, study: "ClinicalBERT-style fine-tuning", experiments: ["mask", "frozen vs fine-tuned"]}
+          - {n: 2, title: "BERT", band: P1, goal: predict, gds: 4, subject: "Masked LM on triage notes; fine-tune for urgency — and what a 'physician-level' benchmark actually measured — in the spirit of ClinicalBERT-style fine-tuning", dataset: notes, visuals: 7, experiments: ["mask", "frozen vs fine-tuned"]}
           - {n: 3, title: "GPT", band: P1, goal: predict, gds: 4, subject: "Discharge summary generation; scaling laws", dataset: notes, study: "kaplan2020", refs: [radford2018, radford2019, brown2020], visuals: 7, experiments: ["generation", "scaling plots"]}
           - {n: 4, title: "T5 & Vision Transformers", band: P1, goal: predict, gds: 4, subject: "Text-to-text; lesion patches as tokens", dataset: imaging, refs: [raffel2020], visuals: 7, experiments: ["prefixes", "patch embedding"]}
       - slug: variants
@@ -765,7 +765,7 @@ modules:
       - slug: bandits
         title: Bandits
         notebooks:
-          - {n: 1, title: "Exploration vs Exploitation", band: P3, goal: decide, gds: 4, subject: "Five treatment arms with unknown response rates — adaptive trial design", dataset: synthetic, refs: [sutton2018, kochenderfer2022], visuals: 8, study: "adaptive / response-adaptive randomisation", experiments: ["ε-greedy/UCB/Thompson regret"]}
+          - {n: 1, title: "Exploration vs Exploitation", band: P3, goal: decide, gds: 4, subject: "Five treatment arms with unknown response rates — adaptive trial design — in the spirit of adaptive / response-adaptive randomisation", dataset: synthetic, refs: [sutton2018, kochenderfer2022], visuals: 8, experiments: ["ε-greedy/UCB/Thompson regret"]}
       - slug: tabular
         title: Tabular Methods
         notebooks:
@@ -793,7 +793,7 @@ modules:
         title: Advanced
         notebooks:
           - {n: 1, title: "Hierarchical, Inverse & Multi-Agent RL", band: P5, goal: decide, gds: 4, subject: "Sub-goals along the chain; recover a commander's reward from demonstrations; two evac teams cooperating", dataset: evac, refs: [albrecht2024], visuals: 7, experiments: ["options", "recovered reward", "joint policy"]}
-          - {n: 2, title: "Offline RL", band: P2, goal: decide, gds: 4, subject: "Learning a treatment policy from a fixed registry — CQL, IQL", dataset: admissions, visuals: 5, study: "AI Clinician (sepsis) offline-RL debate", experiments: ["distributional shift"]}
+          - {n: 2, title: "Offline RL", band: P2, goal: decide, gds: 4, subject: "Learning a treatment policy from a fixed registry — CQL, IQL — in the spirit of AI Clinician (sepsis) offline-RL debate", dataset: admissions, visuals: 5, experiments: ["distributional shift"]}
           - {n: 3, title: "RLHF & DPO", band: P1, goal: predict, gds: 4, subject: "Preference learning from clinician rankings of note summaries", dataset: notes, study: "chen2025", refs: [deepseek2025, mirzadeh2024], visuals: 7, experiments: ["reward model", "implicit vs explicit"]}
 
   - id: "22"
@@ -943,7 +943,7 @@ modules:
       - slug: survival
         title: Survival Analysis
         notebooks:
-          - {n: 1, title: "Kaplan-Meier & Cox PH", band: P3, goal: explain, gds: 4, subject: "Time to readmission by arm; hazard ratios", dataset: trial, visuals: 8, study: "Cox (1972); KM on trial endpoints", experiments: ["KM with censoring", "forest plot", "PH assumption check"]}
+          - {n: 1, title: "Kaplan-Meier & Cox PH", band: P3, goal: explain, gds: 4, subject: "Time to readmission by arm; hazard ratios — in the spirit of Cox (1972); KM on trial endpoints", dataset: trial, visuals: 8, experiments: ["KM with censoring", "forest plot", "PH assumption check"]}
           - {n: 2, title: "Random Survival Forests & DeepSurv", band: P3, goal: explain, gds: 4, subject: "Non-linear survival", dataset: trial, visuals: 6, experiments: ["importance", "neural hazard"]}
       - slug: causal
         title: Causal Inference
@@ -1001,7 +1001,7 @@ modules:
       - slug: calibration_bias
         title: Calibration & Bias-Variance
         notebooks:
-          - {n: 1, title: "Calibration — Reliability, Platt, Isotonic", band: P1, goal: predict, gds: 6, subject: "Does 70% risk mean 70%?", dataset: screening, visuals: 6, study: "TRIPOD calibration reporting", experiments: ["reliability before/after"]}
+          - {n: 1, title: "Calibration — Reliability, Platt, Isotonic", band: P1, goal: predict, gds: 6, subject: "Does 70% risk mean 70%? — in the spirit of TRIPOD calibration reporting", dataset: screening, visuals: 6, experiments: ["reliability before/after"]}
           - {n: 2, title: "Bias–Variance Decomposition", band: P2, goal: decide, gds: 6, subject: "LOS — bias² + variance + noise", dataset: admissions, visuals: 6, experiments: ["learning curves"]}
       - slug: meta
         title: Science About This Repo
@@ -1010,4 +1010,4 @@ modules:
       - slug: fairness
         title: Fairness
         notebooks:
-          - {n: 1, title: "Demographic Parity, Equalised Odds & Calibration Across Groups", band: P1, goal: explain, gds: 6, subject: "A risk model audited by sex, age band and deprivation", dataset: cohort, refs: [rajpurkar2022], visuals: 7, study: "Obermeyer et al. 2019 algorithmic bias in care management", experiments: ["metric tradeoffs", "mitigation"]}
+          - {n: 1, title: "Demographic Parity, Equalised Odds & Calibration Across Groups", band: P1, goal: explain, gds: 6, subject: "A risk model audited by sex, age band and deprivation — in the spirit of Obermeyer et al. 2019 algorithmic bias in care management", dataset: cohort, refs: [rajpurkar2022], visuals: 7, experiments: ["metric tradeoffs", "mitigation"]}

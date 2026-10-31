@@ -54,3 +54,8 @@ def test_synthetic_variants():
     assert len(synthetic.classification_variants(n=100)) == 8
     assert "spirals" in synthetic.clustering_variants(n=120)
     assert len(synthetic.bandit_arms()) == 5
+
+def test_ledger_reads_the_build_record():
+    from datasets import load_ledger
+    df, digest = load_ledger()
+    assert {"id", "attempt", "verdict"} <= set(df.columns) and isinstance(digest, str)

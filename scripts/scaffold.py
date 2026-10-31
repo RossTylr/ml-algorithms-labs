@@ -4,6 +4,7 @@ scaffold.py — Generate the repo tree, module READMEs and notebook stubs from c
 
 Idempotent: re-running never overwrites a notebook that already exists (built work is safe).
 READMEs and INDEX.md are regenerated every run (they are derived artefacts).
+The manifest is read through scripts/manifest.py, which refuses unknown or invalid fields rather than defaulting them.
 
 Usage:
     python scripts/scaffold.py            # scaffold everything
@@ -18,21 +19,16 @@ from pathlib import Path
 
 import nbformat
 import yaml
+from manifest import ManifestError, load_manifest
 from nbformat.v4 import new_code_cell, new_markdown_cell, new_notebook
 
 ROOT = Path(__file__).resolve().parent.parent
-MANIFEST = ROOT / "curriculum" / "curriculum.yaml"
 LIBRARY = ROOT / "library" / "curated.yaml"
 GOALS = {"predict": "Predict — the model's job is accuracy on unseen patients; coefficients are not mechanisms.",
          "explain": "Explain — the model's job is to say something true about the process; prediction is secondary.",
          "decide": "Decide — the model feeds an action; the cost of being wrong in each direction matters more than accuracy."}
 GDS = {1: "Gathering, preparation, exploration", 2: "Representation and transformation", 3: "Computing with data",
        4: "Data modelling", 5: "Visualisation and presentation", 6: "Science about data science"}
-
-
-def load_manifest() -> dict:
-    with MANIFEST.open() as f:
-        return yaml.safe_load(f)
 
 
 def nb_path(module: dict, topic: dict, nb: dict) -> Path:
@@ -63,11 +59,11 @@ def load_library() -> dict:
 
 def stub_notebook(m: dict, t: dict, nb: dict, meta: dict, bands: dict, lib: dict | None = None) -> nbformat.NotebookNode:
     """The stub carries every gate-checked section with placeholders. Claude Code fills; validate.py checks."""
-    band = nb.get("band", "P1")
+    band = nb["band"]
     band_name = bands[band]["name"]
     band_q = bands[band]["question"]
     prereqs = ", ".join(m["prereqs"]) or "None"
-    experiments = nb.get("experiments", [])
+    experiments = nb["experiments"]
     lib = lib or {}
     study = nb.get("study")
     if study in lib:
@@ -77,7 +73,7 @@ def stub_notebook(m: dict, t: dict, nb: dict, meta: dict, bands: dict, lib: dict
         study_line = f"**In the spirit of**: {study}  \n"
     else:
         study_line = ""
-    goal = nb.get("goal", "predict"); gds = int(nb.get("gds", 4))
+    goal = nb["goal"]; gds = nb["gds"]
     goal_line = f"**Goal**: `{goal}` — {GOALS[goal]}  \n**GDS division**: {gds} {GDS[gds]}  \n"
     refs = [k for k in nb.get("refs", []) if k in lib]
     if study in lib and study not in refs:
@@ -167,9 +163,9 @@ def stub_notebook(m: dict, t: dict, nb: dict, meta: dict, bands: dict, lib: dict
         "id": f"{m['id']}.{t['idx']:02d}.{nb['n']:02d}",
         "band": band,
         "dataset": nb["dataset"],
-        "visuals_min": nb.get("visuals", 7),
+        "visuals_min": nb["visuals"],
         "goal": goal, "gds": gds, "study": study, "refs": refs,
-        "experiments": nb.get("experiments", []),
+        "experiments": nb["experiments"],
         "build": nb.get("build"),
         "status": "stub",
     }
@@ -180,8 +176,6 @@ def stub_notebook(m: dict, t: dict, nb: dict, meta: dict, bands: dict, lib: dict
 def meta_loader(dataset: str) -> str:
     if dataset == "synthetic":
         return "synthetic"
-    if dataset == "ledger":
-        return "synthetic  # this notebook reads ledger.jsonl and learn/digest.md directly"
     return f"load_{dataset}"
 
 
@@ -238,7 +232,11 @@ def main() -> int:
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args()
 
-    manifest = load_manifest()
+    try:
+        manifest = load_manifest()
+    except ManifestError as e:
+        print(e, file=sys.stderr)
+        return 1
     lib = load_library()
     bands = manifest["priority_bands"]
     created = skipped = 0

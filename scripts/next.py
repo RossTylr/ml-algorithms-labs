@@ -18,7 +18,7 @@ import sys
 from pathlib import Path
 
 import nbformat
-import yaml
+from manifest import ManifestError, load_manifest
 
 ROOT = Path(__file__).resolve().parent.parent
 LEDGER = ROOT / "ledger.jsonl"
@@ -53,8 +53,7 @@ def built_count() -> int:
     return sum(1 for ln in LEDGER.read_text().splitlines() if ln.strip() and json.loads(ln).get("verdict") == "BUILT")
 
 
-def candidates(module: str | None):
-    manifest = yaml.safe_load((ROOT / "curriculum" / "curriculum.yaml").read_text())
+def candidates(manifest: dict, module: str | None):
     mods = sorted(manifest["modules"], key=lambda m: (m["tier"], float(m.get("order", m["id"]))))
     total = sum(len(t["notebooks"]) for m in manifest["modules"] for t in m["topics"])
     n_built = built_count()
@@ -79,10 +78,14 @@ def main() -> int:
     ap.add_argument("--module")
     ap.add_argument("--json", action="store_true")
     a = ap.parse_args()
+    try:
+        manifest = load_manifest()
+    except ManifestError as e:
+        print(e, file=sys.stderr); return 1
     base = built_count()
     jagged = revise_topics()
     out = []
-    for i, (p, meta, title) in enumerate(candidates(a.module)):
+    for i, (p, meta, title) in enumerate(candidates(manifest, a.module)):
         if i >= a.n:
             break
         rel = str(p.relative_to(ROOT))

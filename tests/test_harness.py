@@ -11,8 +11,8 @@ def test_h11_agents_do_not_name_each_other():
 
 def test_h1_next_is_first_stub(tmp_path):
     # a fresh scaffold, not the live tree (where 00.01.01 is already built)
-    for d in ("scripts", "curriculum"):
-        shutil.copytree(os.path.join(ROOT, d), tmp_path / d)
+    for d in ("scripts", "curriculum", "library", "datasets"):  # the manifest loader checks library keys and dataset exports
+        shutil.copytree(os.path.join(ROOT, d), tmp_path / d, ignore=shutil.ignore_patterns("__pycache__"))
     subprocess.run([sys.executable, "scripts/scaffold.py", "--module", "00"], capture_output=True, cwd=tmp_path, check=True)
     out = subprocess.run([sys.executable, "scripts/next.py"], capture_output=True, text=True, cwd=tmp_path).stdout.strip()
     assert out.endswith("00_mathematical_foundations/01_linear_algebra/01_vectors_matrices_operations.ipynb")

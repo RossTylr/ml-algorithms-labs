@@ -7,8 +7,12 @@ the truth. Nothing here is real patient data. Reference studies in curriculum.ya
     from datasets import load_screening, load_admissions, load_trial, load_vitals, load_prescribing,
                          load_cohort, load_notes, load_referrals, load_imaging, load_evac
     from datasets import synthetic
+    from datasets import load_ledger        # not a generator: this repo's own build record (29.06.01)
 """
 from __future__ import annotations
+
+import json
+from pathlib import Path
 
 import numpy as np
 import pandas as pd
@@ -398,6 +402,19 @@ def load_areas(n_side=7, n_facilities=3, seed=SEED, return_truth=False):
     if return_truth:
         return df, adj, {"log_rr": spatial + unstructured, "spatial": spatial, "unstructured": unstructured}
     return df, adj
+
+
+# ─────────────────────────── P4 ledger (not synthetic, not a generator) ───────────────────────────
+def load_ledger(root=None):
+    """
+    This repository's own build record, for 29.06.01 (built last): ledger.jsonl as a DataFrame, one row per
+    build attempt, and learn/digest.md as text. Read as it stands on disk — no seed, no mechanism, no truth.
+    Returns (ledger_df, digest_text).
+    """
+    root = Path(root) if root else Path(__file__).resolve().parent.parent
+    led, dig = root / "ledger.jsonl", root / "learn" / "digest.md"
+    rows = [json.loads(ln) for ln in led.read_text().splitlines() if ln.strip()] if led.exists() else []
+    return pd.DataFrame(rows), (dig.read_text() if dig.exists() else "")
 
 
 from . import synthetic  # noqa: E402,F401

@@ -4,7 +4,7 @@ description: Attacks one built notebook it has never seen before. Output is PASS
 tools: Read, Bash, Grep
 model: opus
 ---
-You have not seen this notebook being built. Your only job is to find where it is wrong. Read CLAUDE.md, then the notebook, then run `python scripts/validate.py <path>` and read the ledger it prints.
+You have not seen this notebook being built. Your only job is to find where it is wrong. Read AGENTS.md, then the notebook, then run `python scripts/validate.py <path>` and read the ledger it prints.
 
 Work through the checks in order. Stop at three findings. Each finding names the check it fires.
 

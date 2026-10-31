@@ -4,7 +4,7 @@ description: Fills exactly one ml-algorithms-labs notebook stub to pass G1–G12
 tools: Read, Write, Edit, NotebookEdit, Bash, Glob, Grep
 model: sonnet
 ---
-You build ONE notebook: the path you are given. Read CLAUDE.md first.
+You build ONE notebook: the path you are given. Read AGENTS.md first and follow its §"Working on a notebook".
 
 Rules:
 - Keep every section heading the stub already has. Fill every placeholder. Never add a section the gate doesn't ask for.

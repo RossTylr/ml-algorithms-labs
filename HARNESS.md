@@ -1,6 +1,6 @@
 # Harness
 
-How the notebooks get built: the loop, the agents, the gates, and the learning cadence that runs alongside. Companion to `CLAUDE.md`, which governs what a notebook is; this document governs how the loop runs. Design decisions are recorded inline as D-1 to D-7 with their reasoning.
+How the notebooks get built: the loop, the agents, the gates, and the learning cadence that runs alongside. Companion to `AGENTS.md`, which governs what a notebook is; this document governs how the loop runs. Design decisions are recorded inline as D-1 to D-7 with their reasoning.
 
 ## 1. Origin and what was kept
 
@@ -47,7 +47,7 @@ next.py ──> stub ──> builder ──> validate.py ──> reviewer ──
 
 ## 3. Three configurations, tried in order
 
-**T0 — headless.** `scripts/loop.sh N` makes one `claude -p` call per notebook, gates it, records it, commits it. No agents, no reviewer. This measures the floor: whether one prompt plus `CLAUDE.md` plus the stub produces a gate-passing notebook, and at what cost in tokens and time.
+**T0 — headless.** `scripts/loop.sh N` makes one `claude -p` call per notebook, gates it, records it, commits it. No agents, no reviewer. This measures the floor: whether one prompt plus `AGENTS.md` plus the stub produces a gate-passing notebook, and at what cost in tokens and time.
 
 **T1 — agents.** `/build-next` in Claude Code runs the full loop: `.claude/agents/builder.md` fills the stub, the validator gates it, `.claude/agents/skeptic.md` reviews it in a fresh context, the ledger records the outcome, the notebook is committed. Tier-3 notebooks are routed to the stronger model. This is the working configuration and the whole interface is one command.
 
@@ -88,9 +88,9 @@ Morning cadence, fifteen minutes: read the ledger, take the quizzes, read the di
 | `/build-next` | one notebook through the full loop |
 | `/build-next N [--usd <ceiling>]` | N notebooks in sequence; BLOCKED is committed and the run moves on; two BLOCKED in a row, or this run's usd above the ceiling, stop it |
 | `/skeptic <path>` | the reviewer alone, on any notebook including one edited by hand |
-| `claude -p "Read CLAUDE.md. Build <path> in place; then run python scripts/validate.py <path> and fix failures."` | the headless floor, no agents |
+| `claude -p "Read AGENTS.md. Build <path> in place; then run python scripts/validate.py <path> and fix failures."` | the headless floor, no agents |
 
-If a fifth kind of prompt becomes necessary, the need belongs in the manifest or `CLAUDE.md`, not in a prompt.
+If a fifth kind of prompt becomes necessary, the need belongs in the manifest or `AGENTS.md`, not in a prompt.
 
 ## 6. Tests
 

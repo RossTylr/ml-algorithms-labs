@@ -12,7 +12,7 @@ Each step states which. Expected results are given so a departure is visible str
 | Step | Where | Do | Expect |
 |---|---|---|---|
 | A1 | Terminal | `cd ~/Projects` then `git clone https://github.com/RossTylr/ml-algorithms-labs.git` | a folder `ml-algorithms-labs` |
-| A2 | Cursor | File → Open Folder → `ml-algorithms-labs` | Cursor reopens in the repo; `CLAUDE.md` is picked up automatically |
+| A2 | Cursor | File → Open Folder → `ml-algorithms-labs` | Cursor reopens in the repo; `CLAUDE.md` is picked up automatically and points to `AGENTS.md`, the single guide |
 | A3 | Terminal | `python3 -m venv .venv` | a `.venv` folder |
 | A4 | Terminal | `source .venv/bin/activate` | prompt shows `(.venv)` |
 | A5 | Terminal | `pip install -r requirements/base.txt pytest` | about two minutes; no errors |
@@ -24,7 +24,7 @@ If A7 or A8 differs, stop and fix before building anything. Nothing downstream i
 
 ## Part B — the first build, headless (the floor)
 
-This runs one build with no agents and no reviewer. It measures whether one prompt plus `CLAUDE.md` plus the stub produces a gate-passing notebook, and what it costs.
+This runs one build with no agents and no reviewer. It measures whether one prompt plus `AGENTS.md` plus the stub produces a gate-passing notebook, and what it costs.
 
 | Step | Where | Do | Expect |
 |---|---|---|---|
@@ -46,7 +46,7 @@ If B1 ends BLOCKED, the ledger row names the failing gates. The three usual caus
 | C4 | Claude Code | `/build-next 5` | five lines; at least four BUILT, none BLOCKED |
 | C5 | Terminal | `git log --oneline \| head` | one commit per built notebook |
 
-C4 is test H7. If it holds, the loop can be left running. If it does not, read `learn/digest.md` — the reviewer's findings say where the builder is failing and whether the fix belongs in `CLAUDE.md`, the builder agent file, or the manifest.
+C4 is test H7. If it holds, the loop can be left running. If it does not, read `learn/digest.md` — the reviewer's findings say where the builder is failing and whether the fix belongs in `AGENTS.md`, the builder agent file, or the manifest.
 
 ## Part D — the reproduction test
 
@@ -60,7 +60,7 @@ The first notebook that reproduces a paper's figure is the Lasso notebook (Hasti
 Headless jump:
 
 ```
-claude -p "Read CLAUDE.md. Build 04_regression/04_regularised/02_lasso.ipynb in place. Then run python scripts/validate.py on it and fix any failures."
+claude -p "Read AGENTS.md. Build 04_regression/04_regularised/02_lasso.ipynb in place. Then run python scripts/validate.py on it and fix any failures."
 ```
 
 ## Part E — the daily fifteen minutes
@@ -91,6 +91,6 @@ Or use the scheduled-task interface in the Claude app with the same prompt and c
 | `/build-next` | the normal case |
 | `/build-next N [--usd <ceiling>]` | N in sequence; BLOCKED is committed and the run moves on; stops after two BLOCKED in a row or at the usd ceiling |
 | `/skeptic <path>` | review alone, on any notebook |
-| `claude -p "Read CLAUDE.md. Build <path> in place. Then run python scripts/validate.py <path> and fix any failures."` | headless, no agents |
+| `claude -p "Read AGENTS.md. Build <path> in place. Then run python scripts/validate.py <path> and fix any failures."` | headless, no agents |
 
-There is no fifth prompt. A need that seems to call for one belongs in the manifest or in `CLAUDE.md`.
+There is no fifth prompt. A need that seems to call for one belongs in the manifest or in `AGENTS.md`.

@@ -19,7 +19,7 @@ Stop rules:
 7. `python scripts/ledger.py add --id <id> --path <path> --attempt <n> --verdict <BUILT|BLOCKED> --gates "<✓ count>/<✓ + ✗ count> pass" --skeptic <PASS|REVISE> --findings "<F1;F2;F3>" --tokens <total> --usd <session cost> --seconds <elapsed>` — tokens = input_tokens + output_tokens + cache_read_input_tokens + cache_creation_input_tokens from each usage block, summed over every builder and skeptic run; pass `--usd` only when the cost is known.
 8. Set status from the verdict — `built` on BUILT, `blocked` on BLOCKED: `python -c 'import json,sys;p,s=sys.argv[1:];nb=json.load(open(p));nb["metadata"]["ml_mastery"]["status"]=s;open(p,"w").write(json.dumps(nb,indent=1,ensure_ascii=False))' <path> <built|blocked>`
 9. `python scripts/little_book.py` (regenerates LITTLE_BOOK.md from everything built).
-10. Commit either verdict with `git add <path> learn/ ledger.jsonl LEDGER.md LITTLE_BOOK.md`, then:
+10. Commit either verdict with `git add <path> learn/ library/briefs/ ledger.jsonl LEDGER.md LITTLE_BOOK.md`, then:
     - BUILT: `git commit -m "nb(<id>): built — PASS G1–G14, skeptic PASS"`
     - BLOCKED: `git commit -m "nb(<id>): <title> — BLOCKED attempt <n>"` — a failed attempt is a result; the ledger row must point at a commit that holds it.
 

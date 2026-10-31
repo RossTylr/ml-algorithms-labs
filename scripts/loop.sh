@@ -43,7 +43,7 @@ for _ in $(seq 1 "$N"); do
     --gates "$(grep -c '✓' "/tmp/gate_$ID.txt")/$(grep -cE '✓|✗' "/tmp/gate_$ID.txt") pass" --skeptic "n/a (T0)" \
     --tokens "$TOK" --usd "$USD_NB" --seconds $(( $(date +%s) - T0 )) \
     --findings "$(grep '✗' "/tmp/gate_$ID.txt" | tr '\n' ';' | head -c 300)"
-  git add "$P" learn/ ledger.jsonl LEDGER.md
+  git add "$P" learn/ library/briefs/ ledger.jsonl LEDGER.md
   if [[ "$VER" == "BUILT" ]]; then
     git commit -qm "nb($ID): built — PASS G1–G14" || true
     STREAK=0

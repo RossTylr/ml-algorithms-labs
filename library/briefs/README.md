@@ -1,0 +1,3 @@
+# Study briefs
+
+Briefs are written by the builder on first contact with a paper: when a notebook's `study:` names a library key that has no brief here, the builder reads that paper's PDF (the `file` in `library/curated.yaml`, inside the papers folder) and, before building, writes `<key>.md` — Citation · Central figure (which, axes, what it shows, the claim) · Result · What synthetic data cannot test · Reproduce in spirit — in under 400 words; every later notebook that cites the same key reads the brief instead of the PDF, and its quiz's sixth question is drawn from "What synthetic data cannot test". A brief is a reading note, not doctrine: if it misreads the paper, correct it by hand, and it is committed with the notebook whose build wrote it.

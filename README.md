@@ -58,7 +58,7 @@ All synthetic, seeded, and generated from a known mechanism in `datasets/`. Ever
 
 ## The library
 
-A curated collection of papers underpins the curriculum (`library/`). Each notebook's `study:` field names the paper whose central figure it reproduces; `refs:` populate the References cell; the critique papers — on p-values, significance, the two cultures, GNN evaluation, time-series baselines, hallucination — are the reviewer's named checks. `library/INDEX.md` lists the catalogue and the two planning documents record how it was folded in.
+A curated collection of papers underpins the curriculum (`library/`). Each notebook's `study:` field names the paper whose central figure it reproduces; `refs:` populate the References cell; the critique papers — on p-values, significance, the two cultures, GNN evaluation, time-series baselines, hallucination — are the reviewer's named checks. `library/INDEX.md` lists the catalogue and the two planning documents record how it was folded in. The first notebook to cite a `study:` paper reads its PDF and writes a short brief to `library/briefs/<key>.md`; every later notebook citing it reads the brief instead.
 
 ## Build process
 

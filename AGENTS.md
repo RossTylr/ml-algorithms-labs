@@ -52,7 +52,7 @@ Status follows the verdict: the builder leaves `status: "stub"`; the loop sets `
 
 ## Manifest fields on every notebook
 `band` P1–P5 · `goal` predict|explain|decide · `gds` 1–6 (Donoho) · `dataset` · `study` (library key: reproduce that paper's central figure, in spirit) · `refs` (library keys → References cell) · `visuals` · `experiments` (pre-registered) · `build: last` (29.meta only).
-The library is `library/curated.yaml`; the builder reads a PDF only when `study:` names it.
+The library is `library/curated.yaml`; the builder reads a PDF only when `study:` names it, and only once: on first contact it writes `library/briefs/<key>.md`, which every later notebook citing that key reads instead.
 
 ## Priority bands (clinical framing, from the manifest)
 P1 Diagnostics · P2 Treatment · P3 Efficacy · P4 Health tech / operations · P5 Military-medicine thread.

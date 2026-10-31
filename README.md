@@ -38,7 +38,7 @@ The full table is in [INDEX.md](INDEX.md). Tier 1 is built first.
 
 ## Datasets
 
-All synthetic, seeded, and generated from a known mechanism in `datasets/`.
+All synthetic, seeded, and generated from a known mechanism in `datasets/`. Every numeric parameter behind them — prevalence, effect sizes, noise, mechanism coefficients, class counts — is listed in [datasets/ASSUMPTIONS.md](datasets/ASSUMPTIONS.md); none is doctrine or measured.
 
 | Dataset | Use | What it holds |
 |---|---|---|

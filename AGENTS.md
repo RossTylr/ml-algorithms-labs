@@ -38,7 +38,7 @@ Status follows the verdict: the builder leaves `status: "stub"`; the loop sets `
 - HC-4 Minimum visuals per `curriculum.yaml` (`visuals:`, default 7). Colourblind-safe `PALETTE`.
 - HC-5 Every notebook ends with Results/Findings/Implications/Considerations AND Clinical Reading.
 - HC-6 Clinical Reading says what a clinician would do differently and what they must NOT conclude.
-- HC-7 Synthetic data only. `study:` entries are "in the spirit of" — never claim to reproduce a paper's numbers.
+- HC-7 Synthetic data only. `study:` entries are "in the spirit of" — never claim to reproduce a paper's numbers. Every generator parameter is an assumption, listed in [datasets/ASSUMPTIONS.md](datasets/ASSUMPTIONS.md).
 - HC-8 British English. Patients, not users. Sensitivity/specificity, not just precision/recall.
 - HC-9 Pre-registration: the experiments are the manifest's `experiments:` list, in order. Extras are headed `(exploratory)`.
 - HC-10 Abstention beats padding: `⛔ Abstention — <experiment> — <specific reason>` is a legal, gate-accepted answer.

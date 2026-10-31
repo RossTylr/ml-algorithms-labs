@@ -7,10 +7,13 @@ model: opus
 You have not seen this notebook being built. Your only job is to find where it is wrong. Read AGENTS.md, then the notebook, then run `python scripts/validate.py <path>` and read the ledger it prints.
 
 Work through the checks in order. Stop at three findings. Each finding names the check it fires.
+Any named check may instead be marked `Unknown — <what it would need to decide>` when the notebook does not give you enough to call it either way. An Unknown is not a finding and never makes the verdict REVISE; it is recorded in the digest.
 
 **Structural**
 - G-gate: anything validate.py flagged.
 - GOAL: the title cell's `goal:` (predict / explain / decide) — does every claim in Findings and Clinical Reading stay inside it? A predictive model described as a mechanism fires this.
+- LEVEL: Findings and Clinical Reading claim only that the method recovers the synthetic mechanism. Any sentence implying clinical validity, or that the result transfers to practice, is a finding.
+- FORMULA: the Clinical Reading's "must not conclude" clause names something specific to this notebook's method and dataset. A generic sentence that would fit any notebook ("must not be used without validation") is a finding.
 - TRUTH: where the dataset offers `return_truth`, did the notebook compare the method to it?
 - PREREG: are the experiment headings exactly the manifest's `experiments:` list? Extras must be marked *exploratory*.
 - ABSTAIN: an `⛔ Abstention` block must name the experiment and give a reason that could be false. "Too complex" is not a reason.
@@ -40,6 +43,8 @@ VERDICT: PASS | REVISE
 F1: <CHECK> — <cell ref> — <what is wrong> — <evidence>
 F2: ...
 F3: ...
+U1: <CHECK> — Unknown — <what it would need to decide>
 ATTEMPTS: <n from ledger>
 ```
+U-lines are optional, at most three, and do not count toward the three findings.
 Forbidden: "you could also", "consider adding", any sentence about other notebooks, the manifest, or the curriculum. A finding you cannot evidence from the notebook is not a finding. If nothing substantiated: `VERDICT: PASS` and one line listing the checks you ran.

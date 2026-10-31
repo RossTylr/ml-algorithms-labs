@@ -18,7 +18,7 @@ The design borrows from the "AI research desk" pattern — a lead that plans, ag
 
 **D-1.** Two agents — a builder and a reviewer — and nothing else. Each additional seat is a place for process to begin producing tasks. Two is the minimum that gives role separation.
 
-**D-2.** The reviewer may output only PASS, or REVISE with at most three substantiated findings, scoped to the notebook in hand. A reviewer that can say "a notebook on X is also needed" is a planner by another name.
+**D-2.** The reviewer may output only PASS, or REVISE with at most three substantiated findings, scoped to the notebook in hand. A reviewer that can say "a notebook on X is also needed" is a planner by another name. It may also mark a named check `Unknown — <what it would need to decide>`: the Unknown goes to the digest and never forces a revision, so the reviewer is not pushed to guess a finding or a pass.
 
 ## 2. The loop
 
@@ -131,5 +131,5 @@ learn/                       quiz queue, digest, quiz template
 | R1 | Reviewer drift — the reviewer tries to be helpful and suggests additions | forbidden in the agent file; output truncated to three findings; the phrase "could also" in the digest is the leak to watch for |
 | R2 | Gate gaming — seven trivial plots satisfy the visual count | the reviewer's brief asks whether each figure carries the argument; a specific abstention is a legal alternative to padding (Kalai et al. 2025) |
 | R3 | Register collapse — the plain register drifts into developer prose with analogies attached | the reviewer tests the plain paragraph against a reader with no background, first time |
-| R4 | Clinical overclaim — a clinical reading implying a synthetic result transfers to practice | the reviewer requires a "must not conclude" clause and a statement that the result is retrospective and synthetic (Rajpurkar et al. 2022) |
+| R4 | Clinical overclaim — a clinical reading implying a synthetic result transfers to practice | the reviewer's LEVEL check (Findings and Clinical Reading claim only synthetic-mechanism correctness) and FORMULA check (the "must not conclude" clause is specific to this notebook's method and dataset, not boilerplate), with PROSPECTIVE: the result is retrospective and synthetic and the bar is prospective (Rajpurkar et al. 2022) |
 | R5 | Cost runaway when unattended | the loop and the scheduled task take a count; the ledger tracks tokens; the nightly prompt states a ceiling |

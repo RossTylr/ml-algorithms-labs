@@ -3,7 +3,6 @@ from __future__ import annotations
 
 import time
 
-import numpy as np
 import pandas as pd
 from sklearn.base import clone
 from sklearn.model_selection import cross_val_score

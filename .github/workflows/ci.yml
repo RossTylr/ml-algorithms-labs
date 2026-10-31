@@ -14,5 +14,5 @@ jobs:
       - run: ruff check shared datasets scripts
       - run: pytest -q
       - run: python scripts/scaffold.py --dry-run
-      - name: Gate built notebooks (G1–G11)
+      - name: Gate built notebooks (G1–G14)
         run: python scripts/validate.py --all --built-only

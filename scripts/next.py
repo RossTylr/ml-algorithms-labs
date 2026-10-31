@@ -86,7 +86,7 @@ def main() -> int:
         if i >= a.n:
             break
         rel = str(p.relative_to(ROOT))
-        teachback = rec_topic_jagged = (meta["id"][:5] in jagged) or ((base + i + 1) % 5 == 0)
+        teachback = (meta["id"][:5] in jagged) or ((base + i + 1) % 5 == 0)
         out.append({"path": rel, "id": meta["id"], "band": meta.get("band"), "visuals_min": meta.get("visuals_min"), "teachback": teachback})
     if not out:
         print("NONE", file=sys.stderr); return 1

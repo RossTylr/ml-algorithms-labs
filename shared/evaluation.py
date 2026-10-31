@@ -5,9 +5,18 @@ import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns
 from sklearn.calibration import calibration_curve
-from sklearn.metrics import (auc, average_precision_score, confusion_matrix, mean_absolute_error,
-                             mean_squared_error, precision_recall_curve, r2_score, roc_curve,
-                             silhouette_samples, silhouette_score)
+from sklearn.metrics import (
+    auc,
+    average_precision_score,
+    confusion_matrix,
+    mean_absolute_error,
+    mean_squared_error,
+    precision_recall_curve,
+    r2_score,
+    roc_curve,
+    silhouette_samples,
+    silhouette_score,
+)
 
 from .plotting import PALETTE
 

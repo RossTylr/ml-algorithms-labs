@@ -13,7 +13,7 @@
 | 02.02 | [One-Class SVM & Elliptic Envelope](02_density_based/02_one_class_svm_elliptic_envelope.ipynb) | P4 | predict | `vitals` |  | A boundary around normal physiology |
 | 03.01 | [HBOS, COPOD & ECOD](03_fast_methods/01_hbos_copod_ecod.ipynb) | P4 | predict | `vitals` |  | Ward-scale real-time scoring |
 | 03.02 | [Z-Score, IQR & Grubbs](03_fast_methods/02_z_score_iqr_grubbs.ipynb) | P4 | predict | `vitals` |  | Simple first |
-| 04.01 | [Autoencoder Reconstruction Error](04_learned/01_autoencoder_reconstruction_error.ipynb) | P4 | predict | `vitals` | `NEWS2 early-warning comparison` | Deterioration as a bad reconstruction |
+| 04.01 | [Autoencoder Reconstruction Error](04_learned/01_autoencoder_reconstruction_error.ipynb) | P4 | predict | `vitals` |  | Deterioration as a bad reconstruction — in the spirit of NEWS2 early-warning comparison |
 | 04.02 | [SUOD & Method Comparison](04_learned/02_suod_method_comparison.ipynb) | P5 | predict | `vitals` |  | Deployed monitoring with intermittent data — method × failure-type matrix |
 
 ## Priority bands

@@ -56,7 +56,7 @@ next.py ──> stub ──> builder ──> validate.py ──> reviewer ──
 
 **D-5.** Parallelism is permitted; a coordinator is not. If two seats ever need to talk, the design is wrong.
 
-**Unattended.** A nightly scheduled task runs `/build-next 4` with a token ceiling stated in the prompt. The ledger and the learning queue are what a returning reader sees in the morning.
+**Unattended.** A nightly scheduled task runs `/build-next 4 --usd 6`: the loop itself stops at the usd ceiling, rather than a prompt asking it to. The ledger and the learning queue are what a returning reader sees in the morning.
 
 ### Why no coordinator works
 
@@ -108,8 +108,9 @@ If a fifth kind of prompt becomes necessary, the need belongs in the manifest or
 | H9 | two worktree seats on modules 04 and 05 complete three each and merge cleanly | T2 |
 | H10 | the nightly task produces at least three BUILT lines by morning | unattended |
 | H11 | no agent file names another agent | `tests/test_harness.py` |
+| H12 | every gate fails on its planted defect, and the built 00.01.01 passes them all | `tests/test_gates_detect.py` |
 
-H1 and H11 are automated. H2–H4 are the first evening's work; H5–H8 the first week; H9–H10 only if H7 holds.
+H1, H11 and H12 are automated. H2–H4 are the first evening's work; H5–H8 the first week; H9–H10 only if H7 holds.
 
 ## 7. Components
 
@@ -133,4 +134,4 @@ learn/                       quiz queue, digest, quiz template
 | R2 | Gate gaming — seven trivial plots satisfy the visual count | the reviewer's brief asks whether each figure carries the argument; a specific abstention is a legal alternative to padding (Kalai et al. 2025) |
 | R3 | Register collapse — the plain register drifts into developer prose with analogies attached | the reviewer tests the plain paragraph against a reader with no background, first time |
 | R4 | Clinical overclaim — a clinical reading implying a synthetic result transfers to practice | the reviewer's LEVEL check (Findings and Clinical Reading claim only synthetic-mechanism correctness) and FORMULA check (the "must not conclude" clause is specific to this notebook's method and dataset, not boilerplate), with PROSPECTIVE: the result is retrospective and synthetic and the bar is prospective (Rajpurkar et al. 2022) |
-| R5 | Cost runaway when unattended | the loop and the scheduled task take a count; the ledger tracks tokens; the nightly prompt states a ceiling |
+| R5 | Cost runaway when unattended | the loop and the scheduled task take a count; the ledger tracks tokens and usd; `--usd <ceiling>` stops the run once its own ledger rows exceed the ceiling; two BLOCKED in a row stop it too |

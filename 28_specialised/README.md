@@ -8,7 +8,7 @@
 
 | # | Notebook | Band | Goal | Dataset | Study | Clinical problem |
 |---|----------|------|------|---------|-------|------------------|
-| 01.01 | [Kaplan-Meier & Cox PH](01_survival/01_kaplan_meier_cox_ph.ipynb) | P3 | explain | `trial` | `Cox (1972); KM on trial endpoints` | Time to readmission by arm; hazard ratios |
+| 01.01 | [Kaplan-Meier & Cox PH](01_survival/01_kaplan_meier_cox_ph.ipynb) | P3 | explain | `trial` |  | Time to readmission by arm; hazard ratios — in the spirit of Cox (1972); KM on trial endpoints |
 | 01.02 | [Random Survival Forests & DeepSurv](01_survival/02_random_survival_forests_deepsurv.ipynb) | P3 | explain | `trial` |  | Non-linear survival |
 | 02.01 | [Propensity Scores & Instrumental Variables](02_causal/01_propensity_scores_instrumental_variables.ipynb) | P3 | explain | `admissions` |  | Did the treatment work when it wasn't randomised? |
 | 02.02 | [Diff-in-Diff, DoWhy & Double ML](02_causal/02_diff_in_diff_dowhy_double_ml.ipynb) | P3 | explain | `admissions` |  | A policy change across sites; graphs; debiased estimation |

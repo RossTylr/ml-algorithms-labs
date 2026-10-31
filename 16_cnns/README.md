@@ -13,7 +13,7 @@
 | 02.01 | [LeNet, AlexNet & VGG](02_classic/01_lenet_alexnet_vgg.ipynb) | P1 | predict | `imaging` | `esteva2017` | Esteva-style: transfer learning vs from-scratch at 100 / 1k / 10k patches |
 | 02.02 | [Inception & ResNet](02_classic/02_inception_resnet.ipynb) | P1 | predict | `imaging` | `he2016` | Multi-scale lesions; deep training |
 | 02.03 | [DenseNet, MobileNet & EfficientNet](02_classic/03_densenet_mobilenet_efficientnet.ipynb) | P5 | decide | `imaging` | `tan2020` | Reuse; a model that runs on a ruggedised handheld; compound scaling |
-| 03.01 | [U-Net Segmentation](03_tasks/01_u_net_segmentation.ipynb) | P1 | predict | `imaging` | `U-Net (Ronneberger 2015) on biomedical segmentation` | Lesion boundary pixel labelling |
+| 03.01 | [U-Net Segmentation](03_tasks/01_u_net_segmentation.ipynb) | P1 | predict | `imaging` |  | Lesion boundary pixel labelling — in the spirit of U-Net (Ronneberger 2015) on biomedical segmentation |
 | 03.02 | [Object Detection — YOLO, R-CNN family, FPN](03_tasks/02_object_detection_yolo_r_cnn_family_fpn.ipynb) | P1 | predict | `synthetic` | `redmon2018` | Boxes around multiple lesions |
 | 03.03 | [ConvNeXt](03_tasks/03_convnext.ipynb) | P1 | predict | `imaging` |  | Transformer tricks in a CNN |
 

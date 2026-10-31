@@ -18,8 +18,8 @@ Each step states which. Expected results are given so a departure is visible str
 | A5 | Terminal | `pip install -r requirements/base.txt pytest` | about two minutes; no errors |
 | A6 | Terminal | `python -m ipykernel install --user --name ml-algorithms-labs` | `Installed kernelspec …` — needed for gate G12 |
 | A7 | Terminal | `cp .claude/settings.local.example.json .claude/settings.local.json` | no output; Claude Code now runs the loop's `python scripts/…`, `pytest` and `git` add/commit/status/log/diff commands without asking (the copy is git-ignored, so local edits stay local) |
-| A8 | Terminal | `pytest -q` | `29 passed` |
-| A9 | Terminal | `python scripts/next.py` | `00_mathematical_foundations/01_linear_algebra/01_vectors_matrices_operations.ipynb` |
+| A8 | Terminal | `pytest -q` | `57 passed, 1 deselected` (the deselected test executes notebooks; it runs nightly) |
+| A9 | Terminal | `python scripts/next.py` | the path of the first notebook in build order whose status is `stub` (on an empty scaffold, `00_mathematical_foundations/01_linear_algebra/01_vectors_matrices_operations.ipynb` — test H1) |
 
 If A8 or A9 differs, stop and fix before building anything. Nothing downstream is meaningful until the scaffold is proven.
 
@@ -39,12 +39,14 @@ If B1 ends BLOCKED, the ledger row names the failing gates. The three usual caus
 
 ## Part C — the loop with agents (the working configuration)
 
+On a Mac, before any `/build-next N`, run `caffeinate -is -w $(pgrep -n claude)` in a second terminal. It keeps the machine from idle and system sleep (system sleep only while on mains power) until that Claude Code process exits, so a long run is not cut off when the lid or the screen goes quiet.
+
 | Step | Where | Do | Expect |
 |---|---|---|---|
 | C1 | Terminal | `claude` | Claude Code starts in the repo |
-| C2 | Claude Code | `/build-next` | one line: `00.01.02 BUILT attempts=1 skeptic=PASS` (or REVISE / BLOCKED) |
+| C2 | Claude Code | `/build-next` | one line: `<id> BUILT attempts=1 skeptic=PASS` (or BLOCKED) for the stub `next.py` names |
 | C3 | Terminal | `cat LEDGER.md` | two rows now; the second has a reviewer verdict |
-| C4 | Claude Code | `/build-next 5` | five lines; at least four BUILT, none BLOCKED |
+| C4 | Claude Code | record the weekly usage % (`/usage`); `/build-next 5`; record the weekly usage % again; then in a terminal `python scripts/ledger.py summary` | five lines; at least four BUILT, none BLOCKED. Report the usage % before and after, and pass^1 and pass@3 from the summary |
 | C5 | Terminal | `git log --oneline \| head` | one commit per built notebook |
 
 C4 is test H7. If it holds, the loop can be left running. If it does not, read `learn/digest.md` — the reviewer's findings say where the builder is failing and whether the fix belongs in `AGENTS.md`, the builder agent file, or the manifest.
@@ -80,10 +82,10 @@ claude -p "Read AGENTS.md. Build 04_regression/04_regularised/02_lasso.ipynb in 
 Once C4 holds, schedule the loop. In Claude Code:
 
 ```
-/schedule "nightly build" --cron "0 2 * * *" --prompt "/build-next 4. Stop if today's ledger rows sum to more than 600k tokens."
+/schedule "nightly build" --cron "0 2 * * *" --prompt "/build-next 4 --usd 6"
 ```
 
-Or use the scheduled-task interface in the Claude app with the same prompt and cadence. The morning check is Part E.
+Or use the scheduled-task interface in the Claude app with the same prompt and cadence. `--usd 6` stops the run with `ceiling reached` once this run's ledger rows exceed $6; rows without usd count as zero. The morning check is Part E.
 
 ## The complete prompt set
 

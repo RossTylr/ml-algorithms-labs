@@ -8,7 +8,7 @@
 
 | # | Notebook | Band | Goal | Dataset | Study | Clinical problem |
 |---|----------|------|------|---------|-------|------------------|
-| 01.01 | [Exploration vs Exploitation](01_bandits/01_exploration_vs_exploitation.ipynb) | P3 | decide | `synthetic` | `adaptive / response-adaptive randomisation` | Five treatment arms with unknown response rates — adaptive trial design |
+| 01.01 | [Exploration vs Exploitation](01_bandits/01_exploration_vs_exploitation.ipynb) | P3 | decide | `synthetic` |  | Five treatment arms with unknown response rates — adaptive trial design — in the spirit of adaptive / response-adaptive randomisation |
 | 02.01 | [MDPs & Dynamic Programming](02_tabular/01_mdps_dynamic_programming.ipynb) | P5 | decide | `evac` |  | Casualty evacuation on a 4×4 grid — point of injury to Role 2 |
 | 02.02 | [Monte Carlo & TD Learning](02_tabular/02_monte_carlo_td_learning.ipynb) | P5 | decide | `evac` |  | Same, dynamics unknown |
 | 02.03 | [Q-Learning & SARSA](02_tabular/03_q_learning_sarsa.ipynb) | P5 | decide | `evac` |  | A threat lane — safe route vs fastest route |
@@ -21,7 +21,7 @@
 | 05.01 | [Dyna-Q & World Models](05_model_based/01_dyna_q_world_models.ipynb) | P5 | decide | `evac` |  | Learned evacuation dynamics, imagined rollouts |
 | 05.02 | [MuZero & Dreamer](05_model_based/02_muzero_dreamer.ipynb) | P5 | decide | `evac` |  | Planning with learned models |
 | 06.01 | [Hierarchical, Inverse & Multi-Agent RL](06_advanced_rl/01_hierarchical_inverse_multi_agent_rl.ipynb) | P5 | decide | `evac` |  | Sub-goals along the chain; recover a commander's reward from demonstrations; two evac teams cooperating |
-| 06.02 | [Offline RL](06_advanced_rl/02_offline_rl.ipynb) | P2 | decide | `admissions` | `AI Clinician (sepsis) offline-RL debate` | Learning a treatment policy from a fixed registry — CQL, IQL |
+| 06.02 | [Offline RL](06_advanced_rl/02_offline_rl.ipynb) | P2 | decide | `admissions` |  | Learning a treatment policy from a fixed registry — CQL, IQL — in the spirit of AI Clinician (sepsis) offline-RL debate |
 | 06.03 | [RLHF & DPO](06_advanced_rl/03_rlhf_dpo.ipynb) | P1 | predict | `notes` | `chen2025` | Preference learning from clinician rankings of note summaries |
 
 ## Priority bands

@@ -8,13 +8,13 @@
 
 | # | Notebook | Band | Goal | Dataset | Study | Clinical problem |
 |---|----------|------|------|---------|-------|------------------|
-| 01.01 | [Sigmoid & Decision Boundary](01_logistic/01_sigmoid_decision_boundary.ipynb) | P1 | predict | `screening` | `Framingham-style risk scoring` | Disease present/absent from two biomarkers — the baseline that every 'radiologist-level' claim is measured against |
+| 01.01 | [Sigmoid & Decision Boundary](01_logistic/01_sigmoid_decision_boundary.ipynb) | P1 | predict | `screening` |  | Disease present/absent from two biomarkers — the baseline that every 'radiologist-level' claim is measured against — in the spirit of Framingham-style risk scoring |
 | 01.02 | [Multiclass & Regularisation](01_logistic/02_multiclass_regularisation.ipynb) | P5 | decide | `synthetic` |  | Triage category T1–T4 from injury features |
 | 02.01 | [Distance Metrics & k Selection](02_knn/01_distance_metrics_k_selection.ipynb) | P1 | predict | `screening` |  | Patients like this patient — three diagnoses in 2D biomarker space |
 | 02.02 | [Scaling & Efficiency](02_knn/02_scaling_efficiency.ipynb) | P4 | predict | `cohort` |  | Same at 100k patients |
 | 03.01 | [Gaussian, Multinomial & Bernoulli](03_naive_bayes/01_gaussian_multinomial_bernoulli.ipynb) | P1 | predict | `notes` |  | Biomarkers (Gaussian); triage note words (Multinomial); symptom checklist (Bernoulli) |
 | 03.02 | [Complement NB & Rare Outcomes](03_naive_bayes/02_complement_nb_rare_outcomes.ipynb) | P1 | predict | `notes` |  | Notes where the serious outcome is rare |
-| 04.01 | [Splitting Criteria & Visualisation](04_decision_trees/01_splitting_criteria_visualisation.ipynb) | P1 | predict | `screening` | `Ottawa ankle rule style decision rules` | A clinical decision rule learned from data — mixed features |
+| 04.01 | [Splitting Criteria & Visualisation](04_decision_trees/01_splitting_criteria_visualisation.ipynb) | P1 | predict | `screening` |  | A clinical decision rule learned from data — mixed features — in the spirit of Ottawa ankle rule style decision rules |
 | 04.02 | [Pruning & Overfitting](04_decision_trees/02_pruning_overfitting.ipynb) | P1 | predict | `screening` |  | Same — a rule a clinician could carry |
 | 04.03 | [ID3, C4.5 & Gain Ratio](04_decision_trees/03_id3_c45_gain_ratio.ipynb) | P1 | predict | `notes` |  | Categorical-heavy symptom data |
 | 05.01 | [Maximum Margin (Linear)](05_svm/01_maximum_margin_linear.ipynb) | P1 | predict | `synthetic` | `cortes1995` | Two clearly separable diagnoses |

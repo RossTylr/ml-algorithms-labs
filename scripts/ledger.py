@@ -31,7 +31,7 @@ def add(a) -> None:
     summary()
 
 
-def summary() -> None:
+def summary() -> list[str]:
     recs = [json.loads(l) for l in LEDGER.read_text().splitlines() if l.strip()] if LEDGER.exists() else []
     built = [r for r in recs if r["verdict"] == "BUILT"]
     latest = {r["id"]: r for r in recs}
@@ -39,11 +39,24 @@ def summary() -> None:
     revise = [r for r in recs if r["verdict"] == "REVISE"]
     tok = sorted(r["tokens"] for r in built if r.get("tokens"))
     sec = sorted(r["seconds"] for r in built if r.get("seconds"))
+    usd = sorted(r["usd"] for r in built if r.get("usd") is not None)
     med = lambda xs: xs[len(xs) // 2] if xs else "—"
-    lines = [
+    # pass^1: BUILT at attempt 1; pass@3: BUILT at any attempt — both over every notebook with a row
+    ids = set(latest)
+    first = {r["id"] for r in built if r["attempt"] == 1}
+    ever = {r["id"] for r in built}
+    rate = lambda s: f"{len(s)}/{len(ids)} ({100 * len(s) / len(ids):.0f}%)" if ids else "—"
+    head = [
         "# Build Ledger", "",
+        "Rows before 2026-10-29 record tokens under the earlier single-field definition; later rows sum the four "
+        "usage fields (input, output, cache read, cache creation).", "",
         f"**Built** {len(built)} · **Revise cycles** {len(revise)} · **Blocked** {len(blocked)} · "
         f"**Median tokens/built** {med(tok)} · **Median seconds/built** {med(sec)}", "",
+        f"**pass^1** {rate(first)} — BUILT at the first attempt, over notebooks with any row  ",
+        f"**pass@3** {rate(ever)} — BUILT within three attempts, over the same notebooks  ",
+        f"**Median usd/built** {med(usd)} ({len(usd)} of {len(built)} BUILT rows carry usd)", "",
+    ]
+    lines = head + [
         "| ts | id | attempt | verdict | gates | skeptic | abst | expl | tokens | usd | s | understood |",
         "|---|---|---|---|---|---|---|---|---|---|---|---|",
     ]
@@ -54,6 +67,7 @@ def summary() -> None:
         lines += ["", "## Blocked — do not retry without a manifest change", ""]
         lines += [f"- `{r['id']}` — {r['findings']}" for r in blocked]
     MD.write_text("\n".join(lines) + "\n")
+    return head
 
 
 def main() -> int:
@@ -67,7 +81,10 @@ def main() -> int:
     p.add_argument("--by", default="builder", help="builder, or human for a hand-edited notebook /skeptic passed")
     sub.add_parser("summary")
     a = ap.parse_args()
-    add(a) if a.cmd == "add" else summary()
+    if a.cmd == "add":
+        add(a)
+    else:
+        print("\n".join(summary()))
     return 0
 
 

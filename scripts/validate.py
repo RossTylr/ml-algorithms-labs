@@ -11,7 +11,7 @@ Usage:
     python scripts/validate.py 04_regression              # every notebook in the module
     python scripts/validate.py --all
     python scripts/validate.py --all --execute            # also run each notebook (slow)
-    python scripts/validate.py --all --built-only         # skip untouched stubs
+    python scripts/validate.py --all --built-only         # only notebooks with status "built"
 
 Gates G1–G12 per curriculum.yaml. Added by the paper fold (slice 4):
   G13  every ⛔ Abstention block names the experiment and gives a specific reason (Kalai 2025: reward abstention over padding)
@@ -212,9 +212,8 @@ def validate_one(path: Path, gates: dict, execute: bool, quiet: bool = False) ->
     return passed
 
 
-def is_stub(path: Path) -> bool:
-    nb = nbformat.read(path, as_version=4)
-    return nb.metadata.get("ml_mastery", {}).get("status") == "stub" and "_objective_" in md_text(nb)
+def status(path: Path) -> str | None:
+    return nbformat.read(path, as_version=4).metadata.get("ml_mastery", {}).get("status")
 
 
 def main() -> int:
@@ -222,7 +221,7 @@ def main() -> int:
     ap.add_argument("target", nargs="?", help="notebook path or module directory")
     ap.add_argument("--all", action="store_true")
     ap.add_argument("--execute", action="store_true", help="also run each notebook (G12)")
-    ap.add_argument("--built-only", action="store_true", help="skip untouched stubs")
+    ap.add_argument("--built-only", action="store_true", help="only status built; blocked and stub are excluded")
     args = ap.parse_args()
 
     with MANIFEST.open() as f:
@@ -238,7 +237,7 @@ def main() -> int:
         return 2
 
     if args.built_only:
-        paths = [p for p in paths if not is_stub(p)]
+        paths = [p for p in paths if status(p) == "built"]
 
     results = [validate_one(p, gates, args.execute) for p in paths]
     n_pass = sum(results)

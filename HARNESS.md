@@ -34,6 +34,7 @@ next.py ──> stub ──> builder ──> validate.py ──> reviewer ──
 | BUILT | every gate passes and the reviewer found nothing it could substantiate | validator and reviewer | status `built`; committed `nb(<id>): built — PASS G1–G14, skeptic PASS` |
 | REVISE | a gate failed, or the reviewer has one to three substantiated findings | either | back to the same builder; never terminal |
 | BLOCKED | three attempts failed, or a dependency cannot be installed | the loop | status `blocked`; committed `nb(<id>): <title> — BLOCKED attempt N`; with a count the run moves to the next stub |
+| ACCEPTED | a person's hand edit of a BUILT or BLOCKED notebook passed `/skeptic` and every gate | a human, through `/skeptic` | status `accepted`; ledger `by=human`; treated as built, counted apart |
 
 **Stopping.** A run given a count stops when the count is spent, after two BLOCKED notebooks in a row, or — with `--usd <ceiling>` — before the next notebook once the usd on this run's ledger rows exceeds the ceiling (`ceiling reached`; rows without usd count as zero). Every notebook attempted counts toward the count. `scripts/loop.sh` applies the same three rules in T0.
 
@@ -43,7 +44,7 @@ next.py ──> stub ──> builder ──> validate.py ──> reviewer ──
 
 **D-7.** A BLOCKED notebook is committed exactly as a BUILT one is. A failed attempt is a result, not an absence: the ledger row and the digest findings describe a notebook, and the ledger must point at a commit that holds it as the reviewer saw it. Left uncommitted, its quiz and digest entry are swept into the next notebook's commit under the wrong id, and the notebook itself survives only as a dirty file that a reset discards.
 
-**Human unblock.** A BLOCKED notebook may be edited by hand. `/skeptic <path>` on it with a PASS verdict makes it BUILT: set its status to `"built"`, record a ledger row with attempt 3 and `by=human` (`python scripts/ledger.py add --id <id> --path <path> --attempt 3 --verdict BUILT --gates "<x>/<y> pass" --skeptic PASS --by human`), run `scripts/little_book.py`, and commit as for any BUILT notebook.
+**Human acceptance.** A BLOCKED or BUILT notebook may be edited by hand. `/skeptic <path>`, typed by a person, with a PASS verdict and validate.py passing makes it ACCEPTED: status `"accepted"`, a ledger row with verdict ACCEPTED and `by=human` (`ledger.py add` refuses ACCEPTED without `--by human`), `scripts/little_book.py`, and a commit `nb(<id>): <title> — ACCEPTED by human, skeptic PASS`. Only the /skeptic skill sets it. Accepted counts as built for validate.py (`--built-only`), the Little Book and G12, and `next.py` never selects it; the ledger counts it apart from BUILT so that pass^1 and pass@3 measure the agents, not the hand-fix.
 
 ## 3. Three configurations, tried in order
 

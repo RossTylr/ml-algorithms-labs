@@ -2,7 +2,7 @@
 
 Rows before 2026-10-29 record tokens under the earlier single-field definition; later rows sum the four usage fields (input, output, cache read, cache creation).
 
-**Built** 1 · **Revise cycles** 0 · **Blocked** 1 · **Median tokens/built** 143244 · **Median seconds/built** 1330
+**Built** 1 · **Accepted** 0 (human) · **Revise cycles** 0 · **Blocked** 1 · **Median tokens/built** 143244 · **Median seconds/built** 1330
 
 **pass^1** 1/2 (50%) — BUILT at the first attempt, over notebooks with any row  
 **pass@3** 1/2 (50%) — BUILT within three attempts, over the same notebooks  

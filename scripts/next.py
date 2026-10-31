@@ -2,7 +2,8 @@
 """next.py — print the path of the next unbuilt stub in build order. Deterministic. No planning.
 
 Build order: tier (1→3), then module id, then topic, then notebook.
-A notebook is unbuilt if metadata.ml_mastery.status == "stub"; "built" and "blocked" are skipped.
+A notebook is unbuilt if metadata.ml_mastery.status == "stub"; "built", "accepted" (a human PASS) and "blocked" are
+never selected.
 BLOCKED notebooks (in ledger.jsonl) are skipped too.
 
     python scripts/next.py                 # one path
@@ -48,9 +49,10 @@ def revise_topics() -> set[str]:
 
 
 def built_count() -> int:
+    """Notebooks done: any BUILT row, or an ACCEPTED row (human PASS) — counted once each."""
     if not LEDGER.exists():
         return 0
-    return sum(1 for ln in LEDGER.read_text().splitlines() if ln.strip() and json.loads(ln).get("verdict") == "BUILT")
+    return len({r["id"] for r in map(json.loads, filter(str.strip, LEDGER.read_text().splitlines())) if r.get("verdict") in ("BUILT", "ACCEPTED")})
 
 
 def candidates(manifest: dict, module: str | None):
@@ -65,7 +67,7 @@ def candidates(manifest: dict, module: str | None):
         for p in sorted(mdir.glob("*/*.ipynb")):
             nb = nbformat.read(p, as_version=4)
             meta = nb.metadata.get("ml_mastery", {})
-            if meta.get("status") != "stub" or meta.get("id") in skip:
+            if meta.get("status") != "stub" or meta.get("id") in skip:  # built, accepted, blocked: never selected
                 continue
             if meta.get("build") == "last" and n_built < total - 1:
                 continue  # 29.meta.1 waits until everything else is BUILT

@@ -49,7 +49,7 @@ def main() -> int:
                 if not p.exists():
                     continue
                 nb = nbformat.read(p, as_version=4)
-                if nb.metadata.get("ml_mastery", {}).get("status") != "built":
+                if nb.metadata.get("ml_mastery", {}).get("status") not in ("built", "accepted"):
                     continue
                 n_built += 1
                 para = plain_paragraph(nb) or "_(plain paragraph not yet written — teach-back pending)_"

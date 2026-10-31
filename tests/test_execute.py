@@ -1,4 +1,4 @@
-"""G12 — every notebook with status built executes clean under nbconvert. Nightly tier (`execute`)."""
+"""G12 — every notebook with status built or accepted executes clean under nbconvert. Nightly tier (`execute`)."""
 import json, os, subprocess, sys
 import pytest
 ROOT = os.path.join(os.path.dirname(__file__), "..")
@@ -12,7 +12,7 @@ def _built():
         for f in sorted(files):
             if f.endswith(".ipynb"):
                 meta = json.load(open(os.path.join(d, f)))["metadata"].get("ml_mastery", {})
-                if meta.get("status") == "built":
+                if meta.get("status") in ("built", "accepted"):
                     out.append(pytest.param(os.path.join(rel, f), id=meta["id"]))
     return out
 

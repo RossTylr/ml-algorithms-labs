@@ -20,6 +20,8 @@ MD = ROOT / "LEDGER.md"
 
 
 def add(a) -> None:
+    if a.verdict == "ACCEPTED" and a.by != "human":
+        sys.exit("ledger: ACCEPTED is a human /skeptic PASS — it needs --by human")
     rec = {
         "ts": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "id": a.id, "path": a.path, "attempt": a.attempt, "verdict": a.verdict,
@@ -36,7 +38,8 @@ def summary() -> list[str]:
     recs = [json.loads(l) for l in LEDGER.read_text().splitlines() if l.strip()] if LEDGER.exists() else []
     built = [r for r in recs if r["verdict"] == "BUILT"]
     latest = {r["id"]: r for r in recs}
-    blocked = [r for r in latest.values() if r["verdict"] == "BLOCKED"]  # a later BUILT row (human unblock) lifts it
+    blocked = [r for r in latest.values() if r["verdict"] == "BLOCKED"]  # a later ACCEPTED row (human PASS) lifts it
+    accepted = {r["id"] for r in recs if r["verdict"] == "ACCEPTED"}  # counted apart, so pass^1 / pass@3 stay the agent's
     revise = [r for r in recs if r["verdict"] == "REVISE"]
     tok = sorted(r["tokens"] for r in built if r.get("tokens"))
     sec = sorted(r["seconds"] for r in built if r.get("seconds"))
@@ -51,7 +54,7 @@ def summary() -> list[str]:
         "# Build Ledger", "",
         "Rows before 2026-10-29 record tokens under the earlier single-field definition; later rows sum the four "
         "usage fields (input, output, cache read, cache creation).", "",
-        f"**Built** {len(built)} · **Revise cycles** {len(revise)} · **Blocked** {len(blocked)} · "
+        f"**Built** {len(built)} · **Accepted** {len(accepted)} (human) · **Revise cycles** {len(revise)} · **Blocked** {len(blocked)} · "
         f"**Median tokens/built** {med(tok)} · **Median seconds/built** {med(sec)}", "",
         f"**pass^1** {rate(first)} — BUILT at the first attempt, over notebooks with any row  ",
         f"**pass@3** {rate(ever)} — BUILT within three attempts, over the same notebooks  ",

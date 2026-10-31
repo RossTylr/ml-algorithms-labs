@@ -22,7 +22,7 @@ Change the manifest, re-run `scripts/scaffold.py`; never hand-edit a README or I
 5. commit when PASS                             # message: "nb(04.01.01): OLS intuition — PASS G1–G12"
 ```
 A notebook with `metadata.ml_mastery.status == "stub"` and `_objective_` still in it is unbuilt.
-Status follows the verdict: the builder leaves `status: "stub"`; the loop sets `"built"` on BUILT and `"blocked"` on BLOCKED. Gates are G1–G14 plus HC-12 (G12 execute is optional, G13 abstention, G14 pre-registration, HC-12 exactly one `# CENTRAL`).
+Status follows the verdict: the builder leaves `status: "stub"`; the loop sets `"built"` on BUILT and `"blocked"` on BLOCKED; only a human `/skeptic` PASS after a hand edit sets `"accepted"`, which counts as built but is tallied apart in the ledger. Gates are G1–G14 plus HC-12 (G12 execute is optional, G13 abstention, G14 pre-registration, HC-12 exactly one `# CENTRAL`).
 
 ## Working on a notebook
 1. **Orient.** Read the stub's title cell (band, goal) and its pre-registered experiments (section 6 headings, `metadata.ml_mastery.experiments`). State them in one line before anything else.

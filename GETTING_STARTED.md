@@ -72,7 +72,7 @@ claude -p "Read AGENTS.md. Build 04_regression/04_regularised/02_lasso.ipynb in 
 | E2 | Terminal | `ls learn/queue/` then open the newest quiz; answer before opening the notebook; note the score |
 | E3 | Terminal | `cat learn/digest.md` — the reviewer's findings, newest first |
 | E4 | Terminal | `python scripts/little_book.py && open LITTLE_BOOK.md` |
-| E5 | Claude Code | `/skeptic <path>` on any notebook edited by hand, including a teach-back paragraph |
+| E5 | Claude Code | `/skeptic <path>` on any notebook edited by hand, including a teach-back paragraph; a PASS on a built or blocked notebook marks it `accepted` and commits it |
 | E6 | Terminal | `git push` |
 
 ## Part F — unattended

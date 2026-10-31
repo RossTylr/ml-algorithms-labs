@@ -11,7 +11,7 @@ Usage:
     python scripts/validate.py 04_regression              # every notebook in the module
     python scripts/validate.py --all
     python scripts/validate.py --all --execute            # also run each notebook (slow)
-    python scripts/validate.py --all --built-only         # only notebooks with status "built"
+    python scripts/validate.py --all --built-only         # only status "built" or "accepted"
 
 Gates G1–G12 per curriculum.yaml. Added by the paper fold (slice 4):
   G13  every ⛔ Abstention block names the experiment and gives a specific reason (Kalai 2025: reward abstention over padding)
@@ -36,6 +36,8 @@ import yaml
 
 ROOT = Path(__file__).resolve().parent.parent
 MANIFEST = ROOT / "curriculum" / "curriculum.yaml"
+# "accepted" = a human /skeptic PASS after a hand edit; validate treats it as built everywhere
+BUILT = ("built", "accepted")
 
 REGISTERS = ["🗣️", "💻", "🔬"]
 RFI_BLOCKS = ["📊", "🔍", "💡", "⚠️"]
@@ -241,7 +243,7 @@ def main() -> int:
     ap.add_argument("target", nargs="?", help="notebook path or module directory")
     ap.add_argument("--all", action="store_true")
     ap.add_argument("--execute", action="store_true", help="also run each notebook (G12)")
-    ap.add_argument("--built-only", action="store_true", help="only status built; blocked and stub are excluded")
+    ap.add_argument("--built-only", action="store_true", help="only status built or accepted; blocked and stub are excluded")
     args = ap.parse_args()
 
     with MANIFEST.open() as f:
@@ -257,7 +259,7 @@ def main() -> int:
         return 2
 
     if args.built_only:
-        paths = [p for p in paths if status(p) == "built"]
+        paths = [p for p in paths if status(p) in BUILT]
 
     results = [validate_one(p, gates, args.execute) for p in paths]
     n_pass = sum(results)

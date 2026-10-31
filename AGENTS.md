@@ -22,7 +22,7 @@ Change the manifest, re-run `scripts/scaffold.py`; never hand-edit a README or I
 5. commit when PASS                             # message: "nb(04.01.01): OLS intuition — PASS G1–G12"
 ```
 A notebook with `metadata.ml_mastery.status == "stub"` and `_objective_` still in it is unbuilt.
-Status follows the verdict: the builder leaves `status: "stub"`; the loop sets `"built"` on BUILT and `"blocked"` on BLOCKED. Gates are G1–G14 (G12 execute is optional, G13 abstention, G14 pre-registration).
+Status follows the verdict: the builder leaves `status: "stub"`; the loop sets `"built"` on BUILT and `"blocked"` on BLOCKED. Gates are G1–G14 plus HC-12 (G12 execute is optional, G13 abstention, G14 pre-registration, HC-12 exactly one `# CENTRAL`).
 
 ## Working on a notebook
 1. **Orient.** Read the stub's title cell (band, goal) and its pre-registered experiments (section 6 headings, `metadata.ml_mastery.experiments`). State them in one line before anything else.
@@ -67,7 +67,7 @@ Each has a known generating mechanism. Use `return_truth=True` where offered to 
 ```
 curriculum/curriculum.yaml   manifest
 scripts/scaffold.py          manifest → tree + stubs + READMEs + INDEX.md
-scripts/validate.py          gates G1–G14 (+W1 warning)
+scripts/validate.py          gates G1–G14, HC-12 (+W1 warning)
 scripts/next.py              next stub in build order; teach-back on the jagged edge
 scripts/ledger.py            ledger.jsonl → LEDGER.md
 scripts/little_book.py       built 🗣️ paragraphs + # CENTRAL figures → LITTLE_BOOK.md

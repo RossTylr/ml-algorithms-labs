@@ -16,6 +16,8 @@ Usage:
 Gates G1–G12 per curriculum.yaml. Added by the paper fold (slice 4):
   G13  every ⛔ Abstention block names the experiment and gives a specific reason (Kalai 2025: reward abstention over padding)
   G14  experiment headings are the manifest's pre-registered list; extras must say (exploratory)  (Box 1976; AlphaCodium)
+  HC-12 exactly one code cell is marked # CENTRAL — the figure LITTLE_BOOK.md carries
+G4 checks the three registers anywhere AND inside the `## 2. What Is …` concept section (HC-3).
   W1   figure titles that describe rather than state a finding — warning only (Knaflic)
 Abstention format, in a markdown cell where the figure/finding would have been:
   ⛔ Abstention — <experiment name> — <reason, ≥25 chars, specific>
@@ -72,17 +74,26 @@ def count_bullets_under(nb, heading: str) -> int:
     return len([ln for ln in body.splitlines() if re.match(r"^\s*(\d+\.|[-*])\s+\S", ln)])
 
 
-ABSTAIN_RE = re.compile(r"^⛔\s*Abstention\s*[—:-]\s*(?P<exp>[^\n]+?)\s*[—:-]\s*(?P<reason>[^\n]{25,})", re.M)
+ABSTAIN_LINE = re.compile(r"^⛔\s*Abstention\b.*$", re.M)
+# separators: em dash or colon, or a hyphen with space either side — so "rank-deficient panels" is one experiment name
+ABSTAIN_RE = re.compile(r"^⛔\s*Abstention(?:\s*[—:]\s*|\s+-\s+)(?P<exp>.+?)(?:\s*[—:]\s*|\s+-\s+)(?P<reason>.+)$")
 VAGUE = re.compile(r"too (complex|hard|difficult)|out of scope|not enough time|beyond this notebook", re.I)
 
 
 def abstentions(nb) -> list[tuple[str, str, bool]]:
-    """(experiment, reason, specific?) for every ⛔ Abstention block. Specific = ≥25 chars and not a vague phrase."""
+    """(experiment, reason, specific?) for every ⛔ Abstention line. Specific = reason ≥25 chars and not a vague phrase;
+    a line that does not parse into experiment and reason is not specific."""
     out = []
-    for m in ABSTAIN_RE.finditer(md_text(nb)):
-        exp, reason = m.group("exp").strip(), m.group("reason").strip()
-        out.append((exp, reason, not VAGUE.search(reason)))
+    for line in ABSTAIN_LINE.findall(md_text(nb)):
+        m = ABSTAIN_RE.match(line)
+        exp, reason = (m.group("exp").strip(), m.group("reason").strip()) if m else (line, "")
+        out.append((exp, reason, len(reason) >= 25 and not VAGUE.search(reason)))
     return out
+
+
+def concept_sections(nb) -> dict[str, str]:
+    """heading → body for each `## 2. What Is …` section: the concept section HC-3 requires all three registers in."""
+    return {m.group(1).strip(): m.group(2) for m in re.finditer(r"^##\s+(2\.[^\n]*|What Is[^\n]*)$(.*?)(?=^##\s|\Z)", md_text(nb), re.M | re.S)}
 
 
 def experiment_headings(nb) -> list[str]:
@@ -141,9 +152,14 @@ def gate_results(nb, path: Path, gates: dict, execute: bool) -> list[tuple[str, 
     ok = "set_style" in code and re.search(r"SEED\s*=\s*42", code) is not None
     out.append(("G3", ok, "set_style + SEED=42" if ok else "setup cell incomplete"))
 
-    # G4 registers
+    # G4 registers — present in the notebook, and all three inside every concept section
     missing = [r for r in REGISTERS if r not in md]
-    out.append(("G4", not missing, "all registers" if not missing else f"missing {missing}"))
+    concept = concept_sections(nb)
+    thin = {h: [r for r in REGISTERS if r not in body] for h, body in concept.items()}
+    thin = {h: rs for h, rs in thin.items() if rs}
+    why = (f"missing {missing}" if missing else "no '## 2. What Is' concept section" if not concept
+           else f"concept section '{next(iter(thin))[:40]}' missing {next(iter(thin.values()))}" if thin else "all registers")
+    out.append(("G4", not missing and bool(concept) and not thin, why))
 
     # G5 visuals — a specific abstention relieves one figure each (max two)
     abst = abstentions(nb)
@@ -178,11 +194,15 @@ def gate_results(nb, path: Path, gates: dict, execute: bool) -> list[tuple[str, 
 
     # G13 abstentions must be specific
     vague = [e for e, _, ok in abst if not ok]
-    out.append(("G13", not vague, f"{len(abst)} abstention(s), all specific" if not vague else f"vague abstention for {vague}"))
+    out.append(("G13", not vague, f"{len(abst)} abstention(s), all specific" if not vague else f"non-specific abstention for {vague}"))
 
     # G14 pre-registration: experiment headings ⊆ manifest list unless marked (exploratory)
     extra = exploratory(nb)
     out.append(("G14", not extra, "experiments match manifest" if not extra else f"unregistered: {extra[:2]}"))
+
+    # HC-12 exactly one code cell marked # CENTRAL
+    n = sum(1 for c in nb.cells if c.cell_type == "code" and "# CENTRAL" in c.source)
+    out.append(("HC-12", n == 1, f"{n} cell(s) marked # CENTRAL"))
 
     # W1 figure titles (warning only, never fails)
     desc = descriptive_titles(nb)
